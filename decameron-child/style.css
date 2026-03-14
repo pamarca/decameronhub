@@ -1,0 +1,1815 @@
+/*
+ * Theme Name:  Decameron Child
+ * Template:    twentytwentyfive
+ * Description: Bilingual Decameron - ADA compliant, fully responsive
+ * Version:     4.0
+ */
+
+/* ============================================================
+   CSS VARIABLES - ADA Compliant Colors
+   ============================================================ */
+
+:root {
+    --color-bg-dark: #1a1a2e;
+    --color-bg-nav: #12122a;
+    --color-text-light: #e0e0e0;
+    --color-text-dim: #a0a0b8;
+    --color-accent: #a78bfa;
+    --color-accent-dark: #7c3aed;
+    --color-border: #2a2a3e;
+    
+    --color-italian-bg: #fffbf5;
+    --color-italian-border: #d4a574;
+    --color-english-bg: #f5f9ff;
+    --color-english-border: #6b9bd1;
+    
+    --color-argument-bg: #fff8e7;
+    --color-argument-border: #c4941d;
+    
+    --color-name-person: #7c3aed;
+    --color-name-place: #0369a1;
+    
+    --font-base: Georgia, 'Times New Roman', serif;
+    --font-mono: 'Courier New', Consolas, monospace;
+
+    --spacing-unit: 1rem;
+    --nav-height: 3.5rem;
+    --color-accent-hero: #667eea; /* homepage gradient / stat numbers */
+    --color-bg-hover: #2a2a4e;   /* sidebar nav hover background */
+    --color-bg-active: #16213e;  /* sidebar nav active background */
+    --color-milestone: #9333ea;  /* milestone / named entity highlight */
+
+    /* Light mode text hierarchy */
+    --color-text-body: #2a2a2a;       /* main paragraph text */
+    --color-text-secondary: #444;      /* argument, verse, intro text */
+    --color-text-muted: #555;          /* toggle bar labels */
+    --color-text-faint: #666;          /* subtitles, card text, stat labels */
+    --color-text-nav: #888;            /* nav header, toggle button, nav label */
+
+    /* Light mode sidebar nav */
+    --color-nav-item: #c0c0d0;         /* sidebar nav item text */
+    --color-nav-day: #d0d0e8;          /* sidebar day link text */
+
+    /* Light mode surfaces & borders */
+    --color-surface-subtle: #f5f5f5;   /* toggle bar bg, nav hover bg */
+    --color-surface-card: #f9fafb;     /* control item hover, card bg */
+    --color-border-light: #ddd;        /* panel border, button border */
+    --color-border-faint: #eee;        /* divider line */
+    --color-border-mid: #e5e5e5;       /* subtitle border, page nav borders */
+    --color-border-reset: #e5e7eb;     /* reset button hover bg */
+    --color-surface-reset: #f3f4f6;    /* reset button bg */
+
+    /* Light mode semantic / feature colors */
+    --color-speaker-bg: #f3e8ff;       /* speaker label background */
+    --color-stanza-border: #d4af37;    /* stanza gold border */
+    --color-selection-it: #fde68a;     /* Italian column text selection */
+    --color-selection-en: #bfdbfe;     /* English column text selection */
+    --color-milestone-bg: #fef3c7;     /* milestone highlight background (light) */
+    --color-speaker-hl: #fef08a;       /* speaker highlight */
+    --color-hero-end: #764ba2;         /* hero gradient end */
+
+    /* Dark mode palette */
+    --color-dark-bg: #0f0f1a;          /* dark page/section background */
+    --color-dark-surface: #1e1e32;     /* dark toggle bar, nav hover */
+    --color-dark-it-col: #1c1712;      /* dark Italian column background */
+    --color-dark-en-col: #10161c;      /* dark English column background */
+    --color-dark-arg-bg: #1a1600;      /* dark argument background */
+    --color-dark-speaker-bg: #2d1b69;  /* dark speaker label background */
+    --color-dark-reset-hover: #3a3a5e; /* dark reset button hover */
+    --color-dark-milestone: #78350f;   /* dark highlight / Italian selection */
+    --color-dark-selection-en: #1e3a5f;/* dark English selection */
+    --color-dark-stanza: #b8962e;      /* dark stanza border */
+    --color-dark-verse: #c8c0b0;       /* dark verse text */
+    --color-dark-arg-text: #c0b080;    /* dark argument text */
+    --color-dark-paragraph: #ccc8c0;   /* dark column paragraph text */
+    --color-dark-muted: #aaa;          /* dark mode muted text */
+    --color-dark-subtle: #bbb;         /* dark mode subtle text */
+}
+
+/* ============================================================
+   SKIP LINK (ADA requirement)
+   ============================================================ */
+
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: var(--color-accent);
+    color: #000;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    font-weight: bold;
+    z-index: 10000;
+}
+
+.skip-link:focus {
+    top: 0;
+}
+
+/* ============================================================
+   SITE HEADER WRAPPER
+   ============================================================ */
+
+/* The <header class="site-header"> wraps the top nav on all pages.
+   The nav inside handles its own sticky positioning. */
+.site-header {
+    display: block; /* explicit, prevents any theme override */
+}
+
+/* ============================================================
+   LAYOUT - RESPONSIVE GRID
+   ============================================================ */
+
+.decameron-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    grid-template-areas: "sidebar content";
+    gap: 0;
+    min-height: calc(100vh - var(--wp-admin--admin-bar--height, 0px) - var(--nav-height));
+}
+
+.decameron-sidebar {
+    grid-area: sidebar;
+    position: sticky;
+    top: calc(var(--wp-admin--admin-bar--height, 0px) + var(--nav-height));
+    height: calc(100vh - var(--wp-admin--admin-bar--height, 0px) - var(--nav-height));
+    overflow-y: auto;
+    background: var(--color-bg-dark);
+    color: var(--color-text-light);
+    padding: 1.5rem 0;
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-text-secondary) var(--color-bg-dark);
+}
+
+.decameron-sidebar::-webkit-scrollbar { width: 6px; }
+.decameron-sidebar::-webkit-scrollbar-track { background: var(--color-bg-dark); }
+.decameron-sidebar::-webkit-scrollbar-thumb { background: var(--color-text-secondary); border-radius: 3px; }
+
+.decameron-content {
+    grid-area: content;
+    padding: calc(var(--spacing-unit) * 2.5) calc(var(--spacing-unit) * 3);
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+/* ============================================================
+   SIDEBAR NAVIGATION
+   ============================================================ */
+
+.dec-nav-header {
+    padding: 0 1.25rem 1rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-text-nav);
+    border-bottom: 1px solid var(--color-border);
+    margin-bottom: 0.5rem;
+}
+
+.dec-nav-item {
+    display: block;
+    width: 100%;
+    padding: 0.6rem 1.25rem;
+    color: var(--color-nav-item);
+    text-decoration: none;
+    font-size: 0.875rem;
+    line-height: 1.4;
+    transition: background 0.15s, color 0.15s;
+    min-height: 44px; /* ADA touch target */
+}
+
+.dec-nav-item:hover,
+.dec-nav-item:focus {
+    background: var(--color-bg-hover);
+    color: #fff;
+    text-decoration: none;
+    outline: 2px solid var(--color-accent);
+    outline-offset: -2px;
+}
+
+.dec-nav-item.active {
+    background: var(--color-bg-active);
+    color: var(--color-accent);
+    font-weight: 600;
+    border-left: 3px solid var(--color-accent);
+    padding-left: calc(1.25rem - 3px);
+}
+
+/* Day container */
+.dec-nav-day-container {
+    border-top: 1px solid var(--color-border);
+    display: flex;
+    align-items: stretch;
+}
+
+.dec-nav-day-link {
+    flex: 1;
+    display: block;
+    padding: 0.65rem 1.25rem;
+    color: var(--color-nav-day);
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.15s, color 0.15s;
+    min-height: 44px; /* ADA */
+}
+
+.dec-nav-day-link:hover,
+.dec-nav-day-link:focus {
+    background: var(--color-bg-hover);
+    color: #fff;
+    outline: 2px solid var(--color-accent);
+    outline-offset: -2px;
+}
+
+.dec-nav-day-link.active {
+    color: var(--color-accent);
+    background: var(--color-bg-active);
+}
+
+.dec-nav-day-toggle {
+    flex-shrink: 0;
+    width: 44px; /* ADA minimum */
+    height: 44px; /* ADA minimum */
+    background: none;
+    border: none;
+    border-left: 1px solid var(--color-border);
+    color: var(--color-text-nav);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s, color 0.15s;
+}
+
+.dec-nav-day-toggle:hover,
+.dec-nav-day-toggle:focus {
+    background: var(--color-bg-hover);
+    color: var(--color-accent);
+    outline: 2px solid var(--color-accent);
+    outline-offset: -2px;
+}
+
+.dec-nav-day-toggle.open {
+    color: var(--color-accent);
+}
+
+.dec-nav-day-toggle svg {
+    width: 1rem;
+    height: 1rem;
+    transition: transform 0.2s ease;
+}
+
+.dec-nav-day-toggle.open svg {
+    transform: rotate(90deg);
+}
+
+.dec-nav-novellas {
+    display: none;
+    background: var(--color-bg-nav);
+    padding: 0.25rem 0;
+}
+
+.dec-nav-novellas.open {
+    display: block;
+}
+
+.dec-nav-novellas .dec-nav-item {
+    padding-left: 2.25rem;
+    font-size: 0.82rem;
+    color: var(--color-text-dim);
+}
+
+.dec-nav-novellas .dec-nav-item:hover,
+.dec-nav-novellas .dec-nav-item:focus {
+    color: #fff;
+}
+
+.dec-nav-novellas .dec-nav-item.active {
+    color: var(--color-accent);
+    border-left-color: var(--color-accent);
+    padding-left: calc(2.25rem - 3px);
+}
+
+/* ============================================================
+   PAGE HEADER
+   ============================================================ */
+
+.dec-page-title {
+    font-size: clamp(1.2rem, 4vw, 1.6rem);
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+    color: var(--color-bg-dark);
+}
+
+.dec-page-subtitle {
+    font-size: clamp(0.85rem, 2vw, 0.95rem);
+    color: var(--color-text-faint);
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--color-border-mid);
+}
+
+/* Language toggle */
+.dec-toggle-bar {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+    padding: 0.75rem 1rem;
+    background: var(--color-surface-subtle);
+    border-radius: 6px;
+    font-size: 0.875rem;
+    flex-wrap: wrap;
+}
+
+.dec-toggle-bar span {
+    font-weight: 600;
+    color: var(--color-text-muted);
+}
+
+.dec-toggle-label {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    cursor: pointer;
+    user-select: none;
+    min-height: 44px; /* ADA */
+}
+
+.dec-toggle-label input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    accent-color: var(--color-accent);
+    cursor: pointer;
+}
+
+.dec-toggle-label input[type="checkbox"]:focus {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+}
+
+/* ============================================================
+   BILINGUAL CONTENT
+   ============================================================ */
+
+.wp-block-columns.decameron-bilingual {
+    display: flex !important;
+    gap: 0 !important;
+    margin: 0 0 0.5rem 0 !important;
+    border: none !important;
+    background: none !important;
+    align-items: stretch;
+}
+
+.wp-block-column.italian-column,
+.wp-block-column.english-column {
+    flex: 1 1 0 !important;
+    min-width: 0 !important;
+    padding: 1rem 1.5rem !important;
+    margin: 0 !important;
+}
+
+.wp-block-column.italian-column {
+    background: var(--color-italian-bg);
+    border-right: 3px solid var(--color-italian-border);
+}
+
+.wp-block-column.english-column {
+    background: var(--color-english-bg);
+    border-left: 3px solid var(--color-english-border);
+}
+
+/* Paragraphs */
+.italian-column p,
+.english-column p {
+    font-family: var(--font-base);
+    font-size: clamp(0.95rem, 2vw, 1.05rem);
+    line-height: 1.8;
+    color: var(--color-text-body);
+    margin: 0 0 1rem 0 !important;
+    text-align: justify;
+    hyphens: auto;
+}
+
+.italian-column p:last-child,
+.english-column p:last-child {
+    margin-bottom: 0 !important;
+}
+
+/* Argument (summary) paragraphs */
+.dec-argument {
+    background: var(--color-argument-bg) !important;
+    border-left: 4px solid var(--color-argument-border);
+    padding: 0.75rem 1rem !important;
+    margin: 0 0 1.5rem 1rem !important;
+    font-style: italic;
+    font-size: 0.95em !important;
+    color: var(--color-text-secondary) !important;
+}
+
+/* Speaker labels */
+.dec-speaker {
+    display: inline-block;
+    font-weight: 700;
+    color: var(--color-accent-dark);
+    font-size: 0.9em;
+    margin-right: 0.5em;
+    margin-bottom: 0.5em;
+    padding: 0.2em 0.6em;
+    background: var(--color-speaker-bg);
+    border-radius: 4px;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+}
+
+/* Poetry/Verse/Songs */
+.dec-stanza {
+    margin: 1.5rem 0 1.5rem 2rem;
+    padding-left: 1rem;
+    border-left: 3px solid var(--color-stanza-border);
+}
+
+.dec-verse {
+    font-family: var(--font-base);
+    font-style: italic;
+    line-height: 1.6;
+    margin: 0.25rem 0;
+    color: var(--color-text-secondary);
+}
+
+.dec-stanza:first-child {
+    margin-top: 0;
+}
+
+.dec-stanza:last-child {
+    margin-bottom: 0;
+}
+
+/* Named entities */
+.dec-name-person {
+    color: var(--color-name-person);
+    font-style: italic;
+    font-weight: 600;
+}
+
+.dec-name-place {
+    color: var(--color-name-place);
+    font-weight: 600;
+}
+
+/* Milestone paragraph numbers */
+.dec-milestone {
+    display: inline;
+    font-size: 0.65em;
+    color: var(--color-milestone);
+    font-weight: 700;
+    margin-left: 0.4em;
+    margin-right: 0.4em;
+    font-family: var(--font-mono);
+    white-space: nowrap;
+    vertical-align: super;
+    line-height: 0;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+}
+
+/* Selection highlight */
+.italian-column ::selection { background: var(--color-selection-it); }
+.english-column ::selection { background: var(--color-selection-en); }
+
+/* Hide/show via toggle */
+body.hide-italian .italian-column { display: none !important; }
+body.hide-english .english-column { display: none !important; }
+
+body.hide-italian .wp-block-columns.decameron-bilingual,
+body.hide-english .wp-block-columns.decameron-bilingual {
+    display: block !important;
+}
+
+body.hide-italian .english-column,
+body.hide-english .italian-column {
+    width: 100% !important;
+    border: none !important;
+    border-left: 4px solid var(--color-accent);
+}
+
+/* ============================================================
+   RESPONSIVE - TABLET
+   ============================================================ */
+
+@media (max-width: 1024px) {
+    .decameron-layout {
+        grid-template-columns: 240px 1fr;
+    }
+    
+    .decameron-content {
+        padding: 2rem;
+    }
+    
+    .wp-block-column.italian-column,
+    .wp-block-column.english-column {
+        padding: 0.8rem 1.2rem !important;
+    }
+}
+
+/* ============================================================
+   MOBILE - COLLAPSIBLE SIDEBAR
+   ============================================================ */
+
+@media (max-width: 768px) {
+    :root {
+        --nav-height: 44px; /* On mobile the nav collapses to just the brand bar */
+    }
+
+    /* Make sidebar collapsible */
+    .decameron-sidebar {
+        position: fixed;
+        top: calc(var(--wp-admin--admin-bar--height, 0px) + var(--nav-height));
+        left: 0;
+        width: 280px;
+        height: calc(100vh - var(--wp-admin--admin-bar--height, 0px) - var(--nav-height));
+        transform: translateX(-100%); /* Hidden by default */
+        transition: transform 0.3s ease;
+        z-index: 999;
+        border-right: 3px solid var(--color-accent);
+        border-bottom: none;
+    }
+
+    .decameron-sidebar.open {
+        transform: translateX(0); /* Shown when open */
+    }
+
+    /* Mobile menu toggle button */
+    .mobile-menu-toggle {
+        position: fixed;
+        top: calc(var(--wp-admin--admin-bar--height, 0px) + var(--nav-height) + 0.5rem);
+        right: 1rem;
+        z-index: 1001;
+        width: 48px;
+        height: 48px;
+        background: var(--color-accent);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        transition: all 0.2s;
+    }
+    
+    .mobile-menu-toggle:hover,
+    .mobile-menu-toggle:focus {
+        background: var(--color-accent-dark);
+        transform: scale(1.05);
+    }
+    
+    .mobile-menu-toggle svg {
+        width: 24px;
+        height: 24px;
+    }
+    
+    /* Overlay when menu is open */
+    .sidebar-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 998;
+    }
+    
+    .sidebar-overlay.active {
+        display: block;
+    }
+    
+    /* Layout adjustments */
+    .decameron-layout {
+        grid-template-columns: 1fr;
+        grid-template-areas: "content";
+    }
+    
+    .decameron-content {
+        padding: 1.5rem 1rem;
+        padding-top: 4rem; /* Space for menu toggle */
+    }
+    
+    /* Fix text controls panel on mobile */
+    .text-controls-panel {
+        position: fixed;
+        top: auto;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        min-width: auto;
+        max-width: none;
+        border-radius: 16px 16px 0 0;
+        max-height: 80vh;
+        overflow-y: auto;
+    }
+    
+    .dec-text-controls {
+        z-index: 100; /* Lower than menu toggle */
+    }
+    
+    .text-controls-toggle {
+        padding: 0.4rem 0.75rem;
+        font-size: 0.85rem;
+    }
+    
+    /* Fix toggle bar on mobile */
+    .dec-toggle-bar {
+        position: static; /* Remove relative positioning */
+        z-index: auto;
+        flex-direction: column;
+        gap: 1rem;
+        align-items: stretch;
+    }
+    
+    .dec-toggle-label {
+        width: 100%;
+        justify-content: flex-start;
+    }
+}
+
+/* ============================================================
+   MOBILE - PREVENT DISPLAY BUTTON FROM COVERING MENU
+   ============================================================ */
+
+@media (max-width: 768px) {
+    /* When scrolling, anchor the Display button bottom-left (sidebar toggle is top-right) */
+    body.scrolled .dec-text-controls {
+        position: fixed;
+        bottom: 1rem;
+        left: 1rem;
+        top: auto;
+        margin: 0;
+        z-index: 100;
+    }
+
+    body.scrolled .text-controls-panel {
+        left: 1rem;
+        right: 1rem;
+        bottom: 4rem;
+    }
+}
+
+/* ============================================================
+   VERY SMALL MOBILE
+   ============================================================ */
+
+@media (max-width: 480px) {
+    .mobile-menu-toggle {
+        width: 44px;
+        height: 44px;
+    }
+    
+    .decameron-sidebar {
+        width: 240px;
+    }
+    
+    .decameron-content {
+        padding: 1rem 0.75rem;
+        padding-top: var(--nav-height);
+    }
+}
+
+/* ============================================================
+   HIGH CONTRAST MODE (ADA)
+   ============================================================ */
+
+@media (prefers-contrast: high) {
+    :root {
+        --color-bg-dark: #000;
+        --color-text-light: #fff;
+        --color-accent: #bb86fc;
+        --color-border: #666;
+    }
+    
+    .dec-nav-item:focus,
+    .dec-nav-day-link:focus,
+    .dec-nav-day-toggle:focus {
+        outline: 3px solid #fff;
+        outline-offset: 2px;
+    }
+}
+
+/* ============================================================
+   REDUCED MOTION (ADA)
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* ============================================================
+   PRINT
+   ============================================================ */
+
+@media print {
+    .dec-top-nav,
+    .decameron-sidebar,
+    .dec-toggle-bar,
+    .skip-link { 
+        display: none !important; 
+    }
+    
+    .decameron-layout { 
+        display: block; 
+    }
+    
+    body.hide-italian .italian-column,
+    body.hide-english .english-column { 
+        display: block !important; 
+    }
+    
+    .dec-milestone,
+    .dec-speaker {
+        color: var(--color-text-faint) !important;
+    }
+    
+    .wp-block-columns.decameron-bilingual {
+        break-inside: avoid;
+    }
+}
+
+/* ============================================================
+   ZOOM SUPPORT (ADA requirement - text up to 200%)
+   ============================================================ */
+
+@media (min-width: 1200px) {
+    /* At high zoom, switch to single column */
+    @supports (zoom: 2) {
+        body[style*="zoom: 2"] .decameron-layout {
+            grid-template-columns: 1fr;
+        }
+    }
+}
+
+/* ============================================================
+   ADA COMPLIANCE - Skip Link in Landmark
+   ============================================================ */
+
+/* Hide the header visually but keep it for screen readers */
+.screen-reader-only-header {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Skip link inside the hidden header */
+.screen-reader-only-header .skip-link {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: var(--color-accent, #a78bfa);
+    color: #000;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    font-weight: bold;
+    z-index: 10000;
+}
+
+/* Show header when skip link is focused (Tab key) */
+.screen-reader-only-header:focus-within {
+    position: static;
+    width: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+}
+
+/* Skip link visible and outlined on focus */
+.screen-reader-only-header .skip-link:focus {
+    outline: 2px solid #000;
+    outline-offset: 2px;
+}
+
+/* ============================================================
+   MULTI-LEVEL DROPDOWN MENU
+   ============================================================ */
+
+/* Top navigation */
+.dec-top-nav {
+    background: var(--color-bg-dark, #1a1a2e);
+    border-bottom: 2px solid var(--color-accent, #a78bfa);
+    position: sticky;
+    top: var(--wp-admin--admin-bar--height, 0px);
+    z-index: 1000;
+}
+
+.dec-top-nav ul,
+.dec-top-nav .menu {
+    list-style: none;
+    margin: 0;
+    padding: 0 44px 0 0; /* right: space for theme toggle button */
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    flex-wrap: wrap;
+}
+
+.dec-top-nav li {
+    margin: 0;
+    position: relative;
+}
+
+.dec-top-nav a {
+    display: block;
+    padding: 1rem 1.5rem;
+    color: var(--color-text-light, #e0e0e0);
+    text-decoration: none;
+    font-weight: 500;
+    min-height: 44px;
+    transition: background 0.2s, color 0.2s;
+}
+
+.dec-top-nav a:hover,
+.dec-top-nav a:focus {
+    background: var(--color-bg-hover);
+    color: var(--color-accent, #a78bfa);
+}
+
+.dec-top-nav .current-menu-item > a,
+.dec-top-nav .current-page-ancestor > a,
+.dec-top-nav .current-menu-ancestor > a {
+    background: var(--color-bg-active);
+    color: var(--color-accent, #a78bfa);
+    border-bottom: 3px solid var(--color-accent, #a78bfa);
+}
+
+/* ============================================================
+   FIRST LEVEL DROPDOWN (Indices → Index of Persons, Index of Places)
+   ============================================================ */
+
+/* Hide all submenus by default */
+.dec-top-nav .sub-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 250px;
+    background: var(--color-bg-dark, #1a1a2e);
+    border: 1px solid var(--color-border, #2a2a3e);
+    border-top: 3px solid var(--color-accent, #a78bfa);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    padding: 0;
+    margin: 0;
+    flex-direction: column;
+}
+
+/* Show first-level submenu on hover OR focus-within */
+.dec-top-nav li:hover > .sub-menu,
+.dec-top-nav li:focus-within > .sub-menu {
+    display: flex;
+}
+
+/* Submenu items */
+.dec-top-nav .sub-menu li {
+    width: 100%;
+    position: relative;
+}
+
+.dec-top-nav .sub-menu a {
+    padding: 0.75rem 1.5rem;
+    border-bottom: 1px solid var(--color-border, #2a2a3e);
+    font-size: 0.9rem;
+}
+
+.dec-top-nav .sub-menu li:last-child > a {
+    border-bottom: none;
+}
+
+.dec-top-nav .sub-menu a:hover,
+.dec-top-nav .sub-menu a:focus {
+    background: var(--color-bg-hover);
+    color: var(--color-accent, #a78bfa);
+    padding-left: 2rem;
+}
+
+/* ============================================================
+   SECOND LEVEL DROPDOWN (to the right)
+   ============================================================ */
+
+/* Second level submenu positioning */
+.dec-top-nav .sub-menu .sub-menu {
+    top: 0;
+    left: 100%;  /* Position to the RIGHT of parent */
+    border-top: 1px solid var(--color-border, #2a2a3e);
+    border-left: 3px solid var(--color-accent, #a78bfa);
+}
+
+/* Show second-level submenu on hover */
+.dec-top-nav .sub-menu li:hover > .sub-menu,
+.dec-top-nav .sub-menu li:focus-within > .sub-menu {
+    display: flex;
+}
+
+/* Dropdown indicator arrows */
+.dec-top-nav .menu-item-has-children > a::after {
+    content: ' ▾';
+    font-size: 0.8em;
+    margin-left: 0.3em;
+    opacity: 0.7;
+}
+
+/* Second level gets right arrow instead */
+.dec-top-nav .sub-menu .menu-item-has-children > a::after {
+    content: ' ▸';
+    float: right;
+    margin-left: auto;
+}
+
+/* Active submenu items */
+.dec-top-nav .sub-menu .current-menu-item > a {
+    background: var(--color-bg-hover);
+    color: var(--color-accent, #a78bfa);
+    border-left: 3px solid var(--color-accent, #a78bfa);
+    padding-left: calc(1.5rem - 3px);
+}
+
+/* ============================================================
+   MOBILE RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 768px) {
+    /* Brand bar: site title [grows] + theme toggle + hamburger */
+    .dec-top-nav-brand {
+        display: flex;
+        align-items: center;
+        gap: 0;
+        padding: 0 0.5rem 0 1rem;
+        min-height: 44px;
+    }
+
+    .dec-nav-site-title {
+        flex: 1;
+        color: var(--color-text-light, #e0e0e0);
+        font-weight: 600;
+        font-size: 1rem;
+        font-family: Georgia, serif;
+    }
+
+    .dec-nav-hamburger {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        background: none;
+        border: 1px solid var(--color-border, #2a2a3e);
+        border-radius: 4px;
+        color: var(--color-text-light, #e0e0e0);
+        cursor: pointer;
+        flex-shrink: 0;
+        transition: background 0.2s, color 0.2s;
+    }
+
+    .dec-nav-hamburger:hover,
+    .dec-nav-hamburger:focus {
+        background: var(--color-bg-hover);
+        color: var(--color-accent, #a78bfa);
+        outline: 2px solid var(--color-accent, #a78bfa);
+        outline-offset: -2px;
+    }
+
+    /* Hide the nav menu by default; show when .nav-open is toggled by JS */
+    .dec-top-nav ul,
+    .dec-top-nav .menu {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        padding: 0;        /* reset desktop right padding */
+        border-top: 1px solid var(--color-border, #2a2a3e);
+    }
+
+    .dec-top-nav ul.nav-open,
+    .dec-top-nav .menu.nav-open {
+        display: flex;
+    }
+
+    .dec-top-nav li {
+        width: 100%;
+    }
+
+    /* First level submenu */
+    .dec-top-nav .sub-menu {
+        position: static;
+        width: 100%;
+        box-shadow: none;
+        border: none;
+        border-left: 3px solid var(--color-accent, #a78bfa);
+        background: var(--color-bg-nav, #12122a);
+    }
+
+    .dec-top-nav .sub-menu a {
+        padding-left: 2.5rem;
+    }
+
+    /* Second level submenu */
+    .dec-top-nav .sub-menu .sub-menu {
+        position: static;
+        left: auto;
+        border-left: 3px solid var(--color-accent, #a78bfa);
+        margin-left: 1rem;
+    }
+
+    .dec-top-nav .sub-menu .sub-menu a {
+        padding-left: 3.5rem;
+    }
+
+    /* Arrow changes on mobile */
+    .dec-top-nav .sub-menu .menu-item-has-children > a::after {
+        content: ' ▾';
+        float: none;
+    }
+}
+
+/* ============================================================
+   THEME TOGGLE BUTTON (light / dark / auto)
+   ============================================================ */
+
+.dec-theme-toggle {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    background: none;
+    border: none;
+    border-left: 1px solid var(--color-border, #2a2a3e);
+    color: var(--color-text-light, #e0e0e0);
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: background 0.2s;
+}
+
+.dec-theme-toggle:hover,
+.dec-theme-toggle:focus {
+    background: var(--color-bg-hover);
+    outline: 2px solid var(--color-accent, #a78bfa);
+    outline-offset: -2px;
+}
+
+/* On mobile the brand bar already has a right-side zone (hamburger).
+   Keep the theme toggle in the brand bar too — JS will insert it. */
+@media (max-width: 768px) {
+    .dec-theme-toggle {
+        position: static;
+        width: 44px;
+        height: 44px;
+        border-left: none;
+    }
+}
+
+/* ============================================================
+   KEYBOARD NAVIGATION (ADA)
+   ============================================================ */
+
+/* Ensure focus is visible */
+.dec-top-nav a:focus {
+    outline: 2px solid var(--color-accent, #a78bfa);
+    outline-offset: -2px;
+}
+
+/* Keep submenu open when navigating with keyboard */
+.dec-top-nav li:focus-within > .sub-menu {
+    display: flex;
+}
+
+
+/* ============================================================
+   TEXT DISPLAY CONTROLS
+   Add to your style.css
+   ============================================================ */
+
+/* CSS Variables for text customization */
+:root {
+    --text-font-size: 18px;
+    --text-line-height: 1.8;
+}
+
+/* Apply variables to text content */
+.italian-column p,
+.english-column p {
+    font-size: var(--text-font-size);
+    line-height: var(--text-line-height);
+}
+
+/* Controls container */
+.dec-text-controls {
+    display: inline-block;
+    position: relative;
+    margin-left: 1rem;
+    z-index: 10001;
+}
+
+/* Toggle button */
+.text-controls-toggle {
+    padding: 0.5rem 1rem;
+    background: var(--color-accent, #a78bfa);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.text-controls-toggle:hover {
+    background: var(--color-accent-dark);
+    transform: translateY(-1px);
+}
+
+/* Controls panel */
+.text-controls-panel {
+    position: fixed; /* Changed from absolute to fixed */
+    top: 8rem; /* Adjust based on your header height */
+    right: 2rem;
+    min-width: 320px;
+    max-width: 400px;
+    background: white;
+    border: 1px solid var(--color-border-light);
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    padding: 1.5rem;
+    z-index: 10001;
+    max-height: calc(100vh - 10rem);
+    overflow-y: auto;
+}
+
+.text-controls-panel h4 {
+    margin: 0 0 1rem 0;
+    font-size: 1rem;
+    color: var(--color-bg-dark);
+    border-bottom: 2px solid var(--color-accent, #a78bfa);
+    padding-bottom: 0.5rem;
+}
+
+/* Control items */
+.control-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 0;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.control-item:hover {
+    background: var(--color-surface-card);
+    margin: 0 -0.5rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    border-radius: 4px;
+}
+
+.control-item input[type="checkbox"] {
+    width: 1.25rem;
+    height: 1.25rem;
+    cursor: pointer;
+}
+
+.control-item input[type="range"] {
+    flex: 1;
+    cursor: pointer;
+}
+
+.control-item span:first-of-type {
+    flex: 1;
+    font-size: 0.9rem;
+}
+
+.control-item span:last-of-type {
+    font-size: 0.85rem;
+    color: var(--color-text-faint);
+    font-weight: 600;
+    min-width: 3rem;
+    text-align: right;
+}
+
+/* Divider */
+.control-divider {
+    border-top: 1px solid var(--color-border-faint);
+    margin: 1rem 0;
+}
+
+/* Reset button */
+.reset-settings-btn {
+    width: 100%;
+    margin-top: 1rem;
+    padding: 0.75rem;
+    background: var(--color-surface-reset);
+    border: 1px solid var(--color-border-light);
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-text-faint);
+    transition: all 0.2s;
+}
+
+.reset-settings-btn:hover {
+    background: var(--color-border-reset);
+    color: var(--color-bg-dark);
+}
+
+/* ============================================================
+   TOGGLE STATES
+   ============================================================ */
+
+/* Hide milestones */
+body.hide-milestones .dec-milestone {
+    display: none;
+}
+
+/* Hide speakers */
+body.hide-speakers .dec-speaker {
+    display: none;
+}
+
+/* Hide person names styling */
+body.hide-person-names .dec-name-person {
+    color: inherit;
+    font-style: inherit;
+}
+
+/* Hide place names styling */
+body.hide-place-names .dec-name-place {
+    color: inherit;
+}
+
+/* Clickable milestones */
+.milestone-clickable {
+    cursor: pointer !important;
+    transition: all 0.2s;
+}
+
+.milestone-clickable:hover {
+    background: var(--color-milestone-bg);
+    padding: 0.125rem 0.25rem;
+    border-radius: 3px;
+    transform: scale(1.1);
+}
+
+/* Clickable speakers */
+.speaker-clickable {
+    cursor: pointer !important;
+    transition: all 0.2s;
+}
+
+.speaker-clickable:hover {
+    background: var(--color-speaker-bg);
+    transform: scale(1.05);
+}
+
+/* Highlighted speaker */
+.speaker-highlighted {
+    background: var(--color-speaker-hl) !important;
+    animation: pulse 1s ease-in-out 2;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+/* ============================================================
+   TOAST NOTIFICATION
+   ============================================================ */
+
+.dec-toast {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: var(--color-bg-dark);
+    color: white;
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 10000;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.dec-toast.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ============================================================
+   MOBILE RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 768px) {
+    .dec-text-controls {
+        margin-left: 0.5rem;
+    }
+    
+    .text-controls-toggle {
+        padding: 0.4rem 0.75rem;
+        font-size: 0.85rem;
+    }
+    
+    .text-controls-panel {
+        position: fixed;
+        top: auto;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        min-width: auto;
+        border-radius: 16px 16px 0 0;
+        max-height: 80vh;
+        overflow-y: auto;
+    }
+    
+    .dec-toast {
+        left: 1rem;
+        right: 1rem;
+        bottom: 1rem;
+    }
+}
+
+/* ============================================================
+   ACCESSIBILITY
+   ============================================================ */
+
+.text-controls-toggle:focus {
+    outline: 2px solid var(--color-accent, #a78bfa);
+    outline-offset: 2px;
+}
+
+.control-item input:focus {
+    outline: 2px solid var(--color-accent, #a78bfa);
+    outline-offset: 2px;
+}
+
+/* Paragraph link highlight — applied by JS via classList, removed after 2 s */
+.dec-milestone-highlight {
+    background: var(--color-milestone-bg);
+    padding: 0.125rem 0.3rem;
+    border-radius: 3px;
+}
+html.theme-dark .dec-milestone-highlight { background: var(--color-dark-milestone); }
+@media (prefers-color-scheme: dark) {
+    html:not(.theme-light) .dec-milestone-highlight { background: var(--color-dark-milestone); }
+}
+
+/* ============================================================
+   HOMEPAGE
+   ============================================================ */
+
+.dec-home-hero {
+    background: linear-gradient(135deg, var(--color-accent-hero) 0%, var(--color-hero-end) 100%);
+    color: white;
+    padding: 4rem 2rem;
+    text-align: center;
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.dec-home-hero h1 {
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    margin: 0 0 1rem 0;
+    font-weight: 700;
+}
+
+.dec-home-hero .subtitle {
+    font-size: clamp(1.1rem, 3vw, 1.5rem);
+    margin: 0 0 0.5rem 0;
+    opacity: 0.95;
+}
+
+.dec-home-hero .author {
+    font-size: clamp(1rem, 2.5vw, 1.3rem);
+    margin: 0 0 2rem 0;
+    font-style: italic;
+    opacity: 0.85;
+}
+
+.dec-home-cta {
+    display: inline-block;
+    padding: 1rem 2.5rem;
+    background: white;
+    color: var(--color-accent-hero);
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 50px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s, box-shadow 0.2s;
+    min-width: 44px;
+    min-height: 44px;
+}
+
+.dec-home-cta:hover,
+.dec-home-cta:focus {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    outline: 2px solid white;
+    outline-offset: 4px;
+}
+
+.dec-home-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+}
+
+.dec-home-section {
+    margin-bottom: 3rem;
+}
+
+.dec-home-section h2 {
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    color: var(--color-bg-dark);
+    margin-bottom: 1.5rem;
+    border-bottom: 3px solid var(--color-accent);
+    padding-bottom: 0.5rem;
+}
+
+.dec-home-intro-text {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--color-text-secondary);
+}
+
+.dec-home-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.dec-home-card {
+    background: var(--color-surface-card);
+    padding: 2rem;
+    border-radius: 8px;
+    border-left: 4px solid var(--color-accent);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.dec-home-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.dec-home-card h3 {
+    font-size: 1.3rem;
+    color: var(--color-bg-dark);
+    margin: 0 0 1rem 0;
+}
+
+.dec-home-card p {
+    color: var(--color-text-faint);
+    line-height: 1.6;
+    margin: 0;
+}
+
+.dec-home-stats {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    flex-wrap: wrap;
+    margin: 2rem 0;
+}
+
+.dec-stat {
+    text-align: center;
+}
+
+.dec-stat-number {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--color-accent-hero);
+    line-height: 1;
+}
+
+.dec-stat-label {
+    font-size: 1rem;
+    color: var(--color-text-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+@media (max-width: 768px) {
+    .dec-home-hero {
+        padding: 3rem 1.5rem;
+        min-height: 50vh;
+    }
+
+    .dec-home-content {
+        padding: 2rem 1rem;
+    }
+
+    .dec-home-stats {
+        gap: 2rem;
+    }
+}
+
+/* ============================================================
+   PREV / NEXT PAGE NAVIGATION
+   ============================================================ */
+
+.dec-page-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    gap: 1rem;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--color-border-mid);
+}
+
+.dec-page-nav-spacer {
+    flex: 1;
+}
+
+.dec-page-nav-prev,
+.dec-page-nav-next {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.9rem;
+    text-decoration: none;
+    padding: 1rem 1.25rem;
+    border-radius: 10px;
+    border: 1px solid var(--color-border-light);
+    background: var(--color-surface-card);
+    transition: background 0.18s, border-color 0.18s, box-shadow 0.18s, transform 0.15s;
+    flex: 1;
+    max-width: 48%;
+    min-height: 52px;
+}
+
+.dec-page-nav-prev {
+    border-left: 3px solid var(--color-accent);
+}
+
+.dec-page-nav-next {
+    border-right: 3px solid var(--color-accent);
+    margin-left: auto;
+    justify-content: flex-end;
+}
+
+.dec-page-nav-prev:hover,
+.dec-page-nav-next:hover,
+.dec-page-nav-prev:focus-visible,
+.dec-page-nav-next:focus-visible {
+    background: var(--color-surface-subtle);
+    border-color: var(--color-accent);
+    box-shadow: 0 2px 12px rgba(167, 139, 250, 0.15);
+    outline: none;
+}
+
+.dec-page-nav-prev:hover { transform: translateX(-2px); }
+.dec-page-nav-next:hover { transform: translateX(2px); }
+
+.dec-page-nav-arrow {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    color: var(--color-accent);
+    transition: transform 0.15s;
+}
+
+.dec-page-nav-prev:hover .dec-page-nav-arrow { transform: translateX(-3px); }
+.dec-page-nav-next:hover .dec-page-nav-arrow { transform: translateX(3px); }
+
+.dec-page-nav-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    min-width: 0;
+}
+
+.dec-page-nav-next .dec-page-nav-content {
+    text-align: right;
+}
+
+.dec-page-nav-label {
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-text-nav);
+    font-weight: 700;
+}
+
+.dec-page-nav-title {
+    font-size: 0.88rem;
+    color: var(--color-text-body);
+    font-weight: 600;
+    line-height: 1.35;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@media (max-width: 768px) {
+    .dec-page-nav {
+        flex-direction: column;
+    }
+
+    .dec-page-nav-prev,
+    .dec-page-nav-next {
+        max-width: 100%;
+        margin-left: 0;
+        justify-content: flex-start;
+    }
+
+    .dec-page-nav-next .dec-page-nav-content {
+        text-align: left;
+    }
+
+    .dec-page-nav-prev:hover { transform: none; }
+    .dec-page-nav-next:hover { transform: none; }
+}
+
+/* ============================================================
+   DARK MODE
+   Applies when: system preference is dark (and not forced light),
+   OR when the user manually selects dark via html.theme-dark.
+   html.theme-light forces light even on dark-preference systems.
+   ============================================================ */
+
+/* System auto: respects prefers-color-scheme unless overridden */
+@media (prefers-color-scheme: dark) {
+    /* !important beats WordPress global-styles inline CSS that loads after our stylesheet */
+    html:not(.theme-light) body,
+    html:not(.theme-light) main { background: var(--color-dark-bg) !important; color: var(--color-text-light) !important; }
+    html:not(.theme-light) .decameron-content { background: var(--color-dark-bg) !important; }
+    html:not(.theme-light) .dec-home-content  { background: var(--color-dark-bg) !important; }
+    html:not(.theme-light) .dec-page-title   { color: var(--color-text-light); }
+    html:not(.theme-light) .dec-page-subtitle {
+        color: var(--color-dark-muted);
+        border-bottom-color: var(--color-border);
+    }
+    html:not(.theme-light) .dec-toggle-bar { background: var(--color-dark-surface); }
+    html:not(.theme-light) .wp-block-column.italian-column {
+        background: var(--color-dark-it-col) !important;
+        border-right-color: var(--color-italian-border) !important;
+    }
+    html:not(.theme-light) .wp-block-column.english-column {
+        background: var(--color-dark-en-col) !important;
+        border-left-color: var(--color-english-border) !important;
+    }
+    html:not(.theme-light) .italian-column p,
+    html:not(.theme-light) .english-column p { color: var(--color-dark-paragraph) !important; }
+    html:not(.theme-light) .dec-argument {
+        background: var(--color-dark-arg-bg) !important;
+        color: var(--color-dark-arg-text) !important;
+    }
+    html:not(.theme-light) .dec-page-nav { border-top-color: var(--color-border); }
+    html:not(.theme-light) .dec-page-nav-prev,
+    html:not(.theme-light) .dec-page-nav-next { background: var(--color-dark-surface); border-color: var(--color-border); }
+    html:not(.theme-light) .dec-page-nav-prev { border-left-color: var(--color-accent); }
+    html:not(.theme-light) .dec-page-nav-next { border-right-color: var(--color-accent); }
+    html:not(.theme-light) .dec-page-nav-prev:hover,
+    html:not(.theme-light) .dec-page-nav-next:hover { background: var(--color-bg-hover); border-color: var(--color-accent); }
+    html:not(.theme-light) .dec-page-nav-title { color: var(--color-text-light); }
+    html:not(.theme-light) .dec-page-nav-label { color: var(--color-dark-muted); }
+    html:not(.theme-light) .text-controls-panel {
+        background: var(--color-bg-dark);
+        border-color: var(--color-border);
+        color: var(--color-text-light);
+    }
+    html:not(.theme-light) .text-controls-panel h4 { color: var(--color-text-light); }
+    html:not(.theme-light) .control-item:hover      { background: var(--color-bg-hover); }
+    html:not(.theme-light) .reset-settings-btn {
+        background: var(--color-bg-hover);
+        border-color: var(--color-border);
+        color: var(--color-text-light);
+    }
+    html:not(.theme-light) .reset-settings-btn:hover { background: var(--color-dark-reset-hover); }
+    html:not(.theme-light) .dec-home-content { background: var(--color-dark-bg) !important; }
+    html:not(.theme-light) .dec-home-intro-text { color: var(--color-dark-subtle); }
+    html:not(.theme-light) .dec-home-section h2 { color: var(--color-text-light); }
+    html:not(.theme-light) .dec-home-card {
+        background: var(--color-bg-dark);
+        border-left-color: var(--color-accent);
+    }
+    html:not(.theme-light) .dec-home-card h3 { color: var(--color-text-light); }
+    html:not(.theme-light) .dec-home-card p  { color: var(--color-dark-muted); }
+    /* Missed overrides */
+    html:not(.theme-light) .dec-toggle-bar span { color: var(--color-dark-muted); }
+    html:not(.theme-light) .dec-speaker { background: var(--color-dark-speaker-bg); }
+    html:not(.theme-light) .dec-stanza  { border-left-color: var(--color-dark-stanza); }
+    html:not(.theme-light) .dec-verse   { color: var(--color-dark-verse); }
+    html:not(.theme-light) .control-divider { border-top-color: var(--color-border); }
+    html:not(.theme-light) .dec-home-card, html:not(.theme-light) .dec-home-card:hover { box-shadow: none; }
+    html:not(.theme-light) .dec-home-stats .dec-stat-label { color: var(--color-dark-muted); }
+    html:not(.theme-light) .italian-column ::selection { background: var(--color-dark-milestone); }
+    html:not(.theme-light) .english-column ::selection { background: var(--color-dark-selection-en); }
+}
+
+/* Manual dark: html.theme-dark (same rules as above, without media query) */
+html.theme-dark body,
+html.theme-dark main { background: var(--color-dark-bg) !important; color: var(--color-text-light) !important; }
+html.theme-dark .decameron-content { background: var(--color-dark-bg) !important; }
+html.theme-dark .dec-home-content  { background: var(--color-dark-bg) !important; }
+html.theme-dark .dec-page-title   { color: var(--color-text-light); }
+html.theme-dark .dec-page-subtitle {
+    color: var(--color-dark-muted);
+    border-bottom-color: var(--color-border);
+}
+html.theme-dark .dec-toggle-bar { background: var(--color-dark-surface); }
+html.theme-dark .wp-block-column.italian-column {
+    background: var(--color-dark-it-col) !important;
+    border-right-color: var(--color-italian-border) !important;
+}
+html.theme-dark .wp-block-column.english-column {
+    background: var(--color-dark-en-col) !important;
+    border-left-color: var(--color-english-border) !important;
+}
+html.theme-dark .italian-column p,
+html.theme-dark .english-column p { color: var(--color-dark-paragraph) !important; }
+html.theme-dark .dec-argument {
+    background: var(--color-dark-arg-bg) !important;
+    color: var(--color-dark-arg-text) !important;
+}
+html.theme-dark .dec-page-nav { border-top-color: var(--color-border); }
+html.theme-dark .dec-page-nav-prev,
+html.theme-dark .dec-page-nav-next { background: var(--color-dark-surface); border-color: var(--color-border); }
+html.theme-dark .dec-page-nav-prev { border-left-color: var(--color-accent); }
+html.theme-dark .dec-page-nav-next { border-right-color: var(--color-accent); }
+html.theme-dark .dec-page-nav-prev:hover,
+html.theme-dark .dec-page-nav-next:hover { background: var(--color-bg-hover); border-color: var(--color-accent); }
+html.theme-dark .dec-page-nav-title { color: var(--color-text-light); }
+html.theme-dark .dec-page-nav-label { color: var(--color-dark-muted); }
+html.theme-dark .text-controls-panel {
+    background: var(--color-bg-dark);
+    border-color: var(--color-border);
+    color: var(--color-text-light);
+}
+html.theme-dark .text-controls-panel h4 { color: var(--color-text-light); }
+html.theme-dark .control-item:hover      { background: var(--color-bg-hover); }
+html.theme-dark .reset-settings-btn {
+    background: var(--color-bg-hover);
+    border-color: var(--color-border);
+    color: var(--color-text-light);
+}
+html.theme-dark .reset-settings-btn:hover { background: var(--color-dark-reset-hover); }
+html.theme-dark .dec-home-content { background: var(--color-dark-bg); }
+html.theme-dark .dec-home-intro-text { color: var(--color-dark-subtle); }
+html.theme-dark .dec-home-section h2 { color: var(--color-text-light); }
+html.theme-dark .dec-home-card {
+    background: var(--color-bg-dark);
+    border-left-color: var(--color-accent);
+}
+html.theme-dark .dec-home-card h3 { color: var(--color-text-light); }
+html.theme-dark .dec-home-card p  { color: var(--color-dark-muted); }
+/* Missed overrides */
+html.theme-dark .dec-toggle-bar span { color: var(--color-dark-muted); }
+html.theme-dark .dec-speaker { background: var(--color-dark-speaker-bg); }
+html.theme-dark .dec-stanza  { border-left-color: var(--color-dark-stanza); }
+html.theme-dark .dec-verse   { color: var(--color-dark-verse); }
+html.theme-dark .control-divider { border-top-color: var(--color-border); }
+html.theme-dark .dec-home-card, html.theme-dark .dec-home-card:hover { box-shadow: none; }
+html.theme-dark .dec-home-stats .dec-stat-label { color: var(--color-dark-muted); }
+html.theme-dark .italian-column ::selection { background: var(--color-dark-milestone); }
+html.theme-dark .english-column ::selection { background: var(--color-dark-selection-en); }
+
+/* Also style the theme toggle button itself in dark mode */
+html.theme-dark .dec-top-nav,
+html.theme-dark .dec-top-nav .sub-menu {
+    background: var(--color-bg-dark);
+}

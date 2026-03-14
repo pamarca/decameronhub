@@ -1,0 +1,185 @@
+<?php
+/**
+ * Decameron Child Theme v4 - ULTRA FIX
+ * Manually filter to avoid get_pages meta_query bugs
+ */
+
+// Enqueue styles and scripts
+add_action( 'wp_enqueue_scripts', 'decameron_enqueue', 20 );
+function decameron_enqueue() {
+    wp_enqueue_style(
+        'twentytwentyfive-style',
+        get_template_directory_uri() . '/style.css'
+    );
+
+    wp_enqueue_style(
+        'decameron-child-style',
+        get_stylesheet_directory_uri() . '/style.css',
+        array( 'twentytwentyfive-style' ),
+        '4.0'
+    );
+
+    if ( is_page() && get_post_meta( get_the_ID(), '_decameron_type', true ) ) {
+        wp_enqueue_script(
+            'decameron-js',
+            get_stylesheet_directory_uri() . '/js/decameron.js',
+            array(),
+            '4.0',
+            true
+        );
+
+        wp_localize_script( 'decameron-js', 'decamerOnData', decameron_nav_data() );
+    }
+}
+
+// Register navigation menu
+register_nav_menus( array(
+    'primary-menu' => __( 'Primary Menu', 'decameron-child' ),
+) );
+
+// Build nav data
+function decameron_nav_data() {
+    $days = array();
+
+    // Prologue
+    $all_pages = get_pages( array( 'number' => 1000 ) );
+    $prologue = null;
+    foreach ( $all_pages as $page ) {
+        $type = get_post_meta( $page->ID, '_decameron_type', true );
+        if ( $type === 'prologue' ) {
+            $prologue = $page;
+            break;
+        }
+    }
+    
+    if ( $prologue ) {
+        $days[] = array(
+            'type'  => 'single',
+            'label' => 'Proemio / Prologue',
+            'url'   => get_permalink( $prologue->ID ),
+            'id'    => $prologue->ID,
+        );
+    }
+
+    // Days 1–10
+    for ( $d = 1; $d <= 10; $d++ ) {
+        // Get ALL pages and filter for this day
+        $all_pages = get_pages( array( 'number' => 1000 ) );
+        $day_pages = array();
+        
+        foreach ( $all_pages as $page ) {
+            $page_day = get_post_meta( $page->ID, '_decameron_day', true );
+            if ( $page_day == $d ) {
+                $day_pages[] = $page;
+            }
+        }
+        
+        // Sort by _decameron_order
+        usort( $day_pages, function( $a, $b ) {
+            $order_a = (int) get_post_meta( $a->ID, '_decameron_order', true );
+            $order_b = (int) get_post_meta( $b->ID, '_decameron_order', true );
+            return $order_a - $order_b;
+        });
+        
+        // Find day_intro (order = 0)
+        $day_intro = null;
+        foreach ( $day_pages as $page ) {
+            $type = get_post_meta( $page->ID, '_decameron_type', true );
+            $order = get_post_meta( $page->ID, '_decameron_order', true );
+            if ( $type === 'day_intro' && $order == 0 ) {
+                $day_intro = $page;
+                break;
+            }
+        }
+
+        $children = array();
+
+        // Build children from sorted pages
+        foreach ( $day_pages as $page ) {
+            $type = get_post_meta( $page->ID, '_decameron_type', true );
+            $order = (int) get_post_meta( $page->ID, '_decameron_order', true );
+            
+            // Skip day_intro (that's the clickable day header)
+            if ( $type === 'day_intro' ) {
+                continue;
+            }
+            
+            // Introduction
+            if ( $type === 'introduction' ) {
+                $children[] = array(
+                    'label' => 'Introduzione / Introduction',
+                    'url'   => get_permalink( $page->ID ),
+                    'id'    => $page->ID,
+                );
+            }
+            // Novellas
+            elseif ( $type === 'novella' ) {
+                // order is 2-11, novella number is 1-10
+                $novella_num = $order - 1;
+                $children[] = array(
+                    'label' => 'Novella ' . $novella_num,
+                    'url'   => get_permalink( $page->ID ),
+                    'id'    => $page->ID,
+                );
+            }
+            // Conclusion
+            elseif ( $type === 'conclusion' ) {
+                $children[] = array(
+                    'label' => 'Conclusione / Conclusion',
+                    'url'   => get_permalink( $page->ID ),
+                    'id'    => $page->ID,
+                );
+            }
+        }
+
+        // Day URL is the day_intro page
+        $day_url = $day_intro ? get_permalink( $day_intro->ID ) : '#';
+        $day_id  = $day_intro ? $day_intro->ID : 0;
+
+        $days[] = array(
+            'type'     => 'day',
+            'label'    => 'Giornata ' . $d . ' / Day ' . $d,
+            'url'      => $day_url,
+            'id'       => $day_id,
+            'day'      => $d,
+            'children' => $children,
+        );
+    }
+
+    // Epilogue
+    $epilogue = null;
+    $all_pages = get_pages( array( 'number' => 1000 ) );
+    foreach ( $all_pages as $page ) {
+        $type = get_post_meta( $page->ID, '_decameron_type', true );
+        if ( $type === 'epilogue' ) {
+            $epilogue = $page;
+            break;
+        }
+    }
+    
+    if ( $epilogue ) {
+        $days[] = array(
+            'type'  => 'single',
+            'label' => 'Epilogo / Epilogue',
+            'url'   => get_permalink( $epilogue->ID ),
+            'id'    => $epilogue->ID,
+        );
+    }
+
+    return array(
+        'nav'       => $days,
+        'currentId' => get_the_ID(),
+    );
+}
+
+// Auto-apply template
+add_filter( 'page_template', 'decameron_auto_template' );
+function decameron_auto_template( $template ) {
+    if ( is_page() && get_post_meta( get_the_ID(), '_decameron_type', true ) ) {
+        $custom = get_stylesheet_directory() . '/page-decameron.php';
+        if ( file_exists( $custom ) ) {
+            return $custom;
+        }
+    }
+    return $template;
+}
