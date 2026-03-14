@@ -1,0 +1,284 @@
+id,name,regularized_name,geographic_area,italian_region,type
+abruzzi,Abruzzi,,Italy,Abruzzi,region
+acaia,Acaia,,Greece-Balkans,,region
+sangiovannidacri,Acri,,Cyprus-Levant,,city
+aiguesmortes,Aguamorta,Aigues Mortes,France,,city
+alagna,Alagna,,Italy,,city
+albisola,Alba,Albisola,Italy,Liguria,city
+alessandriaeg,Alessandria / Alessandra,,NorthAfrica,,city
+altarisi,Altarisi,,,,city
+amalfi,Amalfi,,Italy,Campania,city
+ancona,Ancona / Marca d'Ancona,,Italy,Marches,city
+antiochia,Antiochia,,Cyprus-Levant,,region
+maregeo,Arcipelago,,,,sea
+arezzo,Arezzo,,Italy,Tuscany,city
+argo,Argo,,Greece-Balkans,,city
+arno,Arno,,Italy,Tuscany,river
+avignone,Avignone,,France,,city
+monteasinaio,Monte Asinaio,,Italy,Tuscany,hill
+atene,Atene,,Greece-Balkans,,city
+cairo,Babillonia / Babilonia,,NorthAfrica,,city
+baffa,Baffa (Pafo),,Cyprus-Levant,,city
+baldacca,Baldacca,,,,
+barberia,Barberia / Barbaria,,NorthAfrica,,region
+barletta,Barletta,,Italy,Apulia,city
+terrabaschi,terra de' Baschi,,Iberia,,
+bengodi,Bengodi,,,,contrada
+berlinzone,Berlinzone,,,,
+benevento,Benevento,,Italy,Campania,city
+bitonto,Bitonto,,Italy,Apulia,city
+bologna,Bologna,,Italy,Emilia-Romagna,city
+bonconvento,Bonconvento,,Italy,Tuscany,city
+borgogreci,Borgo de' Greci,,Italy,Tuscany,contrada
+borgogna,Borgogna,,France,,city
+sanpancrazio,San Brancazio,,Italy,Tuscany,convent
+contradabrancazio,contrada San Brancazio,,Italy,Tuscany,contrada
+brindisi,Brandizio,,Italy,Apulia,city
+brescia,Brescia,,Italy,Lombardy,city
+bruges,Bruggia,,NorthEurope-EastEurope,,city
+buffia,Buffia,,,,
+cacavincigli,Cacavincigli,,Italy,Tuscany,street-lane
+calatabellotta,Calatabellotta,Caltabellotta,Italy,Sicily,city
+Calabria,Calavria,,Italy,Calabria,region
+calais,Calese,,France,,city
+camaldoli,Camaldoli,,Italy,Tuscany,contrada
+camerata,Camerata,,Italy,Tuscany,hamlet
+camollia,Camollia,Porta Camollia,Italy,Tuscany,contrada
+campi,Campi,CampiBisenzio,Italy,Tuscany,hamlet
+camporeggi,Camporeggi,Camporegio,Italy,Tuscany,contrada
+candia,Candia,,Greece-Balkans,,city
+cantomacina,Canto alla Macina,,Italy,Tuscany,area
+cappadocia,Capadocia,,Turkey-AsiaMinor,,region
+capitolio,Capitolio,Campidoglio,Italy,Latium,hill
+caprezio,Caprezio,,,,
+capova,Capova,Capua,Italy,Campania,city
+gafsa,Capsa,Gafsa,NorthAfrica,,city
+cartagine,Cartagine,,NorthAfrica,,city
+castellammarestabia,Castello da mare di Stabia,Castellamare di Stabia,Italy,Campania,city
+castellorossiglione,Castello dei Rossiglione,,France,,castle
+castelloguardastagno,Castello dei Guardastagno,,France,,castle
+catania,Catania,,Italy,Sicily,city
+cattaio,Cattaio,,MidEast-FarEast,,region
+loggiacavicciuli,Loggia de' Cavicciuli,,Italy,Tuscany,loggia
+cefalonia,Cifalonia,,Aegean-islands,,island
+certaldo,Certaldo,,Italy,Tuscany,hamlet
+cefalu,Cefalú,,Italy,Sicily,city
+chiarenza,Chiarenza,,Greece-Balkans,,city
+chiassi,Chiassi,,Italy,Emilia-Romagna,area
+chiesarossiglione-0409,Chiesa del castello dei Rossiglione,,France,,church
+chios,Chios,,Turkey-AsiaMinor,,island
+sicilia,Cicilia,Sicilia,Italy,Sicily,country
+cipro,Cipri,,Cyprus-Levant,,island
+civillari,Civillari,,Italy,Tuscany,contrada
+viacocomero,Via del Cocomero / Mercato Vecchio,Via Ricasoli,Italy,Tuscany,street-lane
+corniglia,Corniglia,,Italy,Liguria,hamlet
+cornovaglia,contea di Cornovaglia,,England-Ireland-Scotland,,county
+costantinopoli,Costantinopoli,,Turkey-AsiaMinor,,city
+corsignano,Corsignano,Pienza,Italy,Tuscany,city
+cremona,Cremona,,Italy,Lombardy,city
+sancrescivalcava,san Cresci in Valcava,,Italy,Tuscany,monastery
+creta,Creti,,Greece-Balkans,,island
+cuba,la Cuba,,Italy,Sicily,castle
+egina,Egina,,Greece-Balkans,,island
+egitto,Egitto,,NorthAfrica,,country
+armenia,Erminia,,Turkey-AsiaMinor,,country
+faenza,Faenza,,Italy,Emilia-Romagna,city
+famagosta,Famagosta,,Cyprus-Levant,,city
+fano,Fano,,Italy,Marches,city
+ferrara,Ferrara,,Italy,Emilia-Romagna,city
+lefiandre,Fiandra,,NorthEurope-EastEurope,,region
+fiesole,Fiesole,,Italy,Tuscany,city
+firenze,Firenze,,Italy,Tuscany,city
+forlimpopoli,Forlimpopoli,,Italy,Emilia-Romagna,city
+francia,Francia,,France,,country
+friuli,Frioli,Friuli,Italy,,region
+gaeta,Gaeta,,Italy,Campania,city
+galles,Gales,,England-Ireland-Scotland,,
+reamegarbo,reame del Garbo,,Italy,,countryside
+genova,Genova,,Italy,Liguria,city
+agrigento,Gergenti,Agrigento,Italy,Sicily,city
+granada,Granata,Granada,Iberia,,city
+guascogna,Guascogna,,France,,region
+castelguiglielmo,Castel Guiglielmo,,Italy,Emilia-Romagna,castle
+corfu,Gurfo,,Greece-Balkans,,island
+gerusalemme,Ierusalem,,Cyprus-Levant,,city
+imola,Imola,,Italy,Emilia-Romagna,city
+indiapastinacca,India Pastinaca,,,,
+inferno,Inferno / Ninferno,,,,
+inghilterra,Inghilterra,,England-Ireland-Scotland,,country
+irlanda,Irlanda,,England-Ireland-Scotland,,country
+ischia,Ischia,,Italy,Campania,island
+italia,Italia,,Italy,,country
+laiazzo,Laiazzo,,Cyprus-Levant,,city
+lamporecchio,Lamporecchio,,Italy,Tuscany,hamlet
+laterino,Laternino,,Italy,Tuscany,city
+lerici,Lerici,,Italy,Liguria,castle
+legnaia,Legnaia,,Italy,Tuscany,hamlet
+lipari,Lipari,,Italy,Sicily,island
+lombardia,Lombardia,,Italy,Lombardy,region
+londra,Londra,,England-Ireland-Scotland,,city
+lucifero,Lucifero,,,,planet
+lunigiana,Lunigiana,,Italy,Tuscany,region
+magra,Magra,,Italy,Liguria,river
+maiorca,Maiolica,,Iberia,,island
+macello,Macello,,Italy,Veneto,area
+malpertugio,Malpertugio,,Italy,Campania,contrada
+maremma,Maremma,,Italy,Tuscany,region
+marsiglia,Marsilia,,France,,city
+menzogna,Menzogna,,,,
+messina,Messina,,Italy,Sicily,city
+milano,Melano,Milano,Italy,Lombardy,city
+minerva,Minerva,Punta Campanella,Italy,Campania,cape
+modena,Modona,Modena,Italy,Emilia-Romagna,city
+monaco,Monaco,,France,,country
+montenero,Monte Nero,,Italy,Tuscany,
+montesone,Montesone,Monitisoni,Italy,Tuscany,hill
+montisci,Montisci,,Italy,Tuscany,hill
+mmorello,Monte Morello,,Italy,Tuscany,mountain
+montughi,Montughi,,Italy,Tuscany,hill
+morea,Morea (Peloponneso),,Greece-Balkans,,region
+mugello,Mugello,,Italy,Tuscany,countryside
+mugnone,Mugnone / Mugnon,,Italy,Tuscany,river
+montpellier,Monpulier,Montpellier,France,,city
+napoli,Napoli,,Italy,Campania,city
+narsia,Narsia,,,,
+nazarette,Nazarette,,Cyprus-Levant,,city
+norrueca,Norrueca,,,,
+nostradama,Nostra Dama,,France,,church
+ortosanmichele,Orto San Michele,,Italy,Tuscany,church
+palermo,Palermo,,Italy,Sicily,city
+parigi,Parigi,,France,,city
+parione,Parione,,Italy,Tuscany,street-lane
+pasignano,Passignano sul Trasimeno,,Italy,Umbria,city
+pavia,Pavia,,Italy,Lombardy,city
+peretola,Peretola,,Italy,Tuscany,countryside
+iran,Persia,Iran,MidEast-FarEast,,country
+perugia,Perugia,,Italy,Umbria,city
+piccardia,Piccardia,,France,,region
+pisa,Pisa,,Italy,Tuscany,city
+pistoia,Pistoia,,Italy,Tuscany,city
+ponteoca,Ponte dell'Oca,,,,bridge
+porcellana,Porcellana,,Italy,Tuscany,street-lane
+ponza,Ponzo,Ponza,Italy,Campania,island
+portasgallo,porta a San Gallo,,Italy,Tuscany,gate
+portasalaia,Porta Salaia,,Italy,Tuscany,neighborhood
+portapiero,Porta San Piero,,Italy,Tuscany,gate
+prato,Prato,,Italy,Tuscany,city
+pratoognisanti,prato d'Ognissanti,,Italy,Tuscany,area
+procida,Procida,,Italy,Campania,island
+provenza,Provenza,,France,,region
+puglia,Puglia,,Italy,Apulia,region
+radicofani,Radicofani,,Italy,Tuscany,castle
+ravello,Ravello,,Italy,Campania,city
+ravenna,Ravenna,,Italy,Emilia-Romagna,city
+reggio,Reggio,,Italy,Calabria,city
+rialto,Rialto,,Italy,Veneto,neighborhood
+rimini,Rimini / Ariminio,,Italy,Emilia-Romagna,city
+,Ripole,San Giacomo di Ripoli,Italy,Tuscany,convent
+rodi,Rodi,,Greece-Balkans,,island
+roma,Roma,,Italy,Latium,city
+romagna,Romagna,,Italy,Emilia-Romagna,region
+romania,Romania,,Greece-Balkans,,country
+roussillon,Rossiglione,Roussillon,France,,county
+rouen,Ruem,Rouen,France,,city
+rugacatalana,Ruga Catalana,,Italy,Campania,street-lane
+salerno,Salerno,,Italy,Campania,city
+salerno-0410,Salerno (IV.10),,Italy,Campania,city
+sanluzzo,Sanluzzo,Saluzzo,Italy,Piedmont,city
+sangallo,San Gallo,,Italy,Tuscany,church
+sangallo-ospedale,San Gallo (ospedale),,Italy,Tuscany,hospital
+sangimignano,San Gimignano,,Italy,Tuscany,city
+sangiovanni,San Giovanni,,Italy,Tuscany,church
+ripole,San Jacopo di Ripoli,,Italy,Tuscany,convent
+sanmarco,San Marco,,Italy,Veneto,square
+sanpaolo,San Paolo,,Italy,Tuscany,church
+sanpieroco,San Piero in Ciel d'Oro,,Italy,Lombardy,church
+santacroce,Santa Croce,,Italy,Tuscany,church
+santafiore,Santafiore,,Italy,Tuscany,castle
+santalucia,Santa Lucia dal Prato,Santa Lucia a Porta al Prato,Italy,Tuscany,church
+santamariascala,Santa Maria della Scala,,Italy,Tuscany,church
+santamariamaggiore,Santa Maria Maggiore,,Italy,Tuscany,church
+smnovella,Santa Maria Novella,,Italy,Tuscany,church
+santamariaughi,Santa Maria Ughi,,Italy,Tuscany,church
+santamariaverzaia,Santa Maria a Verzaia,Chiesa a Porta San Ferdinando,Italy,Tuscany,church
+santareparata,Santa Reparata,,Italy,Tuscany,church
+santelpidio-a-mare,Sant'Elpidio a Mare / San Lepidio,,Italy,Marches,hamlet
+sardegna,Sardigna,Sardegna,Italy,Sardinia,island
+scalea,Scalea in Calavria,,Italy,Calabria,hamlet
+scozia,Scozia,,England-Ireland-Scotland,,country
+ssepolcro,Sepolcro,,Cyprus-Levant,,area
+settignano,Settignano,,Italy,Tuscany,hill
+siena,Siena,,Italy,Tuscany,city
+sinigaglia,Sinagaglia,Senigallia,Italy,Marches,city
+smirne,le Smirre,,Turkey-AsiaMinor,,city
+spagna,Spagna / Ispagna,,Iberia,,country
+strangford,Stanforda,,England-Ireland-Scotland,,city
+susa,Susa,,NorthAfrica,,city
+tebaide,Tebaida,,NorthAfrica,,region
+terrasanta,Terra Santa,,Cyprus-Levant,,
+ticino,Tesino,,Italy,Lombardy,river
+torrenieri,Torrenieri,,Italy,Tuscany,hamlet
+toscana,Toscana,,Italy,Tuscany,
+trapani,Trapani,,Italy,Sicily,city
+trani,Trani,,Italy,Apulia,city
+tresanti,Tresanti,,Italy,Apulia,hamlet
+treviso,Trivigi,Treviso,Italy,Veneto,city
+truffia,Truffia,,,,
+tunisi,Tunisi,,NorthAfrica,,city
+udine,Udine,,Italy,Friuli-VenetiaJulia,city
+ustica,Ustica,,Italy,Sicily,island
+valdelsa,Valdelsa,,Italy,Tuscany,county
+vallecchio,Vallecchio,,Italy,Tuscany,hamlet
+varlungo,Varlungo,,Italy,Tuscany,county
+verona,Verona,,Italy,Veneto,city
+venezia,Vinegia,Venezia,Italy,Veneto,city
+casamento-1006,casamento di Neri Uberti (X.6),,Italy,Campania,villa
+contado-0601,contado (VI.1),,Italy,,countryside
+duomotreviso-0201,(maggior) chiesa (II.1),duomo-di-Treviso,Italy,Veneto,church
+duomofiesole-0804,maggior chiesa (VIII.4),duomo,Italy,Tuscany,church
+sanfrancesco-0901,chiesa de' frati minori (IX.1),San-Francesco,Italy,Tuscany,church
+chiesa-1004,chiesa (X.4),,Italy,Emilia-Romagna,church
+fiume-0202,fiume (II.2),,Italy,,river
+giardino-0406,giardino (IV.6),,Italy,Lombardy,garden
+giardino-0407,giardino (IV.7),,Italy,Tuscany,garden
+giardino-0709,giardino (VII.9),,Greece-Balkans,,garden
+giardino-1005,giardino (X.5),,Italy,Friuli-VenetiaJulia,garden
+giardino-1006,giardino di Neri Uberti (X.6),,Italy,Campania,garden
+luogo-1009,un luogo di Torello (X.9),,Italy,Lombardy,villa
+monistero-0104,monistero (I.4),,Italy,Tuscany,monastery
+monistero-0301,monistero (III.1),,Italy,Tuscany,convent
+ostiere-1006,ostiere di re Carlo I (X.6),,,,villa
+palagiofolco-0403,il palagio di Folco (IV.3),,Greece-Balkans,,villa
+palagionicostrato-0709,palagio di Nicostrato (VII.9),,Greece-Balkans,,villa
+palagiomitridanes-1003,palagio di Mitridanes (X.3),,MidEast-FarEast,,villa
+palagionatan-1003,palagio di Natan (X.3),,MidEast-FarEast,,villa
+pero-0709,pero (VII.9),,Greece-Balkans,,tree
+piazza-0510,Piazza (V.10),,Italy,Tuscany,square
+prato-1005,prato (X.5),,Italy,Friuli-VenetiaJulia,lawn
+pretorio-1008,pretorio (X.8),,Italy,Latium,villa
+tempio-1008,tempio (X.8),,Greece-Balkans,,church
+alberifrutt-c06,albori fruttiferi (VI.con),,Italy,Tuscany,tree
+boschetto-i09,boschetto (IX.in),,Italy,Tuscany,wood
+canaletti-i03,canaletti (III.in),,Italy,Tuscany,
+cortile-i01,cortile (I.in),,Italy,Tuscany,
+chiesetta-i08,chiesetta (VIII.con),,Italy,Tuscany,
+giardinetto-c02,giardinetto (II.con),,Italy,Tuscany,
+giardini-i02,giardini (II.in),,Italy,Tuscany,
+giardino-i01,giardino (I.in),,Italy,Tuscany,garden
+fiumicello1-c06,chiarissimo fiumicello (VI.con),,Italy,Tuscany,stream
+fiumicello2-c06,fiumicello (VI.con),,Italy,Tuscany,stream
+montagnetta-i01,montagnetta (I.in),,Italy,Tuscany,mountain
+montagnetta-c01,montagnetta (I.con),,Italy,Tuscany,mountain
+montagnette-c06,sei montagnette (VI.con),,Italy,Tuscany,hill
+pratello-i02,pratello (II.in),,Italy,Tuscany,lawn
+prato-i03,prato (III.in),,Italy,Tuscany,lawn
+prato-c06,prato d'erba minutissima (VI.con),,Italy,Tuscany,lawn
+rivo-c01,rivo (I.con),,Italy,Tuscany,river
+valle-c01,valle ombrosa (I.con),,Italy,Tuscany,countryside
+fontebrigata-01,"fonte di marmo bianchissimo (III.in) messe le tavole intorno alla bella fonte (III.con) nella maniera usata vicini alla bella fonte (IV.in) tutti raccolti, come usati erano, appresso della bella fonte (IV.con) intorno della bella fontana di presente furono in sul danzare (VII.con) appresso la bella fontana a seder posti (VIII.in) dintorno alla chiara fonte (X.in)",,Italy,Tuscany,fountain
+giardinobrigata-01,giardino (III.in) (III.con) (IV.in) (IV.con) lo dittevole giardino (V.in) e poi fra le piacevoli ombre del giardino (X.in),,Italy,Tuscany,garden
+laghettobrigata-01,laghetto / pelaghetto,,Italy,Tuscany,lake
+mulinibrigata-01,mulina (III.in) (IV.con),,Italy,Tuscany,mill
+palagiobrigata-01,palagio (I.in) (I.con),,Italy,Tuscany,villa
+palagiobrigata-02,bellissimo e ricco palagio (III.in) bel palagio (IV.in) al palagio tornare (VII.con),,Italy,Tuscany,villa
+valledonnebrigata-01,Valle delle Donne,,Italy,Tuscany,valley

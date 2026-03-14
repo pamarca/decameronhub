@@ -1,0 +1,2082 @@
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<div class="places-map-container">
+    
+    <!-- Map Controls -->
+    <div class="map-controls">
+        <div class="control-group">
+            <label>Filter by Region:</label>
+            <select id="region-filter">
+                <option value="all">All Regions</option>
+                <option value="Italy">Italy</option>
+                <option value="France">France</option>
+                <option value="Cyprus-Levant">Cyprus & Levant</option>
+                <option value="Greece-Balkans">Greece & Balkans</option>
+                <option value="Spain">Spain</option>
+                <option value="England">England</option>
+                <option value="Africa">Africa</option>
+            </select>
+        </div>
+        
+        <div class="control-group">
+            <label>Filter by Type:</label>
+            <select id="type-filter">
+                <option value="all">All Types</option>
+                <option value="city">Cities</option>
+                <option value="region">Regions</option>
+                <option value="country">Countries</option>
+            </select>
+        </div>
+        
+        <div class="stats">
+            <span id="visible-count"></span> places shown
+        </div>
+    </div>
+    
+    <!-- Map -->
+    <div id="places-map" style="width: 100%; height: 600px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);"></div>
+    
+    <!-- Legend -->
+    <div class="map-legend">
+        <h4>Legend</h4>
+        <div class="legend-item">
+            <span class="legend-marker" style="background: #ef4444;">●</span>
+            <span>1-5 mentions</span>
+        </div>
+        <div class="legend-item">
+            <span class="legend-marker" style="background: #f59e0b;">●</span>
+            <span>6-15 mentions</span>
+        </div>
+        <div class="legend-item">
+            <span class="legend-marker" style="background: #10b981;">●</span>
+            <span>16+ mentions</span>
+        </div>
+    </div>
+    
+    <!-- Place List -->
+    <div class="places-list">
+        <h3>All Places Alphabetically</h3>
+        <div class="places-grid" id="places-grid"></div>
+    </div>
+    
+</div>
+
+<style>
+.places-map-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+.map-controls {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background: #f9fafb;
+    border-radius: 8px;
+}
+
+.control-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.control-group label {
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.control-group select {
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: white;
+    min-width: 150px;
+}
+
+.stats {
+    margin-left: auto;
+    font-weight: 600;
+    color: #7c3aed;
+}
+
+.map-legend {
+    margin: 1.5rem 0;
+    padding: 1rem;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+.map-legend h4 {
+    margin: 0 0 0.5rem 0;
+    font-size: 0.9rem;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0.25rem 0;
+    font-size: 0.85rem;
+}
+
+.legend-marker {
+    font-size: 1.5rem;
+    line-height: 1;
+}
+
+.places-list {
+    margin-top: 3rem;
+}
+
+.places-list h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #1a1a2e;
+}
+
+.places-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
+}
+
+.place-card {
+    background: white;
+    padding: 1rem;
+    border-left: 4px solid #0369a1;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.place-card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transform: translateY(-2px);
+}
+
+.place-card h4 {
+    margin: 0 0 0.5rem 0;
+    color: #0369a1;
+}
+
+.place-meta {
+    font-size: 0.85rem;
+    color: #666;
+    margin: 0.25rem 0;
+}
+
+.mention-count {
+    display: inline-block;
+    background: #dbeafe;
+    color: #0369a1;
+    padding: 0.25rem 0.5rem;
+    border-radius: 3px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-top: 0.5rem;
+}
+
+/* Leaflet popup customization */
+.leaflet-popup-content-wrapper {
+    border-radius: 8px;
+    padding: 0;
+}
+
+.leaflet-popup-content {
+    margin: 0;
+    min-width: 250px;
+}
+
+.popup-header {
+    background: #0369a1;
+    color: white;
+    padding: 0.75rem 1rem;
+    margin: 0;
+    font-size: 1.1rem;
+    border-radius: 8px 8px 0 0;
+}
+
+.popup-body {
+    padding: 1rem;
+}
+
+.popup-meta {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 0.5rem;
+}
+
+.popup-body ul {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.popup-body ul li {
+    margin: 0.25rem 0;
+    font-size: 0.9rem;
+}
+
+.popup-body ul a {
+    color: #0369a1;
+    text-decoration: none;
+}
+
+.popup-body ul a:hover {
+    text-decoration: underline;
+}
+</style>
+
+<script>
+// Place data
+const places = [
+  {
+    "id": "abruzzi",
+    "name": "Abruzzi",
+    "lat": 42.4687934,
+    "lon": 13.5631284,
+    "type": "region",
+    "area": "Italy",
+    "mentions": 2,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0610/' target='_blank'>Novella 10 \u2013 Giornata 6</a></li><li><a href='/nov0803/' target='_blank'>Novella 3 \u2013 Giornata 8</a></li></ul>"
+  },
+  {
+    "id": "acaia",
+    "name": "Acaia",
+    "lat": 40.3344763,
+    "lon": 18.2977001,
+    "type": "region",
+    "area": "Greece-Balkans",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov1008/' target='_blank'>Novella 8 \u2013 Giornata 10</a></li></ul>"
+  },
+  {
+    "id": "sangiovannidacri",
+    "name": "Acri",
+    "lat": 32.9281731,
+    "lon": 35.0756378,
+    "type": "city",
+    "area": "Cyprus-Levant",
+    "mentions": 2,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0209/' target='_blank'>Novella 9 \u2013 Giornata 2</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d72</span></li><li><a href='/nov1009/' target='_blank'>Novella 9 \u2013 Giornata 10</a></li></ul>"
+  },
+  {
+    "id": "aiguesmortes",
+    "name": "Aguamorta",
+    "lat": 43.5661521,
+    "lon": 4.19154,
+    "type": "city",
+    "area": "France",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0207/' target='_blank'>Novella 7 \u2013 Giornata 2</a></li></ul>"
+  },
+  {
+    "id": "alagna",
+    "name": "Alagna",
+    "lat": 45.169861,
+    "lon": 8.889846,
+    "type": "city",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0503/' target='_blank'>Novella 3 \u2013 Giornata 5</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d73</span></li></ul>"
+  },
+  {
+    "id": "albisola",
+    "name": "Alba",
+    "lat": 44.339838,
+    "lon": 8.509353,
+    "type": "city",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0209/' target='_blank'>Novella 9 \u2013 Giornata 2</a></li></ul>"
+  },
+  {
+    "id": "alessandriaeg",
+    "name": "Alessandria / Alessandra",
+    "lat": 31.1999427,
+    "lon": 29.9112538,
+    "type": "city",
+    "area": "NorthAfrica",
+    "mentions": 6,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0103/' target='_blank'>Novella 3 \u2013 Giornata 1</a></li><li><a href='/nov0206/' target='_blank'>Novella 6 \u2013 Giornata 2</a></li><li><a href='/nov0207/' target='_blank'>Novella 7 \u2013 Giornata 2</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d73</span></li><li><a href='/nov0209/' target='_blank'>Novella 9 \u2013 Giornata 2</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d74</span></li><li><a href='/nov0802/' target='_blank'>Novella 2 \u2013 Giornata 8</a></li><li><a href='/nov1009/' target='_blank'>Novella 9 \u2013 Giornata 10</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d72</span></li></ul>"
+  },
+  {
+    "id": "amalfi",
+    "name": "Amalfi",
+    "lat": 40.63367,
+    "lon": 14.6026095,
+    "type": "city",
+    "area": "Italy",
+    "mentions": 2,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0204/' target='_blank'>Novella 4 \u2013 Giornata 2</a></li><li><a href='/nov0410/' target='_blank'>Novella 10 \u2013 Giornata 4</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d73</span></li></ul>"
+  },
+  {
+    "id": "antiochia",
+    "name": "Antiochia",
+    "lat": 36.2036546,
+    "lon": 36.1637648,
+    "type": "region",
+    "area": "Cyprus-Levant",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0909/' target='_blank'>Novella 9 \u2013 Giornata 9</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d72</span></li></ul>"
+  },
+  {
+    "id": "maregeo",
+    "name": "Arcipelago",
+    "lat": 59.3409122,
+    "lon": 18.7984629,
+    "type": "sea",
+    "area": "",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0204/' target='_blank'>Novella 4 \u2013 Giornata 2</a></li></ul>"
+  },
+  {
+    "id": "arezzo",
+    "name": "Arezzo",
+    "lat": 43.5171442,
+    "lon": 11.7639282,
+    "type": "city",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0704/' target='_blank'>Novella 4 \u2013 Giornata 7</a></li></ul>"
+  },
+  {
+    "id": "argo",
+    "name": "Argo",
+    "lat": 41.7758173,
+    "lon": -87.8203,
+    "type": "city",
+    "area": "Greece-Balkans",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0709/' target='_blank'>Novella 9 \u2013 Giornata 7</a></li></ul>"
+  },
+  {
+    "id": "arno",
+    "name": "Arno",
+    "lat": 43.7664527,
+    "lon": 11.2573196,
+    "type": "river",
+    "area": "Italy",
+    "mentions": 3,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0807/' target='_blank'>Novella 7 \u2013 Giornata 8</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d73</span></li><li><a href='/nov0809/' target='_blank'>Novella 9 \u2013 Giornata 8</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d72</span></li><li><a href='/nov0908/' target='_blank'>Novella 8 \u2013 Giornata 9</a></li></ul>"
+  },
+  {
+    "id": "avignone",
+    "name": "Avignone",
+    "lat": 43.9492493,
+    "lon": 4.8059012,
+    "type": "city",
+    "area": "France",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0802/' target='_blank'>Novella 2 \u2013 Giornata 8</a></li></ul>"
+  },
+  {
+    "id": "atene",
+    "name": "Atene",
+    "lat": 37.9755648,
+    "lon": 23.7348324,
+    "type": "city",
+    "area": "Greece-Balkans",
+    "mentions": 3,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/epilogue/' target='_blank'>Epilogo / Epilogue</a></li><li><a href='/nov0207/' target='_blank'>Novella 7 \u2013 Giornata 2</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d75</span></li><li><a href='/nov1008/' target='_blank'>Novella 8 \u2013 Giornata 10</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d73</span></li></ul>"
+  },
+  {
+    "id": "cairo",
+    "name": "Babillonia / Babilonia",
+    "lat": 32.5422107,
+    "lon": 44.4300259,
+    "type": "city",
+    "area": "NorthAfrica",
+    "mentions": 3,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0103/' target='_blank'>Novella 3 \u2013 Giornata 1</a></li><li><a href='/nov0207/' target='_blank'>Novella 7 \u2013 Giornata 2</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d72</span></li><li><a href='/nov1009/' target='_blank'>Novella 9 \u2013 Giornata 10</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d72</span></li></ul>"
+  },
+  {
+    "id": "barberia",
+    "name": "Barberia / Barbaria",
+    "lat": 38.667492,
+    "lon": 1.3906505,
+    "type": "region",
+    "area": "NorthAfrica",
+    "mentions": 4,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0310/' target='_blank'>Novella 10 \u2013 Giornata 3</a></li><li><a href='/nov0404/' target='_blank'>Novella 4 \u2013 Giornata 4</a></li><li><a href='/nov0502/' target='_blank'>Novella 2 \u2013 Giornata 5</a></li><li><a href='/nov1009/' target='_blank'>Novella 9 \u2013 Giornata 10</a></li></ul>"
+  },
+  {
+    "id": "barletta",
+    "name": "Barletta",
+    "lat": 41.3214976,
+    "lon": 16.2868696,
+    "type": "city",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0910/' target='_blank'>Novella 10 \u2013 Giornata 9</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d74</span></li></ul>"
+  },
+  {
+    "id": "terrabaschi",
+    "name": "terra de' Baschi",
+    "lat": 43.2578866,
+    "lon": -2.9243518,
+    "type": "",
+    "area": "Iberia",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0803/' target='_blank'>Novella 3 \u2013 Giornata 8</a></li></ul>"
+  },
+  {
+    "id": "bengodi",
+    "name": "Bengodi",
+    "lat": 42.5558617,
+    "lon": 11.1631353,
+    "type": "contrada",
+    "area": "",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0803/' target='_blank'>Novella 3 \u2013 Giornata 8</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d72</span></li></ul>"
+  },
+  {
+    "id": "benevento",
+    "name": "Benevento",
+    "lat": 41.2476307,
+    "lon": 14.7057054,
+    "type": "city",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0206/' target='_blank'>Novella 6 \u2013 Giornata 2</a></li></ul>"
+  },
+  {
+    "id": "bitonto",
+    "name": "Bitonto",
+    "lat": 41.1084971,
+    "lon": 16.691548,
+    "type": "city",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0910/' target='_blank'>Novella 10 \u2013 Giornata 9</a></li></ul>"
+  },
+  {
+    "id": "bologna",
+    "name": "Bologna",
+    "lat": 44.4938203,
+    "lon": 11.3426327,
+    "type": "city",
+    "area": "Italy",
+    "mentions": 8,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/epilogue/' target='_blank'>Epilogo / Epilogue</a></li><li><a href='/nov0110/' target='_blank'>Novella 10 \u2013 Giornata 1</a></li><li><a href='/nov0202/' target='_blank'>Novella 2 \u2013 Giornata 2</a></li><li><a href='/nov0308/' target='_blank'>Novella 8 \u2013 Giornata 3</a></li><li><a href='/nov0707/' target='_blank'>Novella 7 \u2013 Giornata 7</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d76</span></li><li><a href='/nov0809/' target='_blank'>Novella 9 \u2013 Giornata 8</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d76</span></li><li><a href='/nov1004/' target='_blank'>Novella 4 \u2013 Giornata 10</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d77</span></li><li><a href='/nov1010/' target='_blank'>Novella 10 \u2013 Giornata 10</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d75</span></li></ul>"
+  },
+  {
+    "id": "bonconvento",
+    "name": "Bonconvento",
+    "lat": 44.6044097,
+    "lon": 11.3110572,
+    "type": "city",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0904/' target='_blank'>Novella 4 \u2013 Giornata 9</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d73</span></li></ul>"
+  },
+  {
+    "id": "borgogreci",
+    "name": "Borgo de' Greci",
+    "lat": 43.7690764,
+    "lon": 11.2594446,
+    "type": "contrada",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0610/' target='_blank'>Novella 10 \u2013 Giornata 6</a></li></ul>"
+  },
+  {
+    "id": "borgogna",
+    "name": "Borgogna",
+    "lat": 47.2780873,
+    "lon": 4.2224863,
+    "type": "city",
+    "area": "France",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0101/' target='_blank'>Novella 1 \u2013 Giornata 1</a></li></ul>"
+  },
+  {
+    "id": "brindisi",
+    "name": "Brandizio",
+    "lat": 42.4914154,
+    "lon": 14.1744952,
+    "type": "city",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0204/' target='_blank'>Novella 4 \u2013 Giornata 2</a></li></ul>"
+  },
+  {
+    "id": "brescia",
+    "name": "Brescia",
+    "lat": 45.7795805,
+    "lon": 10.425873,
+    "type": "city",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0406/' target='_blank'>Novella 6 \u2013 Giornata 4</a></li></ul>"
+  },
+  {
+    "id": "bruges",
+    "name": "Bruggia",
+    "lat": 44.9534175,
+    "lon": 9.1440496,
+    "type": "city",
+    "area": "NorthEurope-EastEurope",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0203/' target='_blank'>Novella 3 \u2013 Giornata 2</a></li></ul>"
+  },
+  {
+    "id": "calatabellotta",
+    "name": "Calatabellotta",
+    "lat": 37.5773409,
+    "lon": 13.216548,
+    "type": "city",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov1007/' target='_blank'>Novella 7 \u2013 Giornata 10</a></li></ul>"
+  },
+  {
+    "id": "Calabria",
+    "name": "Calavria",
+    "lat": 45.7434395,
+    "lon": 10.6664238,
+    "type": "region",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0506/' target='_blank'>Novella 6 \u2013 Giornata 5</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d72</span></li></ul>"
+  },
+  {
+    "id": "camaldoli",
+    "name": "Camaldoli",
+    "lat": 40.6526226,
+    "lon": 15.1751616,
+    "type": "contrada",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0905/' target='_blank'>Novella 5 \u2013 Giornata 9</a></li></ul>"
+  },
+  {
+    "id": "camerata",
+    "name": "Camerata",
+    "lat": 45.9864146,
+    "lon": 10.2500195,
+    "type": "hamlet",
+    "area": "Italy",
+    "mentions": 2,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0701/' target='_blank'>Novella 1 \u2013 Giornata 7</a></li><li><a href='/nov0905/' target='_blank'>Novella 5 \u2013 Giornata 9</a></li></ul>"
+  },
+  {
+    "id": "camollia",
+    "name": "Camollia",
+    "lat": 43.3276622,
+    "lon": 11.3253877,
+    "type": "contrada",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0808/' target='_blank'>Novella 8 \u2013 Giornata 8</a></li></ul>"
+  },
+  {
+    "id": "camporeggi",
+    "name": "Camporeggi",
+    "lat": 44.2975113,
+    "lon": 11.9445004,
+    "type": "contrada",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0710/' target='_blank'>Novella 10 \u2013 Giornata 7</a></li></ul>"
+  },
+  {
+    "id": "candia",
+    "name": "Candia",
+    "lat": 35.3084952,
+    "lon": 24.4633423,
+    "type": "city",
+    "area": "Greece-Balkans",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0403/' target='_blank'>Novella 3 \u2013 Giornata 4</a></li></ul>"
+  },
+  {
+    "id": "cappadocia",
+    "name": "Capadocia",
+    "lat": 38.7219011,
+    "lon": 35.4873214,
+    "type": "region",
+    "area": "Turkey-AsiaMinor",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0207/' target='_blank'>Novella 7 \u2013 Giornata 2</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d73</span></li></ul>"
+  },
+  {
+    "id": "capitolio",
+    "name": "Capitolio",
+    "lat": 41.8925778,
+    "lon": 12.4822154,
+    "type": "hill",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov1008/' target='_blank'>Novella 8 \u2013 Giornata 10</a></li></ul>"
+  },
+  {
+    "id": "capova",
+    "name": "Capova",
+    "lat": 41.1079984,
+    "lon": 14.2097176,
+    "type": "city",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0401/' target='_blank'>Novella 1 \u2013 Giornata 4</a></li></ul>"
+  },
+  {
+    "id": "gafsa",
+    "name": "Capsa",
+    "lat": 34.4224374,
+    "lon": 8.7843862,
+    "type": "city",
+    "area": "NorthAfrica",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0310/' target='_blank'>Novella 10 \u2013 Giornata 3</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d74</span></li></ul>"
+  },
+  {
+    "id": "cartagine",
+    "name": "Cartagine",
+    "lat": 36.8548083,
+    "lon": 10.3309924,
+    "type": "city",
+    "area": "NorthAfrica",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0404/' target='_blank'>Novella 4 \u2013 Giornata 4</a></li></ul>"
+  },
+  {
+    "id": "castellammarestabia",
+    "name": "Castello da mare di Stabia",
+    "lat": 40.7455771,
+    "lon": 14.4806859,
+    "type": "city",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov1006/' target='_blank'>Novella 6 \u2013 Giornata 10</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d72</span></li></ul>"
+  },
+  {
+    "id": "catania",
+    "name": "Catania",
+    "lat": 37.5023612,
+    "lon": 15.0873718,
+    "type": "city",
+    "area": "Italy",
+    "mentions": 0,
+    "mention_html": ""
+  },
+  {
+    "id": "certaldo",
+    "name": "Certaldo",
+    "lat": 43.5477043,
+    "lon": 11.0409545,
+    "type": "hamlet",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0610/' target='_blank'>Novella 10 \u2013 Giornata 6</a></li></ul>"
+  },
+  {
+    "id": "cefalu",
+    "name": "Cefal\u00fa",
+    "lat": 38.034957,
+    "lon": 14.0244562,
+    "type": "city",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov1007/' target='_blank'>Novella 7 \u2013 Giornata 10</a></li></ul>"
+  },
+  {
+    "id": "chiarenza",
+    "name": "Chiarenza",
+    "lat": 37.5326836,
+    "lon": 15.0456881,
+    "type": "city",
+    "area": "Greece-Balkans",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0207/' target='_blank'>Novella 7 \u2013 Giornata 2</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d74</span></li></ul>"
+  },
+  {
+    "id": "chiassi",
+    "name": "Chiassi",
+    "lat": 45.302644,
+    "lon": 10.6185306,
+    "type": "area",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0508/' target='_blank'>Novella 8 \u2013 Giornata 5</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d72</span></li></ul>"
+  },
+  {
+    "id": "chios",
+    "name": "Chios",
+    "lat": 38.3758132,
+    "lon": 26.0646552,
+    "type": "island",
+    "area": "Turkey-AsiaMinor",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0207/' target='_blank'>Novella 7 \u2013 Giornata 2</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d72</span></li></ul>"
+  },
+  {
+    "id": "sicilia",
+    "name": "Cicilia",
+    "lat": 37.587794,
+    "lon": 14.155048,
+    "type": "country",
+    "area": "Italy",
+    "mentions": 9,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0205/' target='_blank'>Novella 5 \u2013 Giornata 2</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d73</span></li><li><a href='/nov0206/' target='_blank'>Novella 6 \u2013 Giornata 2</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d711</span></li><li><a href='/nov0404/' target='_blank'>Novella 4 \u2013 Giornata 4</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d74</span></li><li><a href='/nov0502/' target='_blank'>Novella 2 \u2013 Giornata 5</a></li><li><a href='/nov0506/' target='_blank'>Novella 6 \u2013 Giornata 5</a></li><li><a href='/nov0507/' target='_blank'>Novella 7 \u2013 Giornata 5</a></li><li><a href='/nov0810/' target='_blank'>Novella 10 \u2013 Giornata 8</a></li><li><a href='/nov1007/' target='_blank'>Novella 7 \u2013 Giornata 10</a></li><li><a href='/nov1009/' target='_blank'>Novella 9 \u2013 Giornata 10</a></li></ul>"
+  },
+  {
+    "id": "cipro",
+    "name": "Cipri",
+    "lat": 35.1762004,
+    "lon": 33.3748219,
+    "type": "island",
+    "area": "Cyprus-Levant",
+    "mentions": 6,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0109/' target='_blank'>Novella 9 \u2013 Giornata 1</a></li><li><a href='/nov0204/' target='_blank'>Novella 4 \u2013 Giornata 2</a></li><li><a href='/nov0207/' target='_blank'>Novella 7 \u2013 Giornata 2</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d78</span></li><li><a href='/nov0307/' target='_blank'>Novella 7 \u2013 Giornata 3</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d73</span></li><li><a href='/nov0501/' target='_blank'>Novella 1 \u2013 Giornata 5</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d76</span></li><li><a href='/nov1009/' target='_blank'>Novella 9 \u2013 Giornata 10</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d72</span></li></ul>"
+  },
+  {
+    "id": "viacocomero",
+    "name": "Via del Cocomero / Mercato Vecchio",
+    "lat": 42.7591544,
+    "lon": 11.1142636,
+    "type": "street-lane",
+    "area": "Italy",
+    "mentions": 2,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0809/' target='_blank'>Novella 9 \u2013 Giornata 8</a></li><li><a href='/nov0903/' target='_blank'>Novella 3 \u2013 Giornata 9</a></li></ul>"
+  },
+  {
+    "id": "corniglia",
+    "name": "Corniglia",
+    "lat": 44.1199606,
+    "lon": 9.7086874,
+    "type": "hamlet",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov1002/' target='_blank'>Novella 2 \u2013 Giornata 10</a></li></ul>"
+  },
+  {
+    "id": "costantinopoli",
+    "name": "Costantinopoli",
+    "lat": -37.6830261,
+    "lon": 176.1698861,
+    "type": "city",
+    "area": "Turkey-AsiaMinor",
+    "mentions": 3,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0204/' target='_blank'>Novella 4 \u2013 Giornata 2</a></li><li><a href='/nov0307/' target='_blank'>Novella 7 \u2013 Giornata 3</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d72</span></li><li><a href='/nov0810/' target='_blank'>Novella 10 \u2013 Giornata 8</a></li></ul>"
+  },
+  {
+    "id": "corsignano",
+    "name": "Corsignano",
+    "lat": 43.0765485,
+    "lon": 11.6789076,
+    "type": "city",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0904/' target='_blank'>Novella 4 \u2013 Giornata 9</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d72</span></li></ul>"
+  },
+  {
+    "id": "cremona",
+    "name": "Cremona",
+    "lat": 45.2208641,
+    "lon": 10.037038,
+    "type": "city",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0505/' target='_blank'>Novella 5 \u2013 Giornata 5</a></li></ul>"
+  },
+  {
+    "id": "sancrescivalcava",
+    "name": "san Cresci in Valcava",
+    "lat": 43.9159011,
+    "lon": 11.4028674,
+    "type": "monastery",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0207/' target='_blank'>Novella 7 \u2013 Giornata 2</a></li></ul>"
+  },
+  {
+    "id": "creta",
+    "name": "Creti",
+    "lat": 44.6841634,
+    "lon": 24.5115331,
+    "type": "island",
+    "area": "Greece-Balkans",
+    "mentions": 4,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0207/' target='_blank'>Novella 7 \u2013 Giornata 2</a></li><li><a href='/nov0403/' target='_blank'>Novella 3 \u2013 Giornata 4</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d73</span></li><li><a href='/nov0501/' target='_blank'>Novella 1 \u2013 Giornata 5</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d73</span></li><li><a href='/nov1009/' target='_blank'>Novella 9 \u2013 Giornata 10</a></li></ul>"
+  },
+  {
+    "id": "cuba",
+    "name": "la Cuba",
+    "lat": 38.1380751,
+    "lon": 13.3422482,
+    "type": "castle",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0506/' target='_blank'>Novella 6 \u2013 Giornata 5</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d74</span></li></ul>"
+  },
+  {
+    "id": "egina",
+    "name": "Egina",
+    "lat": 37.7243694,
+    "lon": 23.4938109,
+    "type": "island",
+    "area": "Greece-Balkans",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0207/' target='_blank'>Novella 7 \u2013 Giornata 2</a></li></ul>"
+  },
+  {
+    "id": "egitto",
+    "name": "Egitto",
+    "lat": 26.2540493,
+    "lon": 29.2675469,
+    "type": "country",
+    "area": "NorthAfrica",
+    "mentions": 3,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0207/' target='_blank'>Novella 7 \u2013 Giornata 2</a></li><li><a href='/nov0610/' target='_blank'>Novella 10 \u2013 Giornata 6</a></li><li><a href='/nov1009/' target='_blank'>Novella 9 \u2013 Giornata 10</a></li></ul>"
+  },
+  {
+    "id": "armenia",
+    "name": "Erminia",
+    "lat": 44.7303164,
+    "lon": 10.2951589,
+    "type": "country",
+    "area": "Turkey-AsiaMinor",
+    "mentions": 2,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0207/' target='_blank'>Novella 7 \u2013 Giornata 2</a></li><li><a href='/nov0507/' target='_blank'>Novella 7 \u2013 Giornata 5</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d73</span></li></ul>"
+  },
+  {
+    "id": "faenza",
+    "name": "Faenza",
+    "lat": 44.2855555,
+    "lon": 11.8832055,
+    "type": "city",
+    "area": "Italy",
+    "mentions": 2,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0505/' target='_blank'>Novella 5 \u2013 Giornata 5</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d73</span></li><li><a href='/nov0803/' target='_blank'>Novella 3 \u2013 Giornata 8</a></li></ul>"
+  },
+  {
+    "id": "famagosta",
+    "name": "Famagosta",
+    "lat": 35.1207627,
+    "lon": 33.9520958,
+    "type": "city",
+    "area": "Cyprus-Levant",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0207/' target='_blank'>Novella 7 \u2013 Giornata 2</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d73</span></li></ul>"
+  },
+  {
+    "id": "fano",
+    "name": "Fano",
+    "lat": 43.8424173,
+    "lon": 13.0146632,
+    "type": "city",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0505/' target='_blank'>Novella 5 \u2013 Giornata 5</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d72</span></li></ul>"
+  },
+  {
+    "id": "ferrara",
+    "name": "Ferrara",
+    "lat": 44.7667642,
+    "lon": 11.827939,
+    "type": "city",
+    "area": "Italy",
+    "mentions": 2,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0202/' target='_blank'>Novella 2 \u2013 Giornata 2</a></li><li><a href='/nov0810/' target='_blank'>Novella 10 \u2013 Giornata 8</a></li></ul>"
+  },
+  {
+    "id": "lefiandre",
+    "name": "Fiandra",
+    "lat": 45.1777956,
+    "lon": 9.5325436,
+    "type": "region",
+    "area": "NorthEurope-EastEurope",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0402/' target='_blank'>Novella 2 \u2013 Giornata 4</a></li></ul>"
+  },
+  {
+    "id": "fiesole",
+    "name": "Fiesole",
+    "lat": 43.8066689,
+    "lon": 11.2930735,
+    "type": "city",
+    "area": "Italy",
+    "mentions": 2,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0701/' target='_blank'>Novella 1 \u2013 Giornata 7</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d72</span></li><li><a href='/nov0804/' target='_blank'>Novella 4 \u2013 Giornata 8</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d73</span></li></ul>"
+  },
+  {
+    "id": "firenze",
+    "name": "Firenze",
+    "lat": 43.7697955,
+    "lon": 11.2556404,
+    "type": "city",
+    "area": "Italy",
+    "mentions": 37,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/d01intro/' target='_blank'>Introduzione \u2013 Giornata 1</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d75</span></li><li><a href='/d04intro/' target='_blank'>Introduzione \u2013 Giornata 4</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d75</span></li><li><a href='/d10conclu/' target='_blank'>Conclusione \u2013 Giornata 10</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d72</span></li><li><a href='/nov0106/' target='_blank'>Novella 6 \u2013 Giornata 1</a></li><li><a href='/nov0201/' target='_blank'>Novella 1 \u2013 Giornata 2</a></li><li><a href='/nov0203/' target='_blank'>Novella 3 \u2013 Giornata 2</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d78</span></li><li><a href='/nov0303/' target='_blank'>Novella 3 \u2013 Giornata 3</a></li><li><a href='/nov0306/' target='_blank'>Novella 6 \u2013 Giornata 3</a></li><li><a href='/nov0307/' target='_blank'>Novella 7 \u2013 Giornata 3</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d76</span></li><li><a href='/nov0309/' target='_blank'>Novella 9 \u2013 Giornata 3</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d74</span></li><li><em>...and 27 more</em></li></ul>"
+  },
+  {
+    "id": "forlimpopoli",
+    "name": "Forlimpopoli",
+    "lat": 44.1873049,
+    "lon": 12.1259056,
+    "type": "city",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0809/' target='_blank'>Novella 9 \u2013 Giornata 8</a></li></ul>"
+  },
+  {
+    "id": "francia",
+    "name": "Francia",
+    "lat": 46.603354,
+    "lon": 1.8883335,
+    "type": "country",
+    "area": "France",
+    "mentions": 10,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0101/' target='_blank'>Novella 1 \u2013 Giornata 1</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d73</span></li><li><a href='/nov0105/' target='_blank'>Novella 5 \u2013 Giornata 1</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d73</span></li><li><a href='/nov0106/' target='_blank'>Novella 6 \u2013 Giornata 1</a></li><li><a href='/nov0207/' target='_blank'>Novella 7 \u2013 Giornata 2</a></li><li><a href='/nov0208/' target='_blank'>Novella 8 \u2013 Giornata 2</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d73</span></li><li><a href='/nov0409/' target='_blank'>Novella 9 \u2013 Giornata 4</a></li><li><a href='/nov0508/' target='_blank'>Novella 8 \u2013 Giornata 5</a></li><li><a href='/nov0608/' target='_blank'>Novella 8 \u2013 Giornata 6</a></li><li><a href='/nov0707/' target='_blank'>Novella 7 \u2013 Giornata 7</a></li><li><a href='/nov0809/' target='_blank'>Novella 9 \u2013 Giornata 8</a></li></ul>"
+  },
+  {
+    "id": "friuli",
+    "name": "Frioli",
+    "lat": 45.6528943,
+    "lon": 13.7804956,
+    "type": "region",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov1005/' target='_blank'>Novella 5 \u2013 Giornata 10</a></li></ul>"
+  },
+  {
+    "id": "gaeta",
+    "name": "Gaeta",
+    "lat": 41.218312,
+    "lon": 13.56281,
+    "type": "city",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0204/' target='_blank'>Novella 4 \u2013 Giornata 2</a></li></ul>"
+  },
+  {
+    "id": "galles",
+    "name": "Gales",
+    "lat": 52.2928116,
+    "lon": -3.73893,
+    "type": "",
+    "area": "England-Ireland-Scotland",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0208/' target='_blank'>Novella 8 \u2013 Giornata 2</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d72</span></li></ul>"
+  },
+  {
+    "id": "genova",
+    "name": "Genova",
+    "lat": 44.40726,
+    "lon": 8.9338624,
+    "type": "city",
+    "area": "Italy",
+    "mentions": 7,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0105/' target='_blank'>Novella 5 \u2013 Giornata 1</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d72</span></li><li><a href='/nov0108/' target='_blank'>Novella 8 \u2013 Giornata 1</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d74</span></li><li><a href='/nov0206/' target='_blank'>Novella 6 \u2013 Giornata 2</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d73</span></li><li><a href='/nov0209/' target='_blank'>Novella 9 \u2013 Giornata 2</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d711</span></li><li><a href='/nov0303/' target='_blank'>Novella 3 \u2013 Giornata 3</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d72</span></li><li><a href='/nov0403/' target='_blank'>Novella 3 \u2013 Giornata 4</a></li><li><a href='/nov1009/' target='_blank'>Novella 9 \u2013 Giornata 10</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d73</span></li></ul>"
+  },
+  {
+    "id": "agrigento",
+    "name": "Gergenti",
+    "lat": 37.3122991,
+    "lon": 13.57465,
+    "type": "city",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0205/' target='_blank'>Novella 5 \u2013 Giornata 2</a></li></ul>"
+  },
+  {
+    "id": "granada",
+    "name": "Granata",
+    "lat": 37.1895028,
+    "lon": -3.5906604,
+    "type": "city",
+    "area": "Iberia",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0404/' target='_blank'>Novella 4 \u2013 Giornata 4</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d72</span></li></ul>"
+  },
+  {
+    "id": "guascogna",
+    "name": "Guascogna",
+    "lat": 44.4682078,
+    "lon": 7.3278184,
+    "type": "region",
+    "area": "France",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0109/' target='_blank'>Novella 9 \u2013 Giornata 1</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d72</span></li></ul>"
+  },
+  {
+    "id": "corfu",
+    "name": "Gurfo",
+    "lat": 45.8995223,
+    "lon": 7.6165576,
+    "type": "island",
+    "area": "Greece-Balkans",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0204/' target='_blank'>Novella 4 \u2013 Giornata 2</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d73</span></li></ul>"
+  },
+  {
+    "id": "gerusalemme",
+    "name": "Ierusalem",
+    "lat": 31.7788472,
+    "lon": 35.2257856,
+    "type": "city",
+    "area": "Cyprus-Levant",
+    "mentions": 3,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0207/' target='_blank'>Novella 7 \u2013 Giornata 2</a></li><li><a href='/nov0610/' target='_blank'>Novella 10 \u2013 Giornata 6</a></li><li><a href='/nov0909/' target='_blank'>Novella 9 \u2013 Giornata 9</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d72</span></li></ul>"
+  },
+  {
+    "id": "imola",
+    "name": "Imola",
+    "lat": 44.3535145,
+    "lon": 11.7141233,
+    "type": "city",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0402/' target='_blank'>Novella 2 \u2013 Giornata 4</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d72</span></li></ul>"
+  },
+  {
+    "id": "inghilterra",
+    "name": "Inghilterra",
+    "lat": 52.5310214,
+    "lon": -1.2649062,
+    "type": "country",
+    "area": "England-Ireland-Scotland",
+    "mentions": 4,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0203/' target='_blank'>Novella 3 \u2013 Giornata 2</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d79</span></li><li><a href='/nov0208/' target='_blank'>Novella 8 \u2013 Giornata 2</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d79</span></li><li><a href='/nov0707/' target='_blank'>Novella 7 \u2013 Giornata 7</a></li><li><a href='/nov0809/' target='_blank'>Novella 9 \u2013 Giornata 8</a></li></ul>"
+  },
+  {
+    "id": "irlanda",
+    "name": "Irlanda",
+    "lat": 52.865196,
+    "lon": -7.9794599,
+    "type": "country",
+    "area": "England-Ireland-Scotland",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0208/' target='_blank'>Novella 8 \u2013 Giornata 2</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d72</span></li></ul>"
+  },
+  {
+    "id": "ischia",
+    "name": "Ischia",
+    "lat": 40.734205,
+    "lon": 13.947125,
+    "type": "island",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0506/' target='_blank'>Novella 6 \u2013 Giornata 5</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d77</span></li></ul>"
+  },
+  {
+    "id": "italia",
+    "name": "Italia",
+    "lat": 42.6384261,
+    "lon": 12.674297,
+    "type": "country",
+    "area": "Italy",
+    "mentions": 8,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0107/' target='_blank'>Novella 7 \u2013 Giornata 1</a></li><li><a href='/nov0108/' target='_blank'>Novella 8 \u2013 Giornata 1</a></li><li><a href='/nov0203/' target='_blank'>Novella 3 \u2013 Giornata 2</a></li><li><a href='/nov0204/' target='_blank'>Novella 4 \u2013 Giornata 2</a></li><li><a href='/nov0209/' target='_blank'>Novella 9 \u2013 Giornata 2</a></li><li><a href='/nov0306/' target='_blank'>Novella 6 \u2013 Giornata 3</a></li><li><a href='/nov0610/' target='_blank'>Novella 10 \u2013 Giornata 6</a></li><li><a href='/nov1001/' target='_blank'>Novella 1 \u2013 Giornata 10</a></li></ul>"
+  },
+  {
+    "id": "lamporecchio",
+    "name": "Lamporecchio",
+    "lat": 43.8163799,
+    "lon": 10.896283,
+    "type": "hamlet",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0301/' target='_blank'>Novella 1 \u2013 Giornata 3</a></li></ul>"
+  },
+  {
+    "id": "lerici",
+    "name": "Lerici",
+    "lat": 44.0736073,
+    "lon": 9.9099135,
+    "type": "castle",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0206/' target='_blank'>Novella 6 \u2013 Giornata 2</a></li></ul>"
+  },
+  {
+    "id": "legnaia",
+    "name": "Legnaia",
+    "lat": 43.7705299,
+    "lon": 11.2115148,
+    "type": "hamlet",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0809/' target='_blank'>Novella 9 \u2013 Giornata 8</a></li></ul>"
+  },
+  {
+    "id": "lipari",
+    "name": "Lipari",
+    "lat": 38.4692717,
+    "lon": 14.9564504,
+    "type": "island",
+    "area": "Italy",
+    "mentions": 2,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0206/' target='_blank'>Novella 6 \u2013 Giornata 2</a></li><li><a href='/nov0502/' target='_blank'>Novella 2 \u2013 Giornata 5</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d77</span></li></ul>"
+  },
+  {
+    "id": "lombardia",
+    "name": "Lombardia",
+    "lat": 45.5703694,
+    "lon": 9.7732524,
+    "type": "region",
+    "area": "Italy",
+    "mentions": 4,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0302/' target='_blank'>Novella 2 \u2013 Giornata 3</a></li><li><a href='/nov0902/' target='_blank'>Novella 2 \u2013 Giornata 9</a></li><li><a href='/nov1004/' target='_blank'>Novella 4 \u2013 Giornata 10</a></li><li><a href='/nov1009/' target='_blank'>Novella 9 \u2013 Giornata 10</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d74</span></li></ul>"
+  },
+  {
+    "id": "londra",
+    "name": "Londra",
+    "lat": 51.5074456,
+    "lon": -0.1277653,
+    "type": "city",
+    "area": "England-Ireland-Scotland",
+    "mentions": 2,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0203/' target='_blank'>Novella 3 \u2013 Giornata 2</a></li><li><a href='/nov0208/' target='_blank'>Novella 8 \u2013 Giornata 2</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d74</span></li></ul>"
+  },
+  {
+    "id": "lucifero",
+    "name": "Lucifero",
+    "lat": 43.8645147,
+    "lon": 10.2504894,
+    "type": "planet",
+    "area": "",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/d07intro/' target='_blank'>Introduzione \u2013 Giornata 7</a></li></ul>"
+  },
+  {
+    "id": "lunigiana",
+    "name": "Lunigiana",
+    "lat": 44.2484888,
+    "lon": 10.0524325,
+    "type": "region",
+    "area": "Italy",
+    "mentions": 3,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0104/' target='_blank'>Novella 4 \u2013 Giornata 1</a></li><li><a href='/nov0206/' target='_blank'>Novella 6 \u2013 Giornata 2</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d73</span></li><li><a href='/nov0307/' target='_blank'>Novella 7 \u2013 Giornata 3</a></li></ul>"
+  },
+  {
+    "id": "magra",
+    "name": "Magra",
+    "lat": 44.2512783,
+    "lon": 9.9450185,
+    "type": "river",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0206/' target='_blank'>Novella 6 \u2013 Giornata 2</a></li></ul>"
+  },
+  {
+    "id": "maiorca",
+    "name": "Maiolica",
+    "lat": 44.4071694,
+    "lon": 8.9424803,
+    "type": "island",
+    "area": "Iberia",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0207/' target='_blank'>Novella 7 \u2013 Giornata 2</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d74</span></li></ul>"
+  },
+  {
+    "id": "macello",
+    "name": "Macello",
+    "lat": 44.851139,
+    "lon": 7.39802,
+    "type": "area",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0402/' target='_blank'>Novella 2 \u2013 Giornata 4</a></li></ul>"
+  },
+  {
+    "id": "malpertugio",
+    "name": "Malpertugio",
+    "lat": 38.0117191,
+    "lon": 14.1032914,
+    "type": "contrada",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0205/' target='_blank'>Novella 5 \u2013 Giornata 2</a></li></ul>"
+  },
+  {
+    "id": "maremma",
+    "name": "Maremma",
+    "lat": 44.2360427,
+    "lon": 8.4298691,
+    "type": "region",
+    "area": "Italy",
+    "mentions": 2,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0402/' target='_blank'>Novella 2 \u2013 Giornata 4</a></li><li><a href='/nov0606/' target='_blank'>Novella 6 \u2013 Giornata 6</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d73</span></li></ul>"
+  },
+  {
+    "id": "marsiglia",
+    "name": "Marsilia",
+    "lat": 43.2961743,
+    "lon": 5.3699525,
+    "type": "city",
+    "area": "France",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0403/' target='_blank'>Novella 3 \u2013 Giornata 4</a></li></ul>"
+  },
+  {
+    "id": "menzogna",
+    "name": "Menzogna",
+    "lat": 41.1396097,
+    "lon": 14.6709358,
+    "type": "",
+    "area": "",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0610/' target='_blank'>Novella 10 \u2013 Giornata 6</a></li></ul>"
+  },
+  {
+    "id": "messina",
+    "name": "Messina",
+    "lat": 38.1937571,
+    "lon": 15.5542082,
+    "type": "city",
+    "area": "Italy",
+    "mentions": 2,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0404/' target='_blank'>Novella 4 \u2013 Giornata 4</a></li><li><a href='/nov0405/' target='_blank'>Novella 5 \u2013 Giornata 4</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d74</span></li></ul>"
+  },
+  {
+    "id": "milano",
+    "name": "Melano",
+    "lat": 45.4641943,
+    "lon": 9.1896346,
+    "type": "city",
+    "area": "Italy",
+    "mentions": 4,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0305/' target='_blank'>Novella 5 \u2013 Giornata 3</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d74</span></li><li><a href='/nov0703/' target='_blank'>Novella 3 \u2013 Giornata 7</a></li><li><a href='/nov0801/' target='_blank'>Novella 1 \u2013 Giornata 8</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d72</span></li><li><a href='/nov1009/' target='_blank'>Novella 9 \u2013 Giornata 10</a></li></ul>"
+  },
+  {
+    "id": "minerva",
+    "name": "Minerva",
+    "lat": 40.5694595,
+    "lon": 14.3248809,
+    "type": "cape",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0506/' target='_blank'>Novella 6 \u2013 Giornata 5</a></li></ul>"
+  },
+  {
+    "id": "modena",
+    "name": "Modona",
+    "lat": 44.5384728,
+    "lon": 10.9359609,
+    "type": "city",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov1004/' target='_blank'>Novella 4 \u2013 Giornata 10</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d74</span></li></ul>"
+  },
+  {
+    "id": "monaco",
+    "name": "Monaco",
+    "lat": 42.2803146,
+    "lon": 9.4304477,
+    "type": "country",
+    "area": "France",
+    "mentions": 2,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0210/' target='_blank'>Novella 10 \u2013 Giornata 2</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d73</span></li><li><a href='/nov0810/' target='_blank'>Novella 10 \u2013 Giornata 8</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d72</span></li></ul>"
+  },
+  {
+    "id": "montenero",
+    "name": "Monte Nero",
+    "lat": 44.5619063,
+    "lon": 9.5087446,
+    "type": "",
+    "area": "Italy",
+    "mentions": 2,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/d06intro/' target='_blank'>Introduzione \u2013 Giornata 6</a></li><li><a href='/nov0210/' target='_blank'>Novella 10 \u2013 Giornata 2</a></li></ul>"
+  },
+  {
+    "id": "montisci",
+    "name": "Montisci",
+    "lat": 39.7915735,
+    "lon": 9.0079526,
+    "type": "hill",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0803/' target='_blank'>Novella 3 \u2013 Giornata 8</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d72</span></li></ul>"
+  },
+  {
+    "id": "mmorello",
+    "name": "Monte Morello",
+    "lat": 44.4713604,
+    "lon": 11.0774964,
+    "type": "mountain",
+    "area": "Italy",
+    "mentions": 2,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0610/' target='_blank'>Novella 10 \u2013 Giornata 6</a></li><li><a href='/nov0803/' target='_blank'>Novella 3 \u2013 Giornata 8</a></li></ul>"
+  },
+  {
+    "id": "montughi",
+    "name": "Montughi",
+    "lat": 43.792779,
+    "lon": 11.2546155,
+    "type": "hill",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0606/' target='_blank'>Novella 6 \u2013 Giornata 6</a></li></ul>"
+  },
+  {
+    "id": "mugello",
+    "name": "Mugello",
+    "lat": 43.9993822,
+    "lon": 11.3723647,
+    "type": "countryside",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0605/' target='_blank'>Novella 5 \u2013 Giornata 6</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d72</span></li></ul>"
+  },
+  {
+    "id": "montpellier",
+    "name": "Monpulier",
+    "lat": 43.6112422,
+    "lon": 3.8767337,
+    "type": "city",
+    "area": "France",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0309/' target='_blank'>Novella 9 \u2013 Giornata 3</a></li></ul>"
+  },
+  {
+    "id": "napoli",
+    "name": "Napoli",
+    "lat": 40.8358846,
+    "lon": 14.2487679,
+    "type": "city",
+    "area": "Italy",
+    "mentions": 8,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0205/' target='_blank'>Novella 5 \u2013 Giornata 2</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d77</span></li><li><a href='/nov0206/' target='_blank'>Novella 6 \u2013 Giornata 2</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d73</span></li><li><a href='/nov0306/' target='_blank'>Novella 6 \u2013 Giornata 3</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d72</span></li><li><a href='/nov0405/' target='_blank'>Novella 5 \u2013 Giornata 4</a></li><li><a href='/nov0506/' target='_blank'>Novella 6 \u2013 Giornata 5</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d72</span></li><li><a href='/nov0702/' target='_blank'>Novella 2 \u2013 Giornata 7</a></li><li><a href='/nov0810/' target='_blank'>Novella 10 \u2013 Giornata 8</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d73</span></li><li><a href='/nov1006/' target='_blank'>Novella 6 \u2013 Giornata 10</a></li></ul>"
+  },
+  {
+    "id": "narsia",
+    "name": "Narsia",
+    "lat": 42.2565437,
+    "lon": 42.6790484,
+    "type": "",
+    "area": "",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0809/' target='_blank'>Novella 9 \u2013 Giornata 8</a></li></ul>"
+  },
+  {
+    "id": "nazarette",
+    "name": "Nazarette",
+    "lat": 18.7213093,
+    "lon": -72.3742645,
+    "type": "city",
+    "area": "Cyprus-Levant",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0610/' target='_blank'>Novella 10 \u2013 Giornata 6</a></li></ul>"
+  },
+  {
+    "id": "nostradama",
+    "name": "Nostra Dama",
+    "lat": 44.1861695,
+    "lon": 0.6683646,
+    "type": "church",
+    "area": "France",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0102/' target='_blank'>Novella 2 \u2013 Giornata 1</a></li></ul>"
+  },
+  {
+    "id": "ortosanmichele",
+    "name": "Orto San Michele",
+    "lat": 43.7010548,
+    "lon": 11.1279143,
+    "type": "church",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0609/' target='_blank'>Novella 9 \u2013 Giornata 6</a></li></ul>"
+  },
+  {
+    "id": "palermo",
+    "name": "Palermo",
+    "lat": 38.1112268,
+    "lon": 13.3524434,
+    "type": "city",
+    "area": "Italy",
+    "mentions": 6,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0205/' target='_blank'>Novella 5 \u2013 Giornata 2</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d77</span></li><li><a href='/nov0206/' target='_blank'>Novella 6 \u2013 Giornata 2</a></li><li><a href='/nov0404/' target='_blank'>Novella 4 \u2013 Giornata 4</a></li><li><a href='/nov0506/' target='_blank'>Novella 6 \u2013 Giornata 5</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d75</span></li><li><a href='/nov0810/' target='_blank'>Novella 10 \u2013 Giornata 8</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d74</span></li><li><a href='/nov1007/' target='_blank'>Novella 7 \u2013 Giornata 10</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d72</span></li></ul>"
+  },
+  {
+    "id": "parigi",
+    "name": "Parigi",
+    "lat": 48.8534951,
+    "lon": 2.3483915,
+    "type": "city",
+    "area": "France",
+    "mentions": 14,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/epilogue/' target='_blank'>Epilogo / Epilogue</a></li><li><a href='/nov0101/' target='_blank'>Novella 1 \u2013 Giornata 1</a></li><li><a href='/nov0102/' target='_blank'>Novella 2 \u2013 Giornata 1</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d75</span></li><li><a href='/nov0107/' target='_blank'>Novella 7 \u2013 Giornata 1</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d73</span></li><li><a href='/nov0203/' target='_blank'>Novella 3 \u2013 Giornata 2</a></li><li><a href='/nov0208/' target='_blank'>Novella 8 \u2013 Giornata 2</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d73</span></li><li><a href='/nov0209/' target='_blank'>Novella 9 \u2013 Giornata 2</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d74</span></li><li><a href='/nov0304/' target='_blank'>Novella 4 \u2013 Giornata 3</a></li><li><a href='/nov0309/' target='_blank'>Novella 9 \u2013 Giornata 3</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d74</span></li><li><a href='/nov0408/' target='_blank'>Novella 8 \u2013 Giornata 4</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d74</span></li><li><em>...and 4 more</em></li></ul>"
+  },
+  {
+    "id": "parione",
+    "name": "Parione",
+    "lat": 41.8973795,
+    "lon": 12.4710487,
+    "type": "street-lane",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0610/' target='_blank'>Novella 10 \u2013 Giornata 6</a></li></ul>"
+  },
+  {
+    "id": "pasignano",
+    "name": "Passignano sul Trasimeno",
+    "lat": 43.1847425,
+    "lon": 12.136838,
+    "type": "city",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0809/' target='_blank'>Novella 9 \u2013 Giornata 8</a></li></ul>"
+  },
+  {
+    "id": "pavia",
+    "name": "Pavia",
+    "lat": 45.0368547,
+    "lon": 9.1378251,
+    "type": "city",
+    "area": "Italy",
+    "mentions": 3,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0302/' target='_blank'>Novella 2 \u2013 Giornata 3</a></li><li><a href='/nov0505/' target='_blank'>Novella 5 \u2013 Giornata 5</a></li><li><a href='/nov1009/' target='_blank'>Novella 9 \u2013 Giornata 10</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d723</span></li></ul>"
+  },
+  {
+    "id": "peretola",
+    "name": "Peretola",
+    "lat": 43.7973619,
+    "lon": 11.1966117,
+    "type": "countryside",
+    "area": "Italy",
+    "mentions": 2,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0604/' target='_blank'>Novella 4 \u2013 Giornata 6</a></li><li><a href='/nov0809/' target='_blank'>Novella 9 \u2013 Giornata 8</a></li></ul>"
+  },
+  {
+    "id": "iran",
+    "name": "Persia",
+    "lat": 32.6475314,
+    "lon": 54.5643516,
+    "type": "country",
+    "area": "MidEast-FarEast",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov1004/' target='_blank'>Novella 4 \u2013 Giornata 10</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d72</span></li></ul>"
+  },
+  {
+    "id": "perugia",
+    "name": "Perugia",
+    "lat": 43.1070321,
+    "lon": 12.4029962,
+    "type": "city",
+    "area": "Italy",
+    "mentions": 2,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0205/' target='_blank'>Novella 5 \u2013 Giornata 2</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d75</span></li><li><a href='/nov0510/' target='_blank'>Novella 10 \u2013 Giornata 5</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d72</span></li></ul>"
+  },
+  {
+    "id": "piccardia",
+    "name": "Piccardia",
+    "lat": 49.601756,
+    "lon": 2.8716339,
+    "type": "region",
+    "area": "France",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0208/' target='_blank'>Novella 8 \u2013 Giornata 2</a></li></ul>"
+  },
+  {
+    "id": "pisa",
+    "name": "Pisa",
+    "lat": 43.4714722,
+    "lon": 10.6797912,
+    "type": "city",
+    "area": "Italy",
+    "mentions": 2,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0210/' target='_blank'>Novella 10 \u2013 Giornata 2</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d77</span></li><li><a href='/nov0810/' target='_blank'>Novella 10 \u2013 Giornata 8</a></li></ul>"
+  },
+  {
+    "id": "pistoia",
+    "name": "Pistoia",
+    "lat": 43.9740957,
+    "lon": 10.8687081,
+    "type": "city",
+    "area": "Italy",
+    "mentions": 2,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0305/' target='_blank'>Novella 5 \u2013 Giornata 3</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d72</span></li><li><a href='/nov0901/' target='_blank'>Novella 1 \u2013 Giornata 9</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d74</span></li></ul>"
+  },
+  {
+    "id": "ponteoca",
+    "name": "Ponte dell'Oca",
+    "lat": 45.9550531,
+    "lon": 12.5009097,
+    "type": "bridge",
+    "area": "",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0909/' target='_blank'>Novella 9 \u2013 Giornata 9</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d74</span></li></ul>"
+  },
+  {
+    "id": "porcellana",
+    "name": "Porcellana",
+    "lat": 44.8397466,
+    "lon": 10.0776608,
+    "type": "street-lane",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0610/' target='_blank'>Novella 10 \u2013 Giornata 6</a></li></ul>"
+  },
+  {
+    "id": "ponza",
+    "name": "Ponzo",
+    "lat": 40.8932368,
+    "lon": 12.9630622,
+    "type": "island",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0206/' target='_blank'>Novella 6 \u2013 Giornata 2</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d72</span></li></ul>"
+  },
+  {
+    "id": "portasgallo",
+    "name": "porta a San Gallo",
+    "lat": 46.9946534,
+    "lon": 9.5177897,
+    "type": "gate",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0803/' target='_blank'>Novella 3 \u2013 Giornata 8</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d72</span></li></ul>"
+  },
+  {
+    "id": "portasalaia",
+    "name": "Porta Salaia",
+    "lat": 43.3186,
+    "lon": 11.330207,
+    "type": "neighborhood",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0710/' target='_blank'>Novella 10 \u2013 Giornata 7</a></li></ul>"
+  },
+  {
+    "id": "portapiero",
+    "name": "Porta San Piero",
+    "lat": 43.9645507,
+    "lon": 11.3243514,
+    "type": "gate",
+    "area": "Italy",
+    "mentions": 2,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0603/' target='_blank'>Novella 3 \u2013 Giornata 6</a></li><li><a href='/nov0701/' target='_blank'>Novella 1 \u2013 Giornata 7</a></li></ul>"
+  },
+  {
+    "id": "prato",
+    "name": "Prato",
+    "lat": 43.9357181,
+    "lon": 11.0941473,
+    "type": "city",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0607/' target='_blank'>Novella 7 \u2013 Giornata 6</a></li></ul>"
+  },
+  {
+    "id": "procida",
+    "name": "Procida",
+    "lat": 40.7649991,
+    "lon": 14.0239063,
+    "type": "island",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0506/' target='_blank'>Novella 6 \u2013 Giornata 5</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d73</span></li></ul>"
+  },
+  {
+    "id": "provenza",
+    "name": "Provenza",
+    "lat": 44.0580563,
+    "lon": 6.0638506,
+    "type": "region",
+    "area": "France",
+    "mentions": 2,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0403/' target='_blank'>Novella 3 \u2013 Giornata 4</a></li><li><a href='/nov0409/' target='_blank'>Novella 9 \u2013 Giornata 4</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d72</span></li></ul>"
+  },
+  {
+    "id": "puglia",
+    "name": "Puglia",
+    "lat": 40.9842539,
+    "lon": 16.6210027,
+    "type": "region",
+    "area": "Italy",
+    "mentions": 3,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0206/' target='_blank'>Novella 6 \u2013 Giornata 2</a></li><li><a href='/nov0910/' target='_blank'>Novella 10 \u2013 Giornata 9</a></li><li><a href='/nov1006/' target='_blank'>Novella 6 \u2013 Giornata 10</a></li></ul>"
+  },
+  {
+    "id": "radicofani",
+    "name": "Radicofani",
+    "lat": 42.8965067,
+    "lon": 11.7697064,
+    "type": "castle",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov1002/' target='_blank'>Novella 2 \u2013 Giornata 10</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d74</span></li></ul>"
+  },
+  {
+    "id": "ravello",
+    "name": "Ravello",
+    "lat": 40.6496643,
+    "lon": 14.6122753,
+    "type": "city",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0204/' target='_blank'>Novella 4 \u2013 Giornata 2</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d72</span></li></ul>"
+  },
+  {
+    "id": "ravenna",
+    "name": "Ravenna",
+    "lat": 44.3640607,
+    "lon": 12.0590095,
+    "type": "city",
+    "area": "Italy",
+    "mentions": 2,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0210/' target='_blank'>Novella 10 \u2013 Giornata 2</a></li><li><a href='/nov0508/' target='_blank'>Novella 8 \u2013 Giornata 5</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d76</span></li></ul>"
+  },
+  {
+    "id": "reggio",
+    "name": "Reggio",
+    "lat": 44.6978389,
+    "lon": 10.6304971,
+    "type": "city",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0204/' target='_blank'>Novella 4 \u2013 Giornata 2</a></li></ul>"
+  },
+  {
+    "id": "rialto",
+    "name": "Rialto",
+    "lat": 44.2258176,
+    "lon": 8.2631084,
+    "type": "neighborhood",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0402/' target='_blank'>Novella 2 \u2013 Giornata 4</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d73</span></li></ul>"
+  },
+  {
+    "id": "",
+    "name": "Ripole",
+    "lat": 40.6741726,
+    "lon": 16.58944,
+    "type": "convent",
+    "area": "Italy",
+    "mentions": 0,
+    "mention_html": ""
+  },
+  {
+    "id": "rodi",
+    "name": "Rodi",
+    "lat": 36.1725297,
+    "lon": 27.9194016,
+    "type": "island",
+    "area": "Greece-Balkans",
+    "mentions": 3,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0207/' target='_blank'>Novella 7 \u2013 Giornata 2</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d72</span></li><li><a href='/nov0403/' target='_blank'>Novella 3 \u2013 Giornata 4</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d72</span></li><li><a href='/nov0501/' target='_blank'>Novella 1 \u2013 Giornata 5</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d710</span></li></ul>"
+  },
+  {
+    "id": "roma",
+    "name": "Roma",
+    "lat": 41.8933203,
+    "lon": 12.4829321,
+    "type": "city",
+    "area": "Italy",
+    "mentions": 9,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0102/' target='_blank'>Novella 2 \u2013 Giornata 1</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d76</span></li><li><a href='/nov0203/' target='_blank'>Novella 3 \u2013 Giornata 2</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d73</span></li><li><a href='/nov0208/' target='_blank'>Novella 8 \u2013 Giornata 2</a></li><li><a href='/nov0503/' target='_blank'>Novella 3 \u2013 Giornata 5</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d76</span></li><li><a href='/nov0507/' target='_blank'>Novella 7 \u2013 Giornata 5</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d72</span></li><li><a href='/nov0809/' target='_blank'>Novella 9 \u2013 Giornata 8</a></li><li><a href='/nov1002/' target='_blank'>Novella 2 \u2013 Giornata 10</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d75</span></li><li><a href='/nov1008/' target='_blank'>Novella 8 \u2013 Giornata 10</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d715</span></li><li><a href='/nov1010/' target='_blank'>Novella 10 \u2013 Giornata 10</a></li></ul>"
+  },
+  {
+    "id": "romagna",
+    "name": "Romagna",
+    "lat": 44.4914458,
+    "lon": 11.3435713,
+    "type": "region",
+    "area": "Italy",
+    "mentions": 4,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0504/' target='_blank'>Novella 4 \u2013 Giornata 5</a></li><li><a href='/nov0505/' target='_blank'>Novella 5 \u2013 Giornata 5</a></li><li><a href='/nov0508/' target='_blank'>Novella 8 \u2013 Giornata 5</a></li><li><a href='/nov0906/' target='_blank'>Novella 6 \u2013 Giornata 9</a></li></ul>"
+  },
+  {
+    "id": "romania",
+    "name": "Romania",
+    "lat": 45.9852129,
+    "lon": 24.6859225,
+    "type": "country",
+    "area": "Greece-Balkans",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0207/' target='_blank'>Novella 7 \u2013 Giornata 2</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d72</span></li></ul>"
+  },
+  {
+    "id": "roussillon",
+    "name": "Rossiglione",
+    "lat": 45.3735991,
+    "lon": 4.8124049,
+    "type": "county",
+    "area": "France",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0309/' target='_blank'>Novella 9 \u2013 Giornata 3</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d74</span></li></ul>"
+  },
+  {
+    "id": "rouen",
+    "name": "Ruem",
+    "lat": 49.4404591,
+    "lon": 1.0939658,
+    "type": "city",
+    "area": "France",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0208/' target='_blank'>Novella 8 \u2013 Giornata 2</a></li></ul>"
+  },
+  {
+    "id": "salerno",
+    "name": "Salerno",
+    "lat": 40.4194417,
+    "lon": 15.3106085,
+    "type": "city",
+    "area": "Italy",
+    "mentions": 3,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0204/' target='_blank'>Novella 4 \u2013 Giornata 2</a></li><li><a href='/nov0401/' target='_blank'>Novella 1 \u2013 Giornata 4</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d72</span></li><li><a href='/nov0810/' target='_blank'>Novella 10 \u2013 Giornata 8</a></li></ul>"
+  },
+  {
+    "id": "salerno-0410",
+    "name": "Salerno (IV.10)",
+    "lat": 40.6803601,
+    "lon": 14.7594542,
+    "type": "city",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0410/' target='_blank'>Novella 10 \u2013 Giornata 4</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d73</span></li></ul>"
+  },
+  {
+    "id": "sanluzzo",
+    "name": "Sanluzzo",
+    "lat": 44.6446052,
+    "lon": 7.4926009,
+    "type": "city",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov1010/' target='_blank'>Novella 10 \u2013 Giornata 10</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d73</span></li></ul>"
+  },
+  {
+    "id": "sangallo",
+    "name": "San Gallo",
+    "lat": 45.8649539,
+    "lon": 9.6718341,
+    "type": "church",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0407/' target='_blank'>Novella 7 \u2013 Giornata 4</a></li></ul>"
+  },
+  {
+    "id": "sangallo-ospedale",
+    "name": "San Gallo (ospedale)",
+    "lat": -20.955715,
+    "lon": -49.1782009,
+    "type": "hospital",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0809/' target='_blank'>Novella 9 \u2013 Giornata 8</a></li></ul>"
+  },
+  {
+    "id": "sangimignano",
+    "name": "San Gimignano",
+    "lat": 43.4677993,
+    "lon": 11.0432115,
+    "type": "city",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0405/' target='_blank'>Novella 5 \u2013 Giornata 4</a></li></ul>"
+  },
+  {
+    "id": "sangiovanni",
+    "name": "San Giovanni",
+    "lat": 45.7880182,
+    "lon": 12.6140857,
+    "type": "church",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0609/' target='_blank'>Novella 9 \u2013 Giornata 6</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d73</span></li></ul>"
+  },
+  {
+    "id": "ripole",
+    "name": "San Jacopo di Ripoli",
+    "lat": 43.7662819,
+    "lon": 11.3255405,
+    "type": "convent",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0809/' target='_blank'>Novella 9 \u2013 Giornata 8</a></li></ul>"
+  },
+  {
+    "id": "sanmarco",
+    "name": "San Marco",
+    "lat": 45.0220884,
+    "lon": 6.8372267,
+    "type": "square",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0402/' target='_blank'>Novella 2 \u2013 Giornata 4</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d74</span></li></ul>"
+  },
+  {
+    "id": "sanpaolo",
+    "name": "San Paolo",
+    "lat": 45.370576,
+    "lon": 10.026767,
+    "type": "church",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0407/' target='_blank'>Novella 7 \u2013 Giornata 4</a></li></ul>"
+  },
+  {
+    "id": "santacroce",
+    "name": "Santa Croce",
+    "lat": 46.0252962,
+    "lon": 10.8388732,
+    "type": "church",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0106/' target='_blank'>Novella 6 \u2013 Giornata 1</a></li></ul>"
+  },
+  {
+    "id": "santamariascala",
+    "name": "Santa Maria della Scala",
+    "lat": 41.8910617,
+    "lon": 12.4678215,
+    "type": "church",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0809/' target='_blank'>Novella 9 \u2013 Giornata 8</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d72</span></li></ul>"
+  },
+  {
+    "id": "santamariamaggiore",
+    "name": "Santa Maria Maggiore",
+    "lat": 41.8976275,
+    "lon": 12.4984704,
+    "type": "church",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0606/' target='_blank'>Novella 6 \u2013 Giornata 6</a></li></ul>"
+  },
+  {
+    "id": "smnovella",
+    "name": "Santa Maria Novella",
+    "lat": 42.1037737,
+    "lon": 12.1764684,
+    "type": "church",
+    "area": "Italy",
+    "mentions": 4,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/d01intro/' target='_blank'>Introduzione \u2013 Giornata 1</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d73</span></li><li><a href='/d10conclu/' target='_blank'>Conclusione \u2013 Giornata 10</a></li><li><a href='/nov0701/' target='_blank'>Novella 1 \u2013 Giornata 7</a></li><li><a href='/nov0809/' target='_blank'>Novella 9 \u2013 Giornata 8</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d72</span></li></ul>"
+  },
+  {
+    "id": "santareparata",
+    "name": "Santa Reparata",
+    "lat": 42.8046378,
+    "lon": 13.6957698,
+    "type": "church",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0609/' target='_blank'>Novella 9 \u2013 Giornata 6</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d72</span></li></ul>"
+  },
+  {
+    "id": "sardegna",
+    "name": "Sardigna",
+    "lat": 40.0912813,
+    "lon": 9.0305773,
+    "type": "island",
+    "area": "Italy",
+    "mentions": 4,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0207/' target='_blank'>Novella 7 \u2013 Giornata 2</a></li><li><a href='/nov0308/' target='_blank'>Novella 8 \u2013 Giornata 3</a></li><li><a href='/nov0404/' target='_blank'>Novella 4 \u2013 Giornata 4</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d72</span></li><li><a href='/nov0610/' target='_blank'>Novella 10 \u2013 Giornata 6</a></li></ul>"
+  },
+  {
+    "id": "scozia",
+    "name": "Scozia",
+    "lat": 56.7861112,
+    "lon": -4.1140518,
+    "type": "country",
+    "area": "England-Ireland-Scotland",
+    "mentions": 3,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0203/' target='_blank'>Novella 3 \u2013 Giornata 2</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d73</span></li><li><a href='/nov0208/' target='_blank'>Novella 8 \u2013 Giornata 2</a></li><li><a href='/nov0809/' target='_blank'>Novella 9 \u2013 Giornata 8</a></li></ul>"
+  },
+  {
+    "id": "ssepolcro",
+    "name": "Sepolcro",
+    "lat": 41.3194648,
+    "lon": 16.280932,
+    "type": "area",
+    "area": "Cyprus-Levant",
+    "mentions": 2,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0207/' target='_blank'>Novella 7 \u2013 Giornata 2</a></li><li><a href='/nov0307/' target='_blank'>Novella 7 \u2013 Giornata 3</a></li></ul>"
+  },
+  {
+    "id": "settignano",
+    "name": "Settignano",
+    "lat": 43.7829916,
+    "lon": 11.3208169,
+    "type": "hill",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0803/' target='_blank'>Novella 3 \u2013 Giornata 8</a></li></ul>"
+  },
+  {
+    "id": "siena",
+    "name": "Siena",
+    "lat": 43.167206,
+    "lon": 11.467561,
+    "type": "city",
+    "area": "Italy",
+    "mentions": 5,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0703/' target='_blank'>Novella 3 \u2013 Giornata 7</a></li><li><a href='/nov0710/' target='_blank'>Novella 10 \u2013 Giornata 7</a></li><li><a href='/nov0808/' target='_blank'>Novella 8 \u2013 Giornata 8</a></li><li><a href='/nov0904/' target='_blank'>Novella 4 \u2013 Giornata 9</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d77</span></li><li><a href='/nov1002/' target='_blank'>Novella 2 \u2013 Giornata 10</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d72</span></li></ul>"
+  },
+  {
+    "id": "sinigaglia",
+    "name": "Sinagaglia",
+    "lat": 43.7149517,
+    "lon": 13.2179488,
+    "type": "city",
+    "area": "Italy",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0804/' target='_blank'>Novella 4 \u2013 Giornata 8</a></li></ul>"
+  },
+  {
+    "id": "spagna",
+    "name": "Spagna / Ispagna",
+    "lat": 39.3260685,
+    "lon": -4.8379791,
+    "type": "country",
+    "area": "Iberia",
+    "mentions": 3,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0403/' target='_blank'>Novella 3 \u2013 Giornata 4</a></li><li><a href='/nov0508/' target='_blank'>Novella 8 \u2013 Giornata 5</a></li><li><a href='/nov1001/' target='_blank'>Novella 1 \u2013 Giornata 10</a></li></ul>"
+  },
+  {
+    "id": "strangford",
+    "name": "Stanforda",
+    "lat": 37.4313138,
+    "lon": -122.1693654,
+    "type": "city",
+    "area": "England-Ireland-Scotland",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0208/' target='_blank'>Novella 8 \u2013 Giornata 2</a></li></ul>"
+  },
+  {
+    "id": "susa",
+    "name": "Susa",
+    "lat": 45.1372115,
+    "lon": 7.0539789,
+    "type": "city",
+    "area": "NorthAfrica",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0502/' target='_blank'>Novella 2 \u2013 Giornata 5</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d75</span></li></ul>"
+  },
+  {
+    "id": "tebaide",
+    "name": "Tebaida",
+    "lat": -4.0112151,
+    "lon": -79.2053795,
+    "type": "region",
+    "area": "NorthAfrica",
+    "mentions": 1,
+    "mention_html": "<ul style='margin: 0.5rem 0; padding-left: 1.5rem;'><li><a href='/nov0310/' target='_blank'>Novella 10 \u2013 Giornata 3</a> <span style='background:#fef3c7; padding:0.125rem 0.25rem; border-radius:2px; font-size:0.75rem;'>\u00d72</span></li></ul>"
+  }
+];
+
+// Initialize map centered on Mediterranean
+const map = L.map('places-map').setView([42, 12], 5);
+
+// Add tile layer (OpenStreetMap)
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap contributors',
+    maxZoom: 18
+}).addTo(map);
+
+// Store markers for filtering
+let markers = [];
+
+// Function to get marker color based on mention count
+function getMarkerColor(mentions) {
+    if (mentions >= 16) return '#10b981'; // Green
+    if (mentions >= 6) return '#f59e0b';  // Orange
+    return '#ef4444';  // Red
+}
+
+// Function to create marker icon
+function createMarkerIcon(color) {
+    return L.divIcon({
+        className: 'custom-marker',
+        html: `<div style="background-color: ${color}; width: 24px; height: 24px; border-radius: 50%; border: 3px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.3);"></div>`,
+        iconSize: [24, 24],
+        iconAnchor: [12, 12]
+    });
+}
+
+// Add markers
+places.forEach(place => {
+    const color = getMarkerColor(place.mentions);
+    const icon = createMarkerIcon(color);
+    
+    const marker = L.marker([place.lat, place.lon], { icon: icon })
+        .bindPopup(`
+            <h3 class="popup-header">${place.name}</h3>
+            <div class="popup-body">
+                <div class="popup-meta">
+                    ${place.type} in ${place.area}<br>
+                    <strong>${place.mentions} mention(s)</strong>
+                </div>
+                ${place.mention_html}
+            </div>
+        `)
+        .addTo(map);
+    
+    marker.placeData = place;
+    markers.push(marker);
+});
+
+// Update visible count
+function updateVisibleCount() {
+    const visible = markers.filter(m => map.hasLayer(m)).length;
+    document.getElementById('visible-count').textContent = visible;
+}
+
+// Filter functions
+function filterMarkers() {
+    const regionFilter = document.getElementById('region-filter').value;
+    const typeFilter = document.getElementById('type-filter').value;
+    
+    markers.forEach(marker => {
+        const place = marker.placeData;
+        let show = true;
+        
+        if (regionFilter !== 'all' && !place.area.includes(regionFilter)) {
+            show = false;
+        }
+        
+        if (typeFilter !== 'all' && place.type !== typeFilter) {
+            show = false;
+        }
+        
+        if (show) {
+            map.addLayer(marker);
+        } else {
+            map.removeLayer(marker);
+        }
+    });
+    
+    updateVisibleCount();
+    updatePlacesList();
+}
+
+// Event listeners
+document.getElementById('region-filter').addEventListener('change', filterMarkers);
+document.getElementById('type-filter').addEventListener('change', filterMarkers);
+
+// Generate places list
+function updatePlacesList() {
+    const grid = document.getElementById('places-grid');
+    const visiblePlaces = markers
+        .filter(m => map.hasLayer(m))
+        .map(m => m.placeData)
+        .sort((a, b) => a.name.localeCompare(b.name));
+    
+    grid.innerHTML = visiblePlaces.map(place => `
+        <div class="place-card" onclick="map.setView([${place.lat}, ${place.lon}], 10); markers.find(m => m.placeData.id === '${place.id}').openPopup();">
+            <h4>${place.name}</h4>
+            <div class="place-meta">${place.type} • ${place.area}</div>
+            <div class="mention-count">${place.mentions} mention(s)</div>
+        </div>
+    `).join('');
+}
+
+// Initial update
+updateVisibleCount();
+updatePlacesList();
+</script>

@@ -1,0 +1,4 @@
+WP_SITE_URL     = "https://decamweb.digitalscholarship.brown.edu"
+WP_SITE_NAME    = "Decameron Web"
+WP_AUTHOR       = "pablo"
+WP_AUTHOR_EMAIL = "pablo_a_marca@alumni.brown.edu"

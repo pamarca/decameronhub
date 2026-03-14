@@ -1,0 +1,173 @@
+INFO: Decameron extraction v6 - COMPLETE FIX with arguments
+INFO: Indexed 5946 English elements
+INFO: PROLOGUE: proem
+INFO:   prologue     order=  0  proem                           IT=  6497  EN=  6643
+INFO: Found 10 days
+INFO: 
+=== DAY 1 ===
+INFO:   day_intro    order=  0  day01_argument                  IT=   438  EN=   377
+INFO:   Found 12 div2 sections
+INFO:   introduction order=  1  d01intro                        IT= 50577  EN= 47755
+INFO:   novella      order=  2  nov0101                         IT= 38396  EN= 32537
+INFO:   novella      order=  3  nov0102                         IT= 12858  EN= 10776
+INFO:   novella      order=  4  nov0103                         IT=  7752  EN=  7196
+INFO:   novella      order=  5  nov0104                         IT= 11749  EN=  9378
+INFO:   novella      order=  6  nov0105                         IT=  7955  EN=  7315
+INFO:   novella      order=  7  nov0106                         IT=  7972  EN=  6686
+INFO:   novella      order=  8  nov0107                         IT= 14454  EN= 12214
+INFO:   novella      order=  9  nov0108                         IT=  7844  EN=  6333
+INFO:   novella      order= 10  nov0109                         IT=  3691  EN=  2762
+INFO:   novella      order= 11  nov0110                         IT=  8573  EN=  7635
+INFO:   conclusion   order= 12  d01conclu                       IT=  9885  EN=  8608
+INFO: 
+=== DAY 2 ===
+INFO:   day_intro    order=  0  day02_argument                  IT=   360  EN=   308
+INFO:   Found 12 div2 sections
+INFO:   introduction order=  1  d02intro                        IT=  1403  EN=  1070
+INFO:   novella      order=  2  nov0201                         IT= 15094  EN= 12077
+INFO:   novella      order=  3  nov0202                         IT= 19716  EN= 16432
+INFO:   novella      order=  4  nov0203                         IT= 26467  EN= 20525
+INFO:   novella      order=  5  nov0204                         IT= 15121  EN= 12627
+INFO:   novella      order=  6  nov0205                         IT= 39632  EN= 32639
+INFO:   novella      order=  7  nov0206                         IT= 46087  EN= 33941
+INFO:   novella      order=  8  nov0207                         IT= 66806  EN= 54015
+INFO:   novella      order=  9  nov0208                         IT= 49030  EN= 39581
+INFO:   novella      order= 10  nov0209                         IT= 39036  EN= 31334
+INFO:   novella      order= 11  nov0210                         IT= 22721  EN= 18141
+INFO:   conclusion   order= 12  d02conclu                       IT=  7444  EN=  7082
+INFO: 
+=== DAY 3 ===
+INFO:   day_intro    order=  0  day03_argument                  IT=   363  EN=   313
+INFO:   Found 12 div2 sections
+INFO:   introduction order=  1  d03intro                        IT=  8456  EN=  7499
+INFO:   novella      order=  2  nov0301                         IT= 19311  EN= 16986
+INFO:   novella      order=  3  nov0302                         IT= 13400  EN= 12740
+INFO:   novella      order=  4  nov0303                         IT= 25691  EN= 23136
+INFO:   novella      order=  5  nov0304                         IT= 15525  EN= 12724
+INFO:   novella      order=  6  nov0305                         IT= 16505  EN= 14272
+INFO:   novella      order=  7  nov0306                         IT= 25100  EN= 21053
+INFO:   novella      order=  8  nov0307                         IT= 49202  EN= 41557
+INFO:   novella      order=  9  nov0308                         IT= 31249  EN= 24326
+INFO:   novella      order= 10  nov0309                         IT= 27901  EN= 23225
+INFO:   novella      order= 11  nov0310                         IT= 15220  EN= 12920
+INFO:   conclusion   order= 12  d03conclu                       IT=  9430  EN=  8843
+INFO: 
+=== DAY 4 ===
+INFO:   day_intro    order=  0  day04_argument                  IT=   320  EN=   250
+INFO:   Found 12 div2 sections
+INFO:   introduction order=  1  d04intro                        IT= 18894  EN= 17423
+INFO:   novella      order=  2  nov0401                         IT= 28176  EN= 25619
+INFO:   novella      order=  3  nov0402                         IT= 27616  EN= 24346
+INFO:   novella      order=  4  nov0403                         IT= 21764  EN= 17307
+INFO:   novella      order=  5  nov0404                         IT= 15991  EN= 12626
+INFO:   novella      order=  6  nov0405                         IT= 12033  EN=  9679
+INFO:   novella      order=  7  nov0406                         IT= 20436  EN= 17911
+INFO:   novella      order=  8  nov0407                         IT= 14108  EN= 10115
+INFO:   novella      order=  9  nov0408                         IT= 15743  EN= 13755
+INFO:   novella      order= 10  nov0409                         IT= 11658  EN=  8502
+INFO:   novella      order= 11  nov0410                         IT= 27735  EN= 22148
+INFO:   conclusion   order= 12  d04conclu                       IT=  8808  EN=  8313
+INFO: 
+=== DAY 5 ===
+INFO:   day_intro    order=  0  day05_argument                  IT=   366  EN=   282
+INFO:   Found 12 div2 sections
+INFO:   introduction order=  1  d05intro                        IT=  2184  EN=  1725
+INFO:   novella      order=  2  nov0501                         IT= 34364  EN= 27940
+INFO:   novella      order=  3  nov0502                         IT= 20720  EN= 16010
+INFO:   novella      order=  4  nov0503                         IT= 23102  EN= 18366
+INFO:   novella      order=  5  nov0504                         IT= 18535  EN= 14079
+INFO:   novella      order=  6  nov0505                         IT= 20137  EN= 14479
+INFO:   novella      order=  7  nov0506                         IT= 17796  EN= 14554
+INFO:   novella      order=  8  nov0507                         IT= 21670  EN= 17857
+INFO:   novella      order=  9  nov0508                         IT= 17800  EN= 15038
+INFO:   novella      order= 10  nov0509                         IT= 17991  EN= 15905
+INFO:   novella      order= 11  nov0510                         IT= 24644  EN= 21869
+INFO:   conclusion   order= 12  d05conclu                       IT=  7495  EN=  6747
+INFO: 
+=== DAY 6 ===
+INFO:   day_intro    order=  0  day06_argument                  IT=   402  EN=   327
+INFO:   Found 12 div2 sections
+INFO:   introduction order=  1  d06intro                        IT=  7031  EN=  5313
+INFO:   novella      order=  2  nov0601                         IT=  4802  EN=  3879
+INFO:   novella      order=  3  nov0602                         IT= 11802  EN=  9101
+INFO:   novella      order=  4  nov0603                         IT=  5622  EN=  4711
+INFO:   novella      order=  5  nov0604                         IT=  8710  EN=  6362
+INFO:   novella      order=  6  nov0605                         IT=  6500  EN=  5301
+INFO:   novella      order=  7  nov0606                         IT=  7217  EN=  5649
+INFO:   novella      order=  8  nov0607                         IT=  7653  EN=  6768
+INFO:   novella      order=  9  nov0608                         IT=  4387  EN=  3801
+INFO:   novella      order= 10  nov0609                         IT=  7444  EN=  5631
+INFO:   novella      order= 11  nov0610                         IT= 24110  EN= 21253
+INFO:   conclusion   order= 12  d06conclu                       IT= 17800  EN= 16054
+INFO: 
+=== DAY 7 ===
+INFO:   day_intro    order=  0  day07_argument                  IT=   397  EN=   382
+INFO:   Found 12 div2 sections
+INFO:   introduction order=  1  d07intro                        IT=  3397  EN=  3027
+INFO:   novella      order=  2  nov0701                         IT= 15377  EN= 11281
+INFO:   novella      order=  3  nov0702                         IT= 13296  EN= 11489
+INFO:   novella      order=  4  nov0703                         IT= 18099  EN= 13717
+INFO:   novella      order=  5  nov0704                         IT= 13555  EN= 10869
+INFO:   novella      order=  6  nov0705                         IT= 23292  EN= 20073
+INFO:   novella      order=  7  nov0706                         IT= 13440  EN=  9664
+INFO:   novella      order=  8  nov0707                         IT= 20125  EN= 15262
+INFO:   novella      order=  9  nov0708                         IT= 25240  EN= 20054
+INFO:   novella      order= 10  nov0709                         IT= 34219  EN= 26999
+INFO:   novella      order= 11  nov0710                         IT= 12392  EN=  9592
+INFO:   conclusion   order= 12  d07conclu                       IT=  8772  EN=  7684
+INFO: 
+=== DAY 8 ===
+INFO:   day_intro    order=  0  day08_argument                  IT=   372  EN=   285
+INFO:   Found 12 div2 sections
+INFO:   introduction order=  1  d08intro                        IT=  1134  EN=   908
+INFO:   novella      order=  2  nov0801                         IT=  8536  EN=  7022
+INFO:   novella      order=  3  nov0802                         IT= 18381  EN= 14480
+INFO:   novella      order=  4  nov0803                         IT= 27534  EN= 21758
+INFO:   novella      order=  5  nov0804                         IT= 16574  EN= 13247
+INFO:   novella      order=  6  nov0805                         IT=  9883  EN=  8169
+INFO:   novella      order=  7  nov0806                         IT= 21299  EN= 16389
+INFO:   novella      order=  8  nov0807                         IT= 66766  EN= 59150
+INFO:   novella      order=  9  nov0808                         IT= 15734  EN= 11354
+INFO:   novella      order= 10  nov0809                         IT= 46073  EN= 40693
+INFO:   novella      order= 11  nov0810                         IT= 31495  EN= 28680
+INFO:   conclusion   order= 12  d08conclu                       IT=  6649  EN=  6180
+INFO: 
+=== DAY 9 ===
+INFO:   day_intro    order=  0  day09_argument                  IT=   327  EN=   289
+INFO:   Found 12 div2 sections
+INFO:   introduction order=  1  d09intro                        IT=  2631  EN=  2402
+INFO:   novella      order=  2  nov0901                         IT= 17101  EN= 14210
+INFO:   novella      order=  3  nov0902                         IT=  8412  EN=  7712
+INFO:   novella      order=  4  nov0903                         IT= 14761  EN= 10851
+INFO:   novella      order=  5  nov0904                         IT= 14445  EN= 10728
+INFO:   novella      order=  6  nov0905                         IT= 28628  EN= 21105
+INFO:   novella      order=  7  nov0906                         IT= 15843  EN= 12156
+INFO:   novella      order=  8  nov0907                         IT=  5849  EN=  5357
+INFO:   novella      order=  9  nov0908                         IT= 13476  EN=  9505
+INFO:   novella      order= 10  nov0909                         IT= 17018  EN= 13150
+INFO:   novella      order= 11  nov0910                         IT= 11442  EN=  8903
+INFO:   conclusion   order= 12  d09conclu                       IT=  6014  EN=  5924
+INFO: 
+=== DAY 10 ===
+INFO:   day_intro    order=  0  day10_argument                  IT=   388  EN=   303
+INFO:   Found 12 div2 sections
+INFO:   introduction order=  1  d10intro                        IT=  1683  EN=  1329
+INFO:   novella      order=  2  nov1001                         IT=  9242  EN=  7732
+INFO:   novella      order=  3  nov1002                         IT= 15815  EN= 12546
+INFO:   novella      order=  4  nov1003                         IT= 21181  EN= 16730
+INFO:   novella      order=  5  nov1004                         IT= 24236  EN= 18244
+INFO:   novella      order=  6  nov1005                         IT= 14871  EN= 11765
+INFO:   novella      order=  7  nov1006                         IT= 20018  EN= 16061
+INFO:   novella      order=  8  nov1007                         IT= 23437  EN= 19297
+INFO:   novella      order=  9  nov1008                         IT= 56602  EN= 46508
+INFO:   novella      order= 10  nov1009                         IT= 58828  EN= 45417
+INFO:   novella      order= 11  nov1010                         IT= 34815  EN= 28677
+INFO:   conclusion   order= 12  d10conclu                       IT=  7870  EN=  7433
+INFO: 
+EPILOGUE: epilogue
+INFO:   epilogue     order=  0  epilogue                        IT= 11905  EN= 12650
+INFO: 
+Wrote 132 rows to CSV
+INFO: Validation: 0 errors, 0 warnings
+INFO: Total IT: 2,287,346 chars (avg 17,328)
+INFO: Total EN: 1,887,968 chars (avg 14,302)

@@ -1,0 +1,667 @@
+
+<!-- Leaflet CSS and JS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<!-- Leaflet MarkerCluster plugin -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+
+<!-- Leaflet Heat plugin -->
+<script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
+
+<!-- html2canvas for export -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+<div class="places-map-container">
+    
+    <!-- Map Controls -->
+    <div class="map-controls">
+        <div class="control-row">
+            <div class="control-group">
+                <label>Region:</label>
+                <select id="region-filter">
+                    <option value="all">All Regions</option>
+                    <option value="Italy">Italy</option>
+                    <option value="France">France</option>
+                    <option value="Cyprus-Levant">Cyprus & Levant</option>
+                    <option value="Greece-Balkans">Greece & Balkans</option>
+                    <option value="Spain">Spain</option>
+                    <option value="England">England</option>
+                    <option value="Africa">Africa</option>
+                </select>
+            </div>
+            
+            <div class="control-group">
+                <label>Type:</label>
+                <select id="type-filter">
+                    <option value="all">All Types</option>
+                    <option value="city">Cities</option>
+                    <option value="region">Regions</option>
+                    <option value="country">Countries</option>
+                </select>
+            </div>
+            
+            <div class="control-group">
+                <label>Search:</label>
+                <input type="text" id="place-search" placeholder="Search places..." />
+                <button id="clear-search" class="btn-icon" title="Clear search">✕</button>
+            </div>
+        </div>
+        
+        <div class="control-row">
+            <div class="control-group">
+                <label>View:</label>
+                <div class="btn-group">
+                    <button id="view-markers" class="btn-toggle active" data-view="markers">Markers</button>
+                    <button id="view-heatmap" class="btn-toggle" data-view="heatmap">Heatmap</button>
+                    <button id="view-routes" class="btn-toggle" data-view="routes">Routes</button>
+                </div>
+            </div>
+            
+            <div class="control-group">
+                <label>
+                    <input type="checkbox" id="enable-clustering" checked>
+                    <span>Cluster markers</span>
+                </label>
+            </div>
+            
+            <div class="control-group ml-auto">
+                <button id="export-map" class="btn btn-primary">
+                    📸 Export Map
+                </button>
+            </div>
+        </div>
+        
+        <div class="stats">
+            <span id="visible-count">0</span> places shown
+        </div>
+    </div>
+    
+    <!-- Map -->
+    <div id="places-map" style="width: 100%; height: 600px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);"></div>
+    
+    <!-- Legend -->
+    <div class="map-legend">
+        <h4>Marker Colors</h4>
+        <div class="legend-item">
+            <span class="legend-marker" style="background: #ef4444;">●</span>
+            <span>1-5 mentions</span>
+        </div>
+        <div class="legend-item">
+            <span class="legend-marker" style="background: #f59e0b;">●</span>
+            <span>6-15 mentions</span>
+        </div>
+        <div class="legend-item">
+            <span class="legend-marker" style="background: #10b981;">●</span>
+            <span>16+ mentions</span>
+        </div>
+    </div>
+    
+</div>
+
+<style>
+.places-map-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+.map-controls {
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background: #f9fafb;
+    border-radius: 8px;
+}
+
+.control-row {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+
+.control-row:last-child {
+    margin-bottom: 0;
+}
+
+.control-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.control-group label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+
+.control-group select,
+.control-group input[type="text"] {
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: white;
+}
+
+.control-group select {
+    min-width: 150px;
+}
+
+#place-search {
+    min-width: 200px;
+}
+
+.btn-icon {
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    background: white;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-icon:hover {
+    background: #fee;
+    border-color: #f87171;
+    color: #dc2626;
+}
+
+.btn-group {
+    display: flex;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.btn-toggle {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-right: 1px solid #ddd;
+    background: white;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.9rem;
+}
+
+.btn-toggle:last-child {
+    border-right: none;
+}
+
+.btn-toggle:hover {
+    background: #f3f4f6;
+}
+
+.btn-toggle.active {
+    background: #0369a1;
+    color: white;
+}
+
+.btn {
+    padding: 0.5rem 1rem;
+    border: 1px solid #ddd;
+    background: white;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn:hover {
+    background: #f3f4f6;
+}
+
+.btn-primary {
+    background: #0369a1;
+    color: white;
+    border-color: #0369a1;
+}
+
+.btn-primary:hover {
+    background: #075985;
+}
+
+.ml-auto {
+    margin-left: auto;
+}
+
+.stats {
+    text-align: center;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #666;
+    padding-top: 0.5rem;
+    border-top: 1px solid #e5e7eb;
+}
+
+.map-legend {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.map-legend h4 {
+    margin: 0 0 0.5rem 0;
+    font-size: 0.9rem;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0.25rem 0;
+    font-size: 0.85rem;
+}
+
+.legend-marker {
+    font-size: 1.5rem;
+    line-height: 1;
+}
+
+/* Popup customization */
+.leaflet-popup-content-wrapper {
+    border-radius: 8px;
+    padding: 0;
+}
+
+.leaflet-popup-content {
+    margin: 0;
+    min-width: 280px;
+    max-width: 350px;
+}
+
+.popup-header {
+    background: #0369a1;
+    color: white;
+    padding: 0.75rem 1rem;
+    margin: 0;
+    font-size: 1.1rem;
+    border-radius: 8px 8px 0 0;
+}
+
+.popup-body {
+    padding: 1rem;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.popup-meta {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 0.75rem;
+}
+
+.mention-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.mention-item {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #f5f5f5;
+    font-size: 0.9rem;
+}
+
+.mention-item:last-child {
+    border-bottom: none;
+}
+
+.mention-item a {
+    color: #0369a1;
+    text-decoration: none;
+}
+
+.mention-item a:hover {
+    text-decoration: underline;
+}
+
+.mention-badge {
+    background: #fef3c7;
+    color: #92400e;
+    padding: 0.125rem 0.375rem;
+    border-radius: 3px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-left: 0.25rem;
+}
+
+.show-more-mentions {
+    display: block;
+    width: 100%;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    background: #f3f4f6;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    color: #0369a1;
+    font-weight: 600;
+    text-align: center;
+}
+
+.show-more-mentions:hover {
+    background: #e5e7eb;
+}
+
+.mention-hidden {
+    display: none;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .control-row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.75rem;
+    }
+    
+    .control-group {
+        width: 100%;
+    }
+    
+    .control-group select,
+    #place-search {
+        width: 100%;
+        min-width: auto;
+    }
+    
+    .btn-group {
+        width: 100%;
+    }
+    
+    .btn-toggle {
+        flex: 1;
+    }
+}
+</style>
+
+<script>
+// Place data
+const places = [{"id": "abruzzi", "name": "Abruzzi", "lat": 42.4687934, "lon": 13.5631284, "type": "region", "area": "Italy", "mentions": [{"section_id": "nov0610", "title": "Novella 10 – Giornata 6", "slug": "giornata-6-novella-10", "count": 1, "day": 6, "order": 11}, {"section_id": "nov0803", "title": "Novella 3 – Giornata 8", "slug": "giornata-8-novella-3", "count": 1, "day": 8, "order": 4}]}, {"id": "acaia", "name": "Acaia", "lat": 40.3344763, "lon": 18.2977001, "type": "region", "area": "Greece-Balkans", "mentions": [{"section_id": "nov1008", "title": "Novella 8 – Giornata 10", "slug": "giornata-10-novella-8", "count": 1, "day": 10, "order": 9}]}, {"id": "sangiovannidacri", "name": "Acri", "lat": 32.9281731, "lon": 35.0756378, "type": "city", "area": "Cyprus-Levant", "mentions": [{"section_id": "nov0209", "title": "Novella 9 – Giornata 2", "slug": "giornata-2-novella-9", "count": 2, "day": 2, "order": 10}, {"section_id": "nov1009", "title": "Novella 9 – Giornata 10", "slug": "giornata-10-novella-9", "count": 1, "day": 10, "order": 10}]}, {"id": "aiguesmortes", "name": "Aguamorta", "lat": 43.5661521, "lon": 4.19154, "type": "city", "area": "France", "mentions": [{"section_id": "nov0207", "title": "Novella 7 – Giornata 2", "slug": "giornata-2-novella-7", "count": 1, "day": 2, "order": 8}]}, {"id": "alagna", "name": "Alagna", "lat": 45.169861, "lon": 8.889846, "type": "city", "area": "Italy", "mentions": [{"section_id": "nov0503", "title": "Novella 3 – Giornata 5", "slug": "giornata-5-novella-3", "count": 3, "day": 5, "order": 4}]}, {"id": "albisola", "name": "Alba", "lat": 44.339838, "lon": 8.509353, "type": "city", "area": "Italy", "mentions": [{"section_id": "nov0209", "title": "Novella 9 – Giornata 2", "slug": "giornata-2-novella-9", "count": 1, "day": 2, "order": 10}]}, {"id": "alessandriaeg", "name": "Alessandria / Alessandra", "lat": 31.1999427, "lon": 29.9112538, "type": "city", "area": "NorthAfrica", "mentions": [{"section_id": "nov0103", "title": "Novella 3 – Giornata 1", "slug": "giornata-1-novella-3", "count": 1, "day": 1, "order": 4}, {"section_id": "nov0206", "title": "Novella 6 – Giornata 2", "slug": "giornata-2-novella-6", "count": 1, "day": 2, "order": 7}, {"section_id": "nov0207", "title": "Novella 7 – Giornata 2", "slug": "giornata-2-novella-7", "count": 3, "day": 2, "order": 8}, {"section_id": "nov0209", "title": "Novella 9 – Giornata 2", "slug": "giornata-2-novella-9", "count": 4, "day": 2, "order": 10}, {"section_id": "nov0802", "title": "Novella 2 – Giornata 8", "slug": "giornata-8-novella-2", "count": 1, "day": 8, "order": 3}, {"section_id": "nov1009", "title": "Novella 9 – Giornata 10", "slug": "giornata-10-novella-9", "count": 2, "day": 10, "order": 10}]}, {"id": "amalfi", "name": "Amalfi", "lat": 40.63367, "lon": 14.6026095, "type": "city", "area": "Italy", "mentions": [{"section_id": "nov0204", "title": "Novella 4 – Giornata 2", "slug": "giornata-2-novella-4", "count": 1, "day": 2, "order": 5}, {"section_id": "nov0410", "title": "Novella 10 – Giornata 4", "slug": "giornata-4-novella-10", "count": 3, "day": 4, "order": 11}]}, {"id": "antiochia", "name": "Antiochia", "lat": 36.2036546, "lon": 36.1637648, "type": "region", "area": "Cyprus-Levant", "mentions": [{"section_id": "nov0909", "title": "Novella 9 – Giornata 9", "slug": "giornata-9-novella-9", "count": 2, "day": 9, "order": 10}]}, {"id": "maregeo", "name": "Arcipelago", "lat": 59.3409122, "lon": 18.7984629, "type": "sea", "area": "", "mentions": [{"section_id": "nov0204", "title": "Novella 4 – Giornata 2", "slug": "giornata-2-novella-4", "count": 1, "day": 2, "order": 5}]}, {"id": "arezzo", "name": "Arezzo", "lat": 43.5171442, "lon": 11.7639282, "type": "city", "area": "Italy", "mentions": [{"section_id": "nov0704", "title": "Novella 4 – Giornata 7", "slug": "giornata-7-novella-4", "count": 1, "day": 7, "order": 5}]}, {"id": "argo", "name": "Argo", "lat": 41.7758173, "lon": -87.8203, "type": "city", "area": "Greece-Balkans", "mentions": [{"section_id": "nov0709", "title": "Novella 9 – Giornata 7", "slug": "giornata-7-novella-9", "count": 1, "day": 7, "order": 10}]}, {"id": "arno", "name": "Arno", "lat": 43.7664527, "lon": 11.2573196, "type": "river", "area": "Italy", "mentions": [{"section_id": "nov0807", "title": "Novella 7 – Giornata 8", "slug": "giornata-8-novella-7", "count": 3, "day": 8, "order": 8}, {"section_id": "nov0809", "title": "Novella 9 – Giornata 8", "slug": "giornata-8-novella-9", "count": 2, "day": 8, "order": 10}, {"section_id": "nov0908", "title": "Novella 8 – Giornata 9", "slug": "giornata-9-novella-8", "count": 1, "day": 9, "order": 9}]}, {"id": "avignone", "name": "Avignone", "lat": 43.9492493, "lon": 4.8059012, "type": "city", "area": "France", "mentions": [{"section_id": "nov0802", "title": "Novella 2 – Giornata 8", "slug": "giornata-8-novella-2", "count": 1, "day": 8, "order": 3}]}, {"id": "atene", "name": "Atene", "lat": 37.9755648, "lon": 23.7348324, "type": "city", "area": "Greece-Balkans", "mentions": [{"section_id": "nov0207", "title": "Novella 7 – Giornata 2", "slug": "giornata-2-novella-7", "count": 5, "day": 2, "order": 8}, {"section_id": "nov1008", "title": "Novella 8 – Giornata 10", "slug": "giornata-10-novella-8", "count": 3, "day": 10, "order": 9}, {"section_id": "epilogue", "title": "Epilogo / Epilogue", "slug": "epilogo-epilogue", "count": 1, "day": 11, "order": 0}]}, {"id": "cairo", "name": "Babillonia / Babilonia", "lat": 32.5422107, "lon": 44.4300259, "type": "city", "area": "NorthAfrica", "mentions": [{"section_id": "nov0103", "title": "Novella 3 – Giornata 1", "slug": "giornata-1-novella-3", "count": 1, "day": 1, "order": 4}, {"section_id": "nov0207", "title": "Novella 7 – Giornata 2", "slug": "giornata-2-novella-7", "count": 2, "day": 2, "order": 8}, {"section_id": "nov1009", "title": "Novella 9 – Giornata 10", "slug": "giornata-10-novella-9", "count": 2, "day": 10, "order": 10}]}, {"id": "barberia", "name": "Barberia / Barbaria", "lat": 38.667492, "lon": 1.3906505, "type": "region", "area": "NorthAfrica", "mentions": [{"section_id": "nov0310", "title": "Novella 10 – Giornata 3", "slug": "giornata-3-novella-10", "count": 1, "day": 3, "order": 11}, {"section_id": "nov0404", "title": "Novella 4 – Giornata 4", "slug": "giornata-4-novella-4", "count": 1, "day": 4, "order": 5}, {"section_id": "nov0502", "title": "Novella 2 – Giornata 5", "slug": "giornata-5-novella-2", "count": 1, "day": 5, "order": 3}, {"section_id": "nov1009", "title": "Novella 9 – Giornata 10", "slug": "giornata-10-novella-9", "count": 1, "day": 10, "order": 10}]}, {"id": "barletta", "name": "Barletta", "lat": 41.3214976, "lon": 16.2868696, "type": "city", "area": "Italy", "mentions": [{"section_id": "nov0910", "title": "Novella 10 – Giornata 9", "slug": "giornata-9-novella-10", "count": 4, "day": 9, "order": 11}]}, {"id": "terrabaschi", "name": "terra de' Baschi", "lat": 43.2578866, "lon": -2.9243518, "type": "", "area": "Iberia", "mentions": [{"section_id": "nov0803", "title": "Novella 3 – Giornata 8", "slug": "giornata-8-novella-3", "count": 1, "day": 8, "order": 4}]}, {"id": "bengodi", "name": "Bengodi", "lat": 42.5558617, "lon": 11.1631353, "type": "contrada", "area": "", "mentions": [{"section_id": "nov0803", "title": "Novella 3 – Giornata 8", "slug": "giornata-8-novella-3", "count": 2, "day": 8, "order": 4}]}, {"id": "benevento", "name": "Benevento", "lat": 41.2476307, "lon": 14.7057054, "type": "city", "area": "Italy", "mentions": [{"section_id": "nov0206", "title": "Novella 6 – Giornata 2", "slug": "giornata-2-novella-6", "count": 1, "day": 2, "order": 7}]}, {"id": "bitonto", "name": "Bitonto", "lat": 41.1084971, "lon": 16.691548, "type": "city", "area": "Italy", "mentions": [{"section_id": "nov0910", "title": "Novella 10 – Giornata 9", "slug": "giornata-9-novella-10", "count": 1, "day": 9, "order": 11}]}, {"id": "bologna", "name": "Bologna", "lat": 44.4938203, "lon": 11.3426327, "type": "city", "area": "Italy", "mentions": [{"section_id": "nov0110", "title": "Novella 10 – Giornata 1", "slug": "giornata-1-novella-10", "count": 1, "day": 1, "order": 11}, {"section_id": "nov0202", "title": "Novella 2 – Giornata 2", "slug": "giornata-2-novella-2", "count": 1, "day": 2, "order": 3}, {"section_id": "nov0308", "title": "Novella 8 – Giornata 3", "slug": "giornata-3-novella-8", "count": 1, "day": 3, "order": 9}, {"section_id": "nov0707", "title": "Novella 7 – Giornata 7", "slug": "giornata-7-novella-7", "count": 6, "day": 7, "order": 8}, {"section_id": "nov0809", "title": "Novella 9 – Giornata 8", "slug": "giornata-8-novella-9", "count": 6, "day": 8, "order": 10}, {"section_id": "nov1004", "title": "Novella 4 – Giornata 10", "slug": "giornata-10-novella-4", "count": 7, "day": 10, "order": 5}, {"section_id": "nov1010", "title": "Novella 10 – Giornata 10", "slug": "giornata-10-novella-10", "count": 5, "day": 10, "order": 11}, {"section_id": "epilogue", "title": "Epilogo / Epilogue", "slug": "epilogo-epilogue", "count": 1, "day": 11, "order": 0}]}, {"id": "bonconvento", "name": "Bonconvento", "lat": 44.6044097, "lon": 11.3110572, "type": "city", "area": "Italy", "mentions": [{"section_id": "nov0904", "title": "Novella 4 – Giornata 9", "slug": "giornata-9-novella-4", "count": 3, "day": 9, "order": 5}]}, {"id": "borgogreci", "name": "Borgo de' Greci", "lat": 43.7690764, "lon": 11.2594446, "type": "contrada", "area": "Italy", "mentions": [{"section_id": "nov0610", "title": "Novella 10 – Giornata 6", "slug": "giornata-6-novella-10", "count": 1, "day": 6, "order": 11}]}, {"id": "borgogna", "name": "Borgogna", "lat": 47.2780873, "lon": 4.2224863, "type": "city", "area": "France", "mentions": [{"section_id": "nov0101", "title": "Novella 1 – Giornata 1", "slug": "giornata-1-novella-1", "count": 1, "day": 1, "order": 2}]}, {"id": "brindisi", "name": "Brandizio", "lat": 42.4914154, "lon": 14.1744952, "type": "city", "area": "Italy", "mentions": [{"section_id": "nov0204", "title": "Novella 4 – Giornata 2", "slug": "giornata-2-novella-4", "count": 1, "day": 2, "order": 5}]}, {"id": "brescia", "name": "Brescia", "lat": 45.7795805, "lon": 10.425873, "type": "city", "area": "Italy", "mentions": [{"section_id": "nov0406", "title": "Novella 6 – Giornata 4", "slug": "giornata-4-novella-6", "count": 1, "day": 4, "order": 7}]}, {"id": "bruges", "name": "Bruggia", "lat": 44.9534175, "lon": 9.1440496, "type": "city", "area": "NorthEurope-EastEurope", "mentions": [{"section_id": "nov0203", "title": "Novella 3 – Giornata 2", "slug": "giornata-2-novella-3", "count": 1, "day": 2, "order": 4}]}, {"id": "calatabellotta", "name": "Calatabellotta", "lat": 37.5773409, "lon": 13.216548, "type": "city", "area": "Italy", "mentions": [{"section_id": "nov1007", "title": "Novella 7 – Giornata 10", "slug": "giornata-10-novella-7", "count": 1, "day": 10, "order": 8}]}, {"id": "Calabria", "name": "Calavria", "lat": 45.7434395, "lon": 10.6664238, "type": "region", "area": "Italy", "mentions": [{"section_id": "nov0506", "title": "Novella 6 – Giornata 5", "slug": "giornata-5-novella-6", "count": 2, "day": 5, "order": 7}]}, {"id": "camaldoli", "name": "Camaldoli", "lat": 40.6526226, "lon": 15.1751616, "type": "contrada", "area": "Italy", "mentions": [{"section_id": "nov0905", "title": "Novella 5 – Giornata 9", "slug": "giornata-9-novella-5", "count": 1, "day": 9, "order": 6}]}, {"id": "camerata", "name": "Camerata", "lat": 45.9864146, "lon": 10.2500195, "type": "hamlet", "area": "Italy", "mentions": [{"section_id": "nov0701", "title": "Novella 1 – Giornata 7", "slug": "giornata-7-novella-1", "count": 1, "day": 7, "order": 2}, {"section_id": "nov0905", "title": "Novella 5 – Giornata 9", "slug": "giornata-9-novella-5", "count": 1, "day": 9, "order": 6}]}, {"id": "camollia", "name": "Camollia", "lat": 43.3276622, "lon": 11.3253877, "type": "contrada", "area": "Italy", "mentions": [{"section_id": "nov0808", "title": "Novella 8 – Giornata 8", "slug": "giornata-8-novella-8", "count": 1, "day": 8, "order": 9}]}, {"id": "camporeggi", "name": "Camporeggi", "lat": 44.2975113, "lon": 11.9445004, "type": "contrada", "area": "Italy", "mentions": [{"section_id": "nov0710", "title": "Novella 10 – Giornata 7", "slug": "giornata-7-novella-10", "count": 1, "day": 7, "order": 11}]}, {"id": "candia", "name": "Candia", "lat": 35.3084952, "lon": 24.4633423, "type": "city", "area": "Greece-Balkans", "mentions": [{"section_id": "nov0403", "title": "Novella 3 – Giornata 4", "slug": "giornata-4-novella-3", "count": 1, "day": 4, "order": 4}]}, {"id": "cappadocia", "name": "Capadocia", "lat": 38.7219011, "lon": 35.4873214, "type": "region", "area": "Turkey-AsiaMinor", "mentions": [{"section_id": "nov0207", "title": "Novella 7 – Giornata 2", "slug": "giornata-2-novella-7", "count": 3, "day": 2, "order": 8}]}, {"id": "capitolio", "name": "Capitolio", "lat": 41.8925778, "lon": 12.4822154, "type": "hill", "area": "Italy", "mentions": [{"section_id": "nov1008", "title": "Novella 8 – Giornata 10", "slug": "giornata-10-novella-8", "count": 1, "day": 10, "order": 9}]}, {"id": "capova", "name": "Capova", "lat": 41.1079984, "lon": 14.2097176, "type": "city", "area": "Italy", "mentions": [{"section_id": "nov0401", "title": "Novella 1 – Giornata 4", "slug": "giornata-4-novella-1", "count": 1, "day": 4, "order": 2}]}, {"id": "gafsa", "name": "Capsa", "lat": 34.4224374, "lon": 8.7843862, "type": "city", "area": "NorthAfrica", "mentions": [{"section_id": "nov0310", "title": "Novella 10 – Giornata 3", "slug": "giornata-3-novella-10", "count": 4, "day": 3, "order": 11}]}, {"id": "cartagine", "name": "Cartagine", "lat": 36.8548083, "lon": 10.3309924, "type": "city", "area": "NorthAfrica", "mentions": [{"section_id": "nov0404", "title": "Novella 4 – Giornata 4", "slug": "giornata-4-novella-4", "count": 1, "day": 4, "order": 5}]}, {"id": "castellammarestabia", "name": "Castello da mare di Stabia", "lat": 40.7455771, "lon": 14.4806859, "type": "city", "area": "Italy", "mentions": [{"section_id": "nov1006", "title": "Novella 6 – Giornata 10", "slug": "giornata-10-novella-6", "count": 2, "day": 10, "order": 7}]}, {"id": "catania", "name": "Catania", "lat": 37.5023612, "lon": 15.0873718, "type": "city", "area": "Italy", "mentions": []}, {"id": "certaldo", "name": "Certaldo", "lat": 43.5477043, "lon": 11.0409545, "type": "hamlet", "area": "Italy", "mentions": [{"section_id": "nov0610", "title": "Novella 10 – Giornata 6", "slug": "giornata-6-novella-10", "count": 1, "day": 6, "order": 11}]}, {"id": "cefalu", "name": "Cefalú", "lat": 38.034957, "lon": 14.0244562, "type": "city", "area": "Italy", "mentions": [{"section_id": "nov1007", "title": "Novella 7 – Giornata 10", "slug": "giornata-10-novella-7", "count": 1, "day": 10, "order": 8}]}, {"id": "chiarenza", "name": "Chiarenza", "lat": 37.5326836, "lon": 15.0456881, "type": "city", "area": "Greece-Balkans", "mentions": [{"section_id": "nov0207", "title": "Novella 7 – Giornata 2", "slug": "giornata-2-novella-7", "count": 4, "day": 2, "order": 8}]}, {"id": "chiassi", "name": "Chiassi", "lat": 45.302644, "lon": 10.6185306, "type": "area", "area": "Italy", "mentions": [{"section_id": "nov0508", "title": "Novella 8 – Giornata 5", "slug": "giornata-5-novella-8", "count": 2, "day": 5, "order": 9}]}, {"id": "chios", "name": "Chios", "lat": 38.3758132, "lon": 26.0646552, "type": "island", "area": "Turkey-AsiaMinor", "mentions": [{"section_id": "nov0207", "title": "Novella 7 – Giornata 2", "slug": "giornata-2-novella-7", "count": 2, "day": 2, "order": 8}]}, {"id": "sicilia", "name": "Cicilia", "lat": 37.587794, "lon": 14.155048, "type": "country", "area": "Italy", "mentions": [{"section_id": "nov0205", "title": "Novella 5 – Giornata 2", "slug": "giornata-2-novella-5", "count": 3, "day": 2, "order": 6}, {"section_id": "nov0206", "title": "Novella 6 – Giornata 2", "slug": "giornata-2-novella-6", "count": 11, "day": 2, "order": 7}, {"section_id": "nov0404", "title": "Novella 4 – Giornata 4", "slug": "giornata-4-novella-4", "count": 4, "day": 4, "order": 5}, {"section_id": "nov0502", "title": "Novella 2 – Giornata 5", "slug": "giornata-5-novella-2", "count": 1, "day": 5, "order": 3}, {"section_id": "nov0506", "title": "Novella 6 – Giornata 5", "slug": "giornata-5-novella-6", "count": 1, "day": 5, "order": 7}, {"section_id": "nov0507", "title": "Novella 7 – Giornata 5", "slug": "giornata-5-novella-7", "count": 1, "day": 5, "order": 8}, {"section_id": "nov0810", "title": "Novella 10 – Giornata 8", "slug": "giornata-8-novella-10", "count": 1, "day": 8, "order": 11}, {"section_id": "nov1007", "title": "Novella 7 – Giornata 10", "slug": "giornata-10-novella-7", "count": 1, "day": 10, "order": 8}, {"section_id": "nov1009", "title": "Novella 9 – Giornata 10", "slug": "giornata-10-novella-9", "count": 1, "day": 10, "order": 10}]}, {"id": "cipro", "name": "Cipri", "lat": 35.1762004, "lon": 33.3748219, "type": "island", "area": "Cyprus-Levant", "mentions": [{"section_id": "nov0109", "title": "Novella 9 – Giornata 1", "slug": "giornata-1-novella-9", "count": 1, "day": 1, "order": 10}, {"section_id": "nov0204", "title": "Novella 4 – Giornata 2", "slug": "giornata-2-novella-4", "count": 1, "day": 2, "order": 5}, {"section_id": "nov0207", "title": "Novella 7 – Giornata 2", "slug": "giornata-2-novella-7", "count": 8, "day": 2, "order": 8}, {"section_id": "nov0307", "title": "Novella 7 – Giornata 3", "slug": "giornata-3-novella-7", "count": 3, "day": 3, "order": 8}, {"section_id": "nov0501", "title": "Novella 1 – Giornata 5", "slug": "giornata-5-novella-1", "count": 6, "day": 5, "order": 2}, {"section_id": "nov1009", "title": "Novella 9 – Giornata 10", "slug": "giornata-10-novella-9", "count": 2, "day": 10, "order": 10}]}, {"id": "viacocomero", "name": "Via del Cocomero / Mercato Vecchio", "lat": 42.7591544, "lon": 11.1142636, "type": "street-lane", "area": "Italy", "mentions": [{"section_id": "nov0809", "title": "Novella 9 – Giornata 8", "slug": "giornata-8-novella-9", "count": 1, "day": 8, "order": 10}, {"section_id": "nov0903", "title": "Novella 3 – Giornata 9", "slug": "giornata-9-novella-3", "count": 1, "day": 9, "order": 4}]}, {"id": "corniglia", "name": "Corniglia", "lat": 44.1199606, "lon": 9.7086874, "type": "hamlet", "area": "Italy", "mentions": [{"section_id": "nov1002", "title": "Novella 2 – Giornata 10", "slug": "giornata-10-novella-2", "count": 1, "day": 10, "order": 3}]}, {"id": "costantinopoli", "name": "Costantinopoli", "lat": -37.6830261, "lon": 176.1698861, "type": "city", "area": "Turkey-AsiaMinor", "mentions": [{"section_id": "nov0204", "title": "Novella 4 – Giornata 2", "slug": "giornata-2-novella-4", "count": 1, "day": 2, "order": 5}, {"section_id": "nov0307", "title": "Novella 7 – Giornata 3", "slug": "giornata-3-novella-7", "count": 2, "day": 3, "order": 8}, {"section_id": "nov0810", "title": "Novella 10 – Giornata 8", "slug": "giornata-8-novella-10", "count": 1, "day": 8, "order": 11}]}, {"id": "corsignano", "name": "Corsignano", "lat": 43.0765485, "lon": 11.6789076, "type": "city", "area": "Italy", "mentions": [{"section_id": "nov0904", "title": "Novella 4 – Giornata 9", "slug": "giornata-9-novella-4", "count": 2, "day": 9, "order": 5}]}, {"id": "cremona", "name": "Cremona", "lat": 45.2208641, "lon": 10.037038, "type": "city", "area": "Italy", "mentions": [{"section_id": "nov0505", "title": "Novella 5 – Giornata 5", "slug": "giornata-5-novella-5", "count": 1, "day": 5, "order": 6}]}, {"id": "sancrescivalcava", "name": "san Cresci in Valcava", "lat": 43.9159011, "lon": 11.4028674, "type": "monastery", "area": "Italy", "mentions": [{"section_id": "nov0207", "title": "Novella 7 – Giornata 2", "slug": "giornata-2-novella-7", "count": 1, "day": 2, "order": 8}]}, {"id": "creta", "name": "Creti", "lat": 44.6841634, "lon": 24.5115331, "type": "island", "area": "Greece-Balkans", "mentions": [{"section_id": "nov0207", "title": "Novella 7 – Giornata 2", "slug": "giornata-2-novella-7", "count": 1, "day": 2, "order": 8}, {"section_id": "nov0403", "title": "Novella 3 – Giornata 4", "slug": "giornata-4-novella-3", "count": 3, "day": 4, "order": 4}, {"section_id": "nov0501", "title": "Novella 1 – Giornata 5", "slug": "giornata-5-novella-1", "count": 3, "day": 5, "order": 2}, {"section_id": "nov1009", "title": "Novella 9 – Giornata 10", "slug": "giornata-10-novella-9", "count": 1, "day": 10, "order": 10}]}, {"id": "cuba", "name": "la Cuba", "lat": 38.1380751, "lon": 13.3422482, "type": "castle", "area": "Italy", "mentions": [{"section_id": "nov0506", "title": "Novella 6 – Giornata 5", "slug": "giornata-5-novella-6", "count": 4, "day": 5, "order": 7}]}, {"id": "egina", "name": "Egina", "lat": 37.7243694, "lon": 23.4938109, "type": "island", "area": "Greece-Balkans", "mentions": [{"section_id": "nov0207", "title": "Novella 7 – Giornata 2", "slug": "giornata-2-novella-7", "count": 1, "day": 2, "order": 8}]}, {"id": "egitto", "name": "Egitto", "lat": 26.2540493, "lon": 29.2675469, "type": "country", "area": "NorthAfrica", "mentions": [{"section_id": "nov0207", "title": "Novella 7 – Giornata 2", "slug": "giornata-2-novella-7", "count": 1, "day": 2, "order": 8}, {"section_id": "nov0610", "title": "Novella 10 – Giornata 6", "slug": "giornata-6-novella-10", "count": 1, "day": 6, "order": 11}, {"section_id": "nov1009", "title": "Novella 9 – Giornata 10", "slug": "giornata-10-novella-9", "count": 1, "day": 10, "order": 10}]}, {"id": "armenia", "name": "Erminia", "lat": 44.7303164, "lon": 10.2951589, "type": "country", "area": "Turkey-AsiaMinor", "mentions": [{"section_id": "nov0207", "title": "Novella 7 – Giornata 2", "slug": "giornata-2-novella-7", "count": 1, "day": 2, "order": 8}, {"section_id": "nov0507", "title": "Novella 7 – Giornata 5", "slug": "giornata-5-novella-7", "count": 3, "day": 5, "order": 8}]}, {"id": "faenza", "name": "Faenza", "lat": 44.2855555, "lon": 11.8832055, "type": "city", "area": "Italy", "mentions": [{"section_id": "nov0505", "title": "Novella 5 – Giornata 5", "slug": "giornata-5-novella-5", "count": 3, "day": 5, "order": 6}, {"section_id": "nov0803", "title": "Novella 3 – Giornata 8", "slug": "giornata-8-novella-3", "count": 1, "day": 8, "order": 4}]}, {"id": "famagosta", "name": "Famagosta", "lat": 35.1207627, "lon": 33.9520958, "type": "city", "area": "Cyprus-Levant", "mentions": [{"section_id": "nov0207", "title": "Novella 7 – Giornata 2", "slug": "giornata-2-novella-7", "count": 3, "day": 2, "order": 8}]}, {"id": "fano", "name": "Fano", "lat": 43.8424173, "lon": 13.0146632, "type": "city", "area": "Italy", "mentions": [{"section_id": "nov0505", "title": "Novella 5 – Giornata 5", "slug": "giornata-5-novella-5", "count": 2, "day": 5, "order": 6}]}, {"id": "ferrara", "name": "Ferrara", "lat": 44.7667642, "lon": 11.827939, "type": "city", "area": "Italy", "mentions": [{"section_id": "nov0202", "title": "Novella 2 – Giornata 2", "slug": "giornata-2-novella-2", "count": 1, "day": 2, "order": 3}, {"section_id": "nov0810", "title": "Novella 10 – Giornata 8", "slug": "giornata-8-novella-10", "count": 1, "day": 8, "order": 11}]}, {"id": "lefiandre", "name": "Fiandra", "lat": 45.1777956, "lon": 9.5325436, "type": "region", "area": "NorthEurope-EastEurope", "mentions": [{"section_id": "nov0402", "title": "Novella 2 – Giornata 4", "slug": "giornata-4-novella-2", "count": 1, "day": 4, "order": 3}]}, {"id": "fiesole", "name": "Fiesole", "lat": 43.8066689, "lon": 11.2930735, "type": "city", "area": "Italy", "mentions": [{"section_id": "nov0701", "title": "Novella 1 – Giornata 7", "slug": "giornata-7-novella-1", "count": 2, "day": 7, "order": 2}, {"section_id": "nov0804", "title": "Novella 4 – Giornata 8", "slug": "giornata-8-novella-4", "count": 3, "day": 8, "order": 5}]}, {"id": "firenze", "name": "Firenze", "lat": 43.7697955, "lon": 11.2556404, "type": "city", "area": "Italy", "mentions": [{"section_id": "d01intro", "title": "Introduzione – Giornata 1", "slug": "giornata-1-introduzione", "count": 5, "day": 1, "order": 1}, {"section_id": "nov0106", "title": "Novella 6 – Giornata 1", "slug": "giornata-1-novella-6", "count": 1, "day": 1, "order": 7}, {"section_id": "nov0201", "title": "Novella 1 – Giornata 2", "slug": "giornata-2-novella-1", "count": 1, "day": 2, "order": 2}, {"section_id": "nov0203", "title": "Novella 3 – Giornata 2", "slug": "giornata-2-novella-3", "count": 8, "day": 2, "order": 4}, {"section_id": "nov0303", "title": "Novella 3 – Giornata 3", "slug": "giornata-3-novella-3", "count": 1, "day": 3, "order": 4}, {"section_id": "nov0306", "title": "Novella 6 – Giornata 3", "slug": "giornata-3-novella-6", "count": 1, "day": 3, "order": 7}, {"section_id": "nov0307", "title": "Novella 7 – Giornata 3", "slug": "giornata-3-novella-7", "count": 6, "day": 3, "order": 8}, {"section_id": "nov0309", "title": "Novella 9 – Giornata 3", "slug": "giornata-3-novella-9", "count": 4, "day": 3, "order": 10}, {"section_id": "d04intro", "title": "Introduzione – Giornata 4", "slug": "giornata-4-introduzione", "count": 5, "day": 4, "order": 1}, {"section_id": "nov0407", "title": "Novella 7 – Giornata 4", "slug": "giornata-4-novella-7", "count": 1, "day": 4, "order": 8}, {"section_id": "nov0408", "title": "Novella 8 – Giornata 4", "slug": "giornata-4-novella-8", "count": 1, "day": 4, "order": 9}, {"section_id": "nov0509", "title": "Novella 9 – Giornata 5", "slug": "giornata-5-novella-9", "count": 2, "day": 5, "order": 10}, {"section_id": "nov0601", "title": "Novella 1 – Giornata 6", "slug": "giornata-6-novella-1", "count": 1, "day": 6, "order": 2}, {"section_id": "nov0602", "title": "Novella 2 – Giornata 6", "slug": "giornata-6-novella-2", "count": 2, "day": 6, "order": 3}, {"section_id": "nov0603", "title": "Novella 3 – Giornata 6", "slug": "giornata-6-novella-3", "count": 3, "day": 6, "order": 4}, {"section_id": "nov0605", "title": "Novella 5 – Giornata 6", "slug": "giornata-6-novella-5", "count": 2, "day": 6, "order": 6}, {"section_id": "nov0606", "title": "Novella 6 – Giornata 6", "slug": "giornata-6-novella-6", "count": 3, "day": 6, "order": 7}, {"section_id": "nov0609", "title": "Novella 9 – Giornata 6", "slug": "giornata-6-novella-9", "count": 1, "day": 6, "order": 10}, {"section_id": "nov0610", "title": "Novella 10 – Giornata 6", "slug": "giornata-6-novella-10", "count": 1, "day": 6, "order": 11}, {"section_id": "nov0701", "title": "Novella 1 – Giornata 7", "slug": "giornata-7-novella-1", "count": 3, "day": 7, "order": 2}, {"section_id": "nov0706", "title": "Novella 6 – Giornata 7", "slug": "giornata-7-novella-6", "count": 1, "day": 7, "order": 7}, {"section_id": "nov0708", "title": "Novella 8 – Giornata 7", "slug": "giornata-7-novella-8", "count": 2, "day": 7, "order": 9}, {"section_id": "nov0802", "title": "Novella 2 – Giornata 8", "slug": "giornata-8-novella-2", "count": 3, "day": 8, "order": 3}, {"section_id": "nov0803", "title": "Novella 3 – Giornata 8", "slug": "giornata-8-novella-3", "count": 3, "day": 8, "order": 4}, {"section_id": "nov0805", "title": "Novella 5 – Giornata 8", "slug": "giornata-8-novella-5", "count": 3, "day": 8, "order": 6}, {"section_id": "nov0806", "title": "Novella 6 – Giornata 8", "slug": "giornata-8-novella-6", "count": 3, "day": 8, "order": 7}, {"section_id": "nov0807", "title": "Novella 7 – Giornata 8", "slug": "giornata-8-novella-7", "count": 4, "day": 8, "order": 8}, {"section_id": "nov0809", "title": "Novella 9 – Giornata 8", "slug": "giornata-8-novella-9", "count": 3, "day": 8, "order": 10}, {"section_id": "nov0810", "title": "Novella 10 – Giornata 8", "slug": "giornata-8-novella-10", "count": 2, "day": 8, "order": 11}, {"section_id": "nov0901", "title": "Novella 1 – Giornata 9", "slug": "giornata-9-novella-1", "count": 1, "day": 9, "order": 2}, {"section_id": "nov0903", "title": "Novella 3 – Giornata 9", "slug": "giornata-9-novella-3", "count": 1, "day": 9, "order": 4}, {"section_id": "nov0905", "title": "Novella 5 – Giornata 9", "slug": "giornata-9-novella-5", "count": 5, "day": 9, "order": 6}, {"section_id": "nov0906", "title": "Novella 6 – Giornata 9", "slug": "giornata-9-novella-6", "count": 3, "day": 9, "order": 7}, {"section_id": "nov0908", "title": "Novella 8 – Giornata 9", "slug": "giornata-9-novella-8", "count": 2, "day": 9, "order": 9}, {"section_id": "nov1001", "title": "Novella 1 – Giornata 10", "slug": "giornata-10-novella-1", "count": 1, "day": 10, "order": 2}, {"section_id": "nov1006", "title": "Novella 6 – Giornata 10", "slug": "giornata-10-novella-6", "count": 1, "day": 10, "order": 7}, {"section_id": "d10conclu", "title": "Conclusione – Giornata 10", "slug": "giornata-10-conclusione", "count": 2, "day": 10, "order": 12}]}, {"id": "forlimpopoli", "name": "Forlimpopoli", "lat": 44.1873049, "lon": 12.1259056, "type": "city", "area": "Italy", "mentions": [{"section_id": "nov0809", "title": "Novella 9 – Giornata 8", "slug": "giornata-8-novella-9", "count": 1, "day": 8, "order": 10}]}, {"id": "francia", "name": "Francia", "lat": 46.603354, "lon": 1.8883335, "type": "country", "area": "France", "mentions": [{"section_id": "nov0101", "title": "Novella 1 – Giornata 1", "slug": "giornata-1-novella-1", "count": 3, "day": 1, "order": 2}, {"section_id": "nov0105", "title": "Novella 5 – Giornata 1", "slug": "giornata-1-novella-5", "count": 3, "day": 1, "order": 6}, {"section_id": "nov0106", "title": "Novella 6 – Giornata 1", "slug": "giornata-1-novella-6", "count": 1, "day": 1, "order": 7}, {"section_id": "nov0207", "title": "Novella 7 – Giornata 2", "slug": "giornata-2-novella-7", "count": 1, "day": 2, "order": 8}, {"section_id": "nov0208", "title": "Novella 8 – Giornata 2", "slug": "giornata-2-novella-8", "count": 3, "day": 2, "order": 9}, {"section_id": "nov0409", "title": "Novella 9 – Giornata 4", "slug": "giornata-4-novella-9", "count": 1, "day": 4, "order": 10}, {"section_id": "nov0508", "title": "Novella 8 – Giornata 5", "slug": "giornata-5-novella-8", "count": 1, "day": 5, "order": 9}, {"section_id": "nov0608", "title": "Novella 8 – Giornata 6", "slug": "giornata-6-novella-8", "count": 1, "day": 6, "order": 9}, {"section_id": "nov0707", "title": "Novella 7 – Giornata 7", "slug": "giornata-7-novella-7", "count": 1, "day": 7, "order": 8}, {"section_id": "nov0809", "title": "Novella 9 – Giornata 8", "slug": "giornata-8-novella-9", "count": 1, "day": 8, "order": 10}]}, {"id": "friuli", "name": "Frioli", "lat": 45.6528943, "lon": 13.7804956, "type": "region", "area": "Italy", "mentions": [{"section_id": "nov1005", "title": "Novella 5 – Giornata 10", "slug": "giornata-10-novella-5", "count": 1, "day": 10, "order": 6}]}, {"id": "gaeta", "name": "Gaeta", "lat": 41.218312, "lon": 13.56281, "type": "city", "area": "Italy", "mentions": [{"section_id": "nov0204", "title": "Novella 4 – Giornata 2", "slug": "giornata-2-novella-4", "count": 1, "day": 2, "order": 5}]}, {"id": "galles", "name": "Gales", "lat": 52.2928116, "lon": -3.73893, "type": "", "area": "England-Ireland-Scotland", "mentions": [{"section_id": "nov0208", "title": "Novella 8 – Giornata 2", "slug": "giornata-2-novella-8", "count": 2, "day": 2, "order": 9}]}, {"id": "genova", "name": "Genova", "lat": 44.40726, "lon": 8.9338624, "type": "city", "area": "Italy", "mentions": [{"section_id": "nov0105", "title": "Novella 5 – Giornata 1", "slug": "giornata-1-novella-5", "count": 2, "day": 1, "order": 6}, {"section_id": "nov0108", "title": "Novella 8 – Giornata 1", "slug": "giornata-1-novella-8", "count": 4, "day": 1, "order": 9}, {"section_id": "nov0206", "title": "Novella 6 – Giornata 2", "slug": "giornata-2-novella-6", "count": 3, "day": 2, "order": 7}, {"section_id": "nov0209", "title": "Novella 9 – Giornata 2", "slug": "giornata-2-novella-9", "count": 11, "day": 2, "order": 10}, {"section_id": "nov0303", "title": "Novella 3 – Giornata 3", "slug": "giornata-3-novella-3", "count": 2, "day": 3, "order": 4}, {"section_id": "nov0403", "title": "Novella 3 – Giornata 4", "slug": "giornata-4-novella-3", "count": 1, "day": 4, "order": 4}, {"section_id": "nov1009", "title": "Novella 9 – Giornata 10", "slug": "giornata-10-novella-9", "count": 3, "day": 10, "order": 10}]}, {"id": "agrigento", "name": "Gergenti", "lat": 37.3122991, "lon": 13.57465, "type": "city", "area": "Italy", "mentions": [{"section_id": "nov0205", "title": "Novella 5 – Giornata 2", "slug": "giornata-2-novella-5", "count": 1, "day": 2, "order": 6}]}, {"id": "granada", "name": "Granata", "lat": 37.1895028, "lon": -3.5906604, "type": "city", "area": "Iberia", "mentions": [{"section_id": "nov0404", "title": "Novella 4 – Giornata 4", "slug": "giornata-4-novella-4", "count": 2, "day": 4, "order": 5}]}, {"id": "guascogna", "name": "Guascogna", "lat": 44.4682078, "lon": 7.3278184, "type": "region", "area": "France", "mentions": [{"section_id": "nov0109", "title": "Novella 9 – Giornata 1", "slug": "giornata-1-novella-9", "count": 2, "day": 1, "order": 10}]}, {"id": "corfu", "name": "Gurfo", "lat": 45.8995223, "lon": 7.6165576, "type": "island", "area": "Greece-Balkans", "mentions": [{"section_id": "nov0204", "title": "Novella 4 – Giornata 2", "slug": "giornata-2-novella-4", "count": 3, "day": 2, "order": 5}]}, {"id": "gerusalemme", "name": "Ierusalem", "lat": 31.7788472, "lon": 35.2257856, "type": "city", "area": "Cyprus-Levant", "mentions": [{"section_id": "nov0207", "title": "Novella 7 – Giornata 2", "slug": "giornata-2-novella-7", "count": 1, "day": 2, "order": 8}, {"section_id": "nov0610", "title": "Novella 10 – Giornata 6", "slug": "giornata-6-novella-10", "count": 1, "day": 6, "order": 11}, {"section_id": "nov0909", "title": "Novella 9 – Giornata 9", "slug": "giornata-9-novella-9", "count": 2, "day": 9, "order": 10}]}, {"id": "imola", "name": "Imola", "lat": 44.3535145, "lon": 11.7141233, "type": "city", "area": "Italy", "mentions": [{"section_id": "nov0402", "title": "Novella 2 – Giornata 4", "slug": "giornata-4-novella-2", "count": 2, "day": 4, "order": 3}]}, {"id": "inghilterra", "name": "Inghilterra", "lat": 52.5310214, "lon": -1.2649062, "type": "country", "area": "England-Ireland-Scotland", "mentions": [{"section_id": "nov0203", "title": "Novella 3 – Giornata 2", "slug": "giornata-2-novella-3", "count": 9, "day": 2, "order": 4}, {"section_id": "nov0208", "title": "Novella 8 – Giornata 2", "slug": "giornata-2-novella-8", "count": 9, "day": 2, "order": 9}, {"section_id": "nov0707", "title": "Novella 7 – Giornata 7", "slug": "giornata-7-novella-7", "count": 1, "day": 7, "order": 8}, {"section_id": "nov0809", "title": "Novella 9 – Giornata 8", "slug": "giornata-8-novella-9", "count": 1, "day": 8, "order": 10}]}, {"id": "irlanda", "name": "Irlanda", "lat": 52.865196, "lon": -7.9794599, "type": "country", "area": "England-Ireland-Scotland", "mentions": [{"section_id": "nov0208", "title": "Novella 8 – Giornata 2", "slug": "giornata-2-novella-8", "count": 2, "day": 2, "order": 9}]}, {"id": "ischia", "name": "Ischia", "lat": 40.734205, "lon": 13.947125, "type": "island", "area": "Italy", "mentions": [{"section_id": "nov0506", "title": "Novella 6 – Giornata 5", "slug": "giornata-5-novella-6", "count": 7, "day": 5, "order": 7}]}, {"id": "italia", "name": "Italia", "lat": 42.6384261, "lon": 12.674297, "type": "country", "area": "Italy", "mentions": [{"section_id": "nov0107", "title": "Novella 7 – Giornata 1", "slug": "giornata-1-novella-7", "count": 1, "day": 1, "order": 8}, {"section_id": "nov0108", "title": "Novella 8 – Giornata 1", "slug": "giornata-1-novella-8", "count": 1, "day": 1, "order": 9}, {"section_id": "nov0203", "title": "Novella 3 – Giornata 2", "slug": "giornata-2-novella-3", "count": 1, "day": 2, "order": 4}, {"section_id": "nov0204", "title": "Novella 4 – Giornata 2", "slug": "giornata-2-novella-4", "count": 1, "day": 2, "order": 5}, {"section_id": "nov0209", "title": "Novella 9 – Giornata 2", "slug": "giornata-2-novella-9", "count": 1, "day": 2, "order": 10}, {"section_id": "nov0306", "title": "Novella 6 – Giornata 3", "slug": "giornata-3-novella-6", "count": 1, "day": 3, "order": 7}, {"section_id": "nov0610", "title": "Novella 10 – Giornata 6", "slug": "giornata-6-novella-10", "count": 1, "day": 6, "order": 11}, {"section_id": "nov1001", "title": "Novella 1 – Giornata 10", "slug": "giornata-10-novella-1", "count": 1, "day": 10, "order": 2}]}, {"id": "lamporecchio", "name": "Lamporecchio", "lat": 43.8163799, "lon": 10.896283, "type": "hamlet", "area": "Italy", "mentions": [{"section_id": "nov0301", "title": "Novella 1 – Giornata 3", "slug": "giornata-3-novella-1", "count": 1, "day": 3, "order": 2}]}, {"id": "lerici", "name": "Lerici", "lat": 44.0736073, "lon": 9.9099135, "type": "castle", "area": "Italy", "mentions": [{"section_id": "nov0206", "title": "Novella 6 – Giornata 2", "slug": "giornata-2-novella-6", "count": 1, "day": 2, "order": 7}]}, {"id": "legnaia", "name": "Legnaia", "lat": 43.7705299, "lon": 11.2115148, "type": "hamlet", "area": "Italy", "mentions": [{"section_id": "nov0809", "title": "Novella 9 – Giornata 8", "slug": "giornata-8-novella-9", "count": 1, "day": 8, "order": 10}]}, {"id": "lipari", "name": "Lipari", "lat": 38.4692717, "lon": 14.9564504, "type": "island", "area": "Italy", "mentions": [{"section_id": "nov0206", "title": "Novella 6 – Giornata 2", "slug": "giornata-2-novella-6", "count": 1, "day": 2, "order": 7}, {"section_id": "nov0502", "title": "Novella 2 – Giornata 5", "slug": "giornata-5-novella-2", "count": 7, "day": 5, "order": 3}]}, {"id": "lombardia", "name": "Lombardia", "lat": 45.5703694, "lon": 9.7732524, "type": "region", "area": "Italy", "mentions": [{"section_id": "nov0302", "title": "Novella 2 – Giornata 3", "slug": "giornata-3-novella-2", "count": 1, "day": 3, "order": 3}, {"section_id": "nov0902", "title": "Novella 2 – Giornata 9", "slug": "giornata-9-novella-2", "count": 1, "day": 9, "order": 3}, {"section_id": "nov1004", "title": "Novella 4 – Giornata 10", "slug": "giornata-10-novella-4", "count": 1, "day": 10, "order": 5}, {"section_id": "nov1009", "title": "Novella 9 – Giornata 10", "slug": "giornata-10-novella-9", "count": 4, "day": 10, "order": 10}]}, {"id": "londra", "name": "Londra", "lat": 51.5074456, "lon": -0.1277653, "type": "city", "area": "England-Ireland-Scotland", "mentions": [{"section_id": "nov0203", "title": "Novella 3 – Giornata 2", "slug": "giornata-2-novella-3", "count": 1, "day": 2, "order": 4}, {"section_id": "nov0208", "title": "Novella 8 – Giornata 2", "slug": "giornata-2-novella-8", "count": 4, "day": 2, "order": 9}]}, {"id": "lucifero", "name": "Lucifero", "lat": 43.8645147, "lon": 10.2504894, "type": "planet", "area": "", "mentions": [{"section_id": "d07intro", "title": "Introduzione – Giornata 7", "slug": "giornata-7-introduzione", "count": 1, "day": 7, "order": 1}]}, {"id": "lunigiana", "name": "Lunigiana", "lat": 44.2484888, "lon": 10.0524325, "type": "region", "area": "Italy", "mentions": [{"section_id": "nov0104", "title": "Novella 4 – Giornata 1", "slug": "giornata-1-novella-4", "count": 1, "day": 1, "order": 5}, {"section_id": "nov0206", "title": "Novella 6 – Giornata 2", "slug": "giornata-2-novella-6", "count": 3, "day": 2, "order": 7}, {"section_id": "nov0307", "title": "Novella 7 – Giornata 3", "slug": "giornata-3-novella-7", "count": 1, "day": 3, "order": 8}]}, {"id": "magra", "name": "Magra", "lat": 44.2512783, "lon": 9.9450185, "type": "river", "area": "Italy", "mentions": [{"section_id": "nov0206", "title": "Novella 6 – Giornata 2", "slug": "giornata-2-novella-6", "count": 1, "day": 2, "order": 7}]}, {"id": "maiorca", "name": "Maiolica", "lat": 44.4071694, "lon": 8.9424803, "type": "island", "area": "Iberia", "mentions": [{"section_id": "nov0207", "title": "Novella 7 – Giornata 2", "slug": "giornata-2-novella-7", "count": 4, "day": 2, "order": 8}]}, {"id": "macello", "name": "Macello", "lat": 44.851139, "lon": 7.39802, "type": "area", "area": "Italy", "mentions": [{"section_id": "nov0402", "title": "Novella 2 – Giornata 4", "slug": "giornata-4-novella-2", "count": 1, "day": 4, "order": 3}]}, {"id": "malpertugio", "name": "Malpertugio", "lat": 38.0117191, "lon": 14.1032914, "type": "contrada", "area": "Italy", "mentions": [{"section_id": "nov0205", "title": "Novella 5 – Giornata 2", "slug": "giornata-2-novella-5", "count": 1, "day": 2, "order": 6}]}, {"id": "maremma", "name": "Maremma", "lat": 44.2360427, "lon": 8.4298691, "type": "region", "area": "Italy", "mentions": [{"section_id": "nov0402", "title": "Novella 2 – Giornata 4", "slug": "giornata-4-novella-2", "count": 1, "day": 4, "order": 3}, {"section_id": "nov0606", "title": "Novella 6 – Giornata 6", "slug": "giornata-6-novella-6", "count": 3, "day": 6, "order": 7}]}, {"id": "marsiglia", "name": "Marsilia", "lat": 43.2961743, "lon": 5.3699525, "type": "city", "area": "France", "mentions": [{"section_id": "nov0403", "title": "Novella 3 – Giornata 4", "slug": "giornata-4-novella-3", "count": 1, "day": 4, "order": 4}]}, {"id": "menzogna", "name": "Menzogna", "lat": 41.1396097, "lon": 14.6709358, "type": "", "area": "", "mentions": [{"section_id": "nov0610", "title": "Novella 10 – Giornata 6", "slug": "giornata-6-novella-10", "count": 1, "day": 6, "order": 11}]}, {"id": "messina", "name": "Messina", "lat": 38.1937571, "lon": 15.5542082, "type": "city", "area": "Italy", "mentions": [{"section_id": "nov0404", "title": "Novella 4 – Giornata 4", "slug": "giornata-4-novella-4", "count": 1, "day": 4, "order": 5}, {"section_id": "nov0405", "title": "Novella 5 – Giornata 4", "slug": "giornata-4-novella-5", "count": 4, "day": 4, "order": 6}]}, {"id": "milano", "name": "Melano", "lat": 45.4641943, "lon": 9.1896346, "type": "city", "area": "Italy", "mentions": [{"section_id": "nov0305", "title": "Novella 5 – Giornata 3", "slug": "giornata-3-novella-5", "count": 4, "day": 3, "order": 6}, {"section_id": "nov0703", "title": "Novella 3 – Giornata 7", "slug": "giornata-7-novella-3", "count": 1, "day": 7, "order": 4}, {"section_id": "nov0801", "title": "Novella 1 – Giornata 8", "slug": "giornata-8-novella-1", "count": 2, "day": 8, "order": 2}, {"section_id": "nov1009", "title": "Novella 9 – Giornata 10", "slug": "giornata-10-novella-9", "count": 1, "day": 10, "order": 10}]}, {"id": "minerva", "name": "Minerva", "lat": 40.5694595, "lon": 14.3248809, "type": "cape", "area": "Italy", "mentions": [{"section_id": "nov0506", "title": "Novella 6 – Giornata 5", "slug": "giornata-5-novella-6", "count": 1, "day": 5, "order": 7}]}, {"id": "modena", "name": "Modona", "lat": 44.5384728, "lon": 10.9359609, "type": "city", "area": "Italy", "mentions": [{"section_id": "nov1004", "title": "Novella 4 – Giornata 10", "slug": "giornata-10-novella-4", "count": 4, "day": 10, "order": 5}]}, {"id": "monaco", "name": "Monaco", "lat": 42.2803146, "lon": 9.4304477, "type": "country", "area": "France", "mentions": [{"section_id": "nov0210", "title": "Novella 10 – Giornata 2", "slug": "giornata-2-novella-10", "count": 3, "day": 2, "order": 11}, {"section_id": "nov0810", "title": "Novella 10 – Giornata 8", "slug": "giornata-8-novella-10", "count": 2, "day": 8, "order": 11}]}, {"id": "montenero", "name": "Monte Nero", "lat": 44.5619063, "lon": 9.5087446, "type": "", "area": "Italy", "mentions": [{"section_id": "nov0210", "title": "Novella 10 – Giornata 2", "slug": "giornata-2-novella-10", "count": 1, "day": 2, "order": 11}, {"section_id": "d06intro", "title": "Introduzione – Giornata 6", "slug": "giornata-6-introduzione", "count": 1, "day": 6, "order": 1}]}, {"id": "montisci", "name": "Montisci", "lat": 39.7915735, "lon": 9.0079526, "type": "hill", "area": "Italy", "mentions": [{"section_id": "nov0803", "title": "Novella 3 – Giornata 8", "slug": "giornata-8-novella-3", "count": 2, "day": 8, "order": 4}]}, {"id": "mmorello", "name": "Monte Morello", "lat": 44.4713604, "lon": 11.0774964, "type": "mountain", "area": "Italy", "mentions": [{"section_id": "nov0610", "title": "Novella 10 – Giornata 6", "slug": "giornata-6-novella-10", "count": 1, "day": 6, "order": 11}, {"section_id": "nov0803", "title": "Novella 3 – Giornata 8", "slug": "giornata-8-novella-3", "count": 1, "day": 8, "order": 4}]}, {"id": "montughi", "name": "Montughi", "lat": 43.792779, "lon": 11.2546155, "type": "hill", "area": "Italy", "mentions": [{"section_id": "nov0606", "title": "Novella 6 – Giornata 6", "slug": "giornata-6-novella-6", "count": 1, "day": 6, "order": 7}]}, {"id": "mugello", "name": "Mugello", "lat": 43.9993822, "lon": 11.3723647, "type": "countryside", "area": "Italy", "mentions": [{"section_id": "nov0605", "title": "Novella 5 – Giornata 6", "slug": "giornata-6-novella-5", "count": 2, "day": 6, "order": 6}]}, {"id": "montpellier", "name": "Monpulier", "lat": 43.6112422, "lon": 3.8767337, "type": "city", "area": "France", "mentions": [{"section_id": "nov0309", "title": "Novella 9 – Giornata 3", "slug": "giornata-3-novella-9", "count": 1, "day": 3, "order": 10}]}, {"id": "napoli", "name": "Napoli", "lat": 40.8358846, "lon": 14.2487679, "type": "city", "area": "Italy", "mentions": [{"section_id": "nov0205", "title": "Novella 5 – Giornata 2", "slug": "giornata-2-novella-5", "count": 7, "day": 2, "order": 6}, {"section_id": "nov0206", "title": "Novella 6 – Giornata 2", "slug": "giornata-2-novella-6", "count": 3, "day": 2, "order": 7}, {"section_id": "nov0306", "title": "Novella 6 – Giornata 3", "slug": "giornata-3-novella-6", "count": 2, "day": 3, "order": 7}, {"section_id": "nov0405", "title": "Novella 5 – Giornata 4", "slug": "giornata-4-novella-5", "count": 1, "day": 4, "order": 6}, {"section_id": "nov0506", "title": "Novella 6 – Giornata 5", "slug": "giornata-5-novella-6", "count": 2, "day": 5, "order": 7}, {"section_id": "nov0702", "title": "Novella 2 – Giornata 7", "slug": "giornata-7-novella-2", "count": 1, "day": 7, "order": 3}, {"section_id": "nov0810", "title": "Novella 10 – Giornata 8", "slug": "giornata-8-novella-10", "count": 3, "day": 8, "order": 11}, {"section_id": "nov1006", "title": "Novella 6 – Giornata 10", "slug": "giornata-10-novella-6", "count": 1, "day": 10, "order": 7}]}, {"id": "narsia", "name": "Narsia", "lat": 42.2565437, "lon": 42.6790484, "type": "", "area": "", "mentions": [{"section_id": "nov0809", "title": "Novella 9 – Giornata 8", "slug": "giornata-8-novella-9", "count": 1, "day": 8, "order": 10}]}, {"id": "nazarette", "name": "Nazarette", "lat": 18.7213093, "lon": -72.3742645, "type": "city", "area": "Cyprus-Levant", "mentions": [{"section_id": "nov0610", "title": "Novella 10 – Giornata 6", "slug": "giornata-6-novella-10", "count": 1, "day": 6, "order": 11}]}, {"id": "nostradama", "name": "Nostra Dama", "lat": 44.1861695, "lon": 0.6683646, "type": "church", "area": "France", "mentions": [{"section_id": "nov0102", "title": "Novella 2 – Giornata 1", "slug": "giornata-1-novella-2", "count": 1, "day": 1, "order": 3}]}, {"id": "ortosanmichele", "name": "Orto San Michele", "lat": 43.7010548, "lon": 11.1279143, "type": "church", "area": "Italy", "mentions": [{"section_id": "nov0609", "title": "Novella 9 – Giornata 6", "slug": "giornata-6-novella-9", "count": 1, "day": 6, "order": 10}]}, {"id": "palermo", "name": "Palermo", "lat": 38.1112268, "lon": 13.3524434, "type": "city", "area": "Italy", "mentions": [{"section_id": "nov0205", "title": "Novella 5 – Giornata 2", "slug": "giornata-2-novella-5", "count": 7, "day": 2, "order": 6}, {"section_id": "nov0206", "title": "Novella 6 – Giornata 2", "slug": "giornata-2-novella-6", "count": 1, "day": 2, "order": 7}, {"section_id": "nov0404", "title": "Novella 4 – Giornata 4", "slug": "giornata-4-novella-4", "count": 1, "day": 4, "order": 5}, {"section_id": "nov0506", "title": "Novella 6 – Giornata 5", "slug": "giornata-5-novella-6", "count": 5, "day": 5, "order": 7}, {"section_id": "nov0810", "title": "Novella 10 – Giornata 8", "slug": "giornata-8-novella-10", "count": 4, "day": 8, "order": 11}, {"section_id": "nov1007", "title": "Novella 7 – Giornata 10", "slug": "giornata-10-novella-7", "count": 2, "day": 10, "order": 8}]}, {"id": "parigi", "name": "Parigi", "lat": 48.8534951, "lon": 2.3483915, "type": "city", "area": "France", "mentions": [{"section_id": "nov0101", "title": "Novella 1 – Giornata 1", "slug": "giornata-1-novella-1", "count": 1, "day": 1, "order": 2}, {"section_id": "nov0102", "title": "Novella 2 – Giornata 1", "slug": "giornata-1-novella-2", "count": 5, "day": 1, "order": 3}, {"section_id": "nov0107", "title": "Novella 7 – Giornata 1", "slug": "giornata-1-novella-7", "count": 3, "day": 1, "order": 8}, {"section_id": "nov0203", "title": "Novella 3 – Giornata 2", "slug": "giornata-2-novella-3", "count": 1, "day": 2, "order": 4}, {"section_id": "nov0208", "title": "Novella 8 – Giornata 2", "slug": "giornata-2-novella-8", "count": 3, "day": 2, "order": 9}, {"section_id": "nov0209", "title": "Novella 9 – Giornata 2", "slug": "giornata-2-novella-9", "count": 4, "day": 2, "order": 10}, {"section_id": "nov0304", "title": "Novella 4 – Giornata 3", "slug": "giornata-3-novella-4", "count": 1, "day": 3, "order": 5}, {"section_id": "nov0309", "title": "Novella 9 – Giornata 3", "slug": "giornata-3-novella-9", "count": 4, "day": 3, "order": 10}, {"section_id": "nov0408", "title": "Novella 8 – Giornata 4", "slug": "giornata-4-novella-8", "count": 4, "day": 4, "order": 9}, {"section_id": "nov0707", "title": "Novella 7 – Giornata 7", "slug": "giornata-7-novella-7", "count": 1, "day": 7, "order": 8}, {"section_id": "nov0807", "title": "Novella 7 – Giornata 8", "slug": "giornata-8-novella-7", "count": 6, "day": 8, "order": 8}, {"section_id": "nov0809", "title": "Novella 9 – Giornata 8", "slug": "giornata-8-novella-9", "count": 1, "day": 8, "order": 10}, {"section_id": "nov1009", "title": "Novella 9 – Giornata 10", "slug": "giornata-10-novella-9", "count": 1, "day": 10, "order": 10}, {"section_id": "epilogue", "title": "Epilogo / Epilogue", "slug": "epilogo-epilogue", "count": 1, "day": 11, "order": 0}]}, {"id": "parione", "name": "Parione", "lat": 41.8973795, "lon": 12.4710487, "type": "street-lane", "area": "Italy", "mentions": [{"section_id": "nov0610", "title": "Novella 10 – Giornata 6", "slug": "giornata-6-novella-10", "count": 1, "day": 6, "order": 11}]}, {"id": "pasignano", "name": "Passignano sul Trasimeno", "lat": 43.1847425, "lon": 12.136838, "type": "city", "area": "Italy", "mentions": [{"section_id": "nov0809", "title": "Novella 9 – Giornata 8", "slug": "giornata-8-novella-9", "count": 1, "day": 8, "order": 10}]}, {"id": "pavia", "name": "Pavia", "lat": 45.0368547, "lon": 9.1378251, "type": "city", "area": "Italy", "mentions": [{"section_id": "nov0302", "title": "Novella 2 – Giornata 3", "slug": "giornata-3-novella-2", "count": 1, "day": 3, "order": 3}, {"section_id": "nov0505", "title": "Novella 5 – Giornata 5", "slug": "giornata-5-novella-5", "count": 1, "day": 5, "order": 6}, {"section_id": "nov1009", "title": "Novella 9 – Giornata 10", "slug": "giornata-10-novella-9", "count": 23, "day": 10, "order": 10}]}, {"id": "peretola", "name": "Peretola", "lat": 43.7973619, "lon": 11.1966117, "type": "countryside", "area": "Italy", "mentions": [{"section_id": "nov0604", "title": "Novella 4 – Giornata 6", "slug": "giornata-6-novella-4", "count": 1, "day": 6, "order": 5}, {"section_id": "nov0809", "title": "Novella 9 – Giornata 8", "slug": "giornata-8-novella-9", "count": 1, "day": 8, "order": 10}]}, {"id": "iran", "name": "Persia", "lat": 32.6475314, "lon": 54.5643516, "type": "country", "area": "MidEast-FarEast", "mentions": [{"section_id": "nov1004", "title": "Novella 4 – Giornata 10", "slug": "giornata-10-novella-4", "count": 2, "day": 10, "order": 5}]}, {"id": "perugia", "name": "Perugia", "lat": 43.1070321, "lon": 12.4029962, "type": "city", "area": "Italy", "mentions": [{"section_id": "nov0205", "title": "Novella 5 – Giornata 2", "slug": "giornata-2-novella-5", "count": 5, "day": 2, "order": 6}, {"section_id": "nov0510", "title": "Novella 10 – Giornata 5", "slug": "giornata-5-novella-10", "count": 2, "day": 5, "order": 11}]}, {"id": "piccardia", "name": "Piccardia", "lat": 49.601756, "lon": 2.8716339, "type": "region", "area": "France", "mentions": [{"section_id": "nov0208", "title": "Novella 8 – Giornata 2", "slug": "giornata-2-novella-8", "count": 1, "day": 2, "order": 9}]}, {"id": "pisa", "name": "Pisa", "lat": 43.4714722, "lon": 10.6797912, "type": "city", "area": "Italy", "mentions": [{"section_id": "nov0210", "title": "Novella 10 – Giornata 2", "slug": "giornata-2-novella-10", "count": 7, "day": 2, "order": 11}, {"section_id": "nov0810", "title": "Novella 10 – Giornata 8", "slug": "giornata-8-novella-10", "count": 1, "day": 8, "order": 11}]}, {"id": "pistoia", "name": "Pistoia", "lat": 43.9740957, "lon": 10.8687081, "type": "city", "area": "Italy", "mentions": [{"section_id": "nov0305", "title": "Novella 5 – Giornata 3", "slug": "giornata-3-novella-5", "count": 2, "day": 3, "order": 6}, {"section_id": "nov0901", "title": "Novella 1 – Giornata 9", "slug": "giornata-9-novella-1", "count": 4, "day": 9, "order": 2}]}, {"id": "ponteoca", "name": "Ponte dell'Oca", "lat": 45.9550531, "lon": 12.5009097, "type": "bridge", "area": "", "mentions": [{"section_id": "nov0909", "title": "Novella 9 – Giornata 9", "slug": "giornata-9-novella-9", "count": 4, "day": 9, "order": 10}]}, {"id": "porcellana", "name": "Porcellana", "lat": 44.8397466, "lon": 10.0776608, "type": "street-lane", "area": "Italy", "mentions": [{"section_id": "nov0610", "title": "Novella 10 – Giornata 6", "slug": "giornata-6-novella-10", "count": 1, "day": 6, "order": 11}]}, {"id": "ponza", "name": "Ponzo", "lat": 40.8932368, "lon": 12.9630622, "type": "island", "area": "Italy", "mentions": [{"section_id": "nov0206", "title": "Novella 6 – Giornata 2", "slug": "giornata-2-novella-6", "count": 2, "day": 2, "order": 7}]}, {"id": "portasgallo", "name": "porta a San Gallo", "lat": 46.9946534, "lon": 9.5177897, "type": "gate", "area": "Italy", "mentions": [{"section_id": "nov0803", "title": "Novella 3 – Giornata 8", "slug": "giornata-8-novella-3", "count": 2, "day": 8, "order": 4}]}, {"id": "portasalaia", "name": "Porta Salaia", "lat": 43.3186, "lon": 11.330207, "type": "neighborhood", "area": "Italy", "mentions": [{"section_id": "nov0710", "title": "Novella 10 – Giornata 7", "slug": "giornata-7-novella-10", "count": 1, "day": 7, "order": 11}]}, {"id": "portapiero", "name": "Porta San Piero", "lat": 43.9645507, "lon": 11.3243514, "type": "gate", "area": "Italy", "mentions": [{"section_id": "nov0603", "title": "Novella 3 – Giornata 6", "slug": "giornata-6-novella-3", "count": 1, "day": 6, "order": 4}, {"section_id": "nov0701", "title": "Novella 1 – Giornata 7", "slug": "giornata-7-novella-1", "count": 1, "day": 7, "order": 2}]}, {"id": "prato", "name": "Prato", "lat": 43.9357181, "lon": 11.0941473, "type": "city", "area": "Italy", "mentions": [{"section_id": "nov0607", "title": "Novella 7 – Giornata 6", "slug": "giornata-6-novella-7", "count": 1, "day": 6, "order": 8}]}, {"id": "procida", "name": "Procida", "lat": 40.7649991, "lon": 14.0239063, "type": "island", "area": "Italy", "mentions": [{"section_id": "nov0506", "title": "Novella 6 – Giornata 5", "slug": "giornata-5-novella-6", "count": 3, "day": 5, "order": 7}]}, {"id": "provenza", "name": "Provenza", "lat": 44.0580563, "lon": 6.0638506, "type": "region", "area": "France", "mentions": [{"section_id": "nov0403", "title": "Novella 3 – Giornata 4", "slug": "giornata-4-novella-3", "count": 1, "day": 4, "order": 4}, {"section_id": "nov0409", "title": "Novella 9 – Giornata 4", "slug": "giornata-4-novella-9", "count": 2, "day": 4, "order": 10}]}, {"id": "puglia", "name": "Puglia", "lat": 40.9842539, "lon": 16.6210027, "type": "region", "area": "Italy", "mentions": [{"section_id": "nov0206", "title": "Novella 6 – Giornata 2", "slug": "giornata-2-novella-6", "count": 1, "day": 2, "order": 7}, {"section_id": "nov0910", "title": "Novella 10 – Giornata 9", "slug": "giornata-9-novella-10", "count": 1, "day": 9, "order": 11}, {"section_id": "nov1006", "title": "Novella 6 – Giornata 10", "slug": "giornata-10-novella-6", "count": 1, "day": 10, "order": 7}]}, {"id": "radicofani", "name": "Radicofani", "lat": 42.8965067, "lon": 11.7697064, "type": "castle", "area": "Italy", "mentions": [{"section_id": "nov1002", "title": "Novella 2 – Giornata 10", "slug": "giornata-10-novella-2", "count": 4, "day": 10, "order": 3}]}, {"id": "ravello", "name": "Ravello", "lat": 40.6496643, "lon": 14.6122753, "type": "city", "area": "Italy", "mentions": [{"section_id": "nov0204", "title": "Novella 4 – Giornata 2", "slug": "giornata-2-novella-4", "count": 2, "day": 2, "order": 5}]}, {"id": "ravenna", "name": "Ravenna", "lat": 44.3640607, "lon": 12.0590095, "type": "city", "area": "Italy", "mentions": [{"section_id": "nov0210", "title": "Novella 10 – Giornata 2", "slug": "giornata-2-novella-10", "count": 1, "day": 2, "order": 11}, {"section_id": "nov0508", "title": "Novella 8 – Giornata 5", "slug": "giornata-5-novella-8", "count": 6, "day": 5, "order": 9}]}, {"id": "reggio", "name": "Reggio", "lat": 44.6978389, "lon": 10.6304971, "type": "city", "area": "Italy", "mentions": [{"section_id": "nov0204", "title": "Novella 4 – Giornata 2", "slug": "giornata-2-novella-4", "count": 1, "day": 2, "order": 5}]}, {"id": "rialto", "name": "Rialto", "lat": 44.2258176, "lon": 8.2631084, "type": "neighborhood", "area": "Italy", "mentions": [{"section_id": "nov0402", "title": "Novella 2 – Giornata 4", "slug": "giornata-4-novella-2", "count": 3, "day": 4, "order": 3}]}, {"id": "", "name": "Ripole", "lat": 40.6741726, "lon": 16.58944, "type": "convent", "area": "Italy", "mentions": []}, {"id": "rodi", "name": "Rodi", "lat": 36.1725297, "lon": 27.9194016, "type": "island", "area": "Greece-Balkans", "mentions": [{"section_id": "nov0207", "title": "Novella 7 – Giornata 2", "slug": "giornata-2-novella-7", "count": 2, "day": 2, "order": 8}, {"section_id": "nov0403", "title": "Novella 3 – Giornata 4", "slug": "giornata-4-novella-3", "count": 2, "day": 4, "order": 4}, {"section_id": "nov0501", "title": "Novella 1 – Giornata 5", "slug": "giornata-5-novella-1", "count": 10, "day": 5, "order": 2}]}, {"id": "roma", "name": "Roma", "lat": 41.8933203, "lon": 12.4829321, "type": "city", "area": "Italy", "mentions": [{"section_id": "nov0102", "title": "Novella 2 – Giornata 1", "slug": "giornata-1-novella-2", "count": 6, "day": 1, "order": 3}, {"section_id": "nov0203", "title": "Novella 3 – Giornata 2", "slug": "giornata-2-novella-3", "count": 3, "day": 2, "order": 4}, {"section_id": "nov0208", "title": "Novella 8 – Giornata 2", "slug": "giornata-2-novella-8", "count": 1, "day": 2, "order": 9}, {"section_id": "nov0503", "title": "Novella 3 – Giornata 5", "slug": "giornata-5-novella-3", "count": 6, "day": 5, "order": 4}, {"section_id": "nov0507", "title": "Novella 7 – Giornata 5", "slug": "giornata-5-novella-7", "count": 2, "day": 5, "order": 8}, {"section_id": "nov0809", "title": "Novella 9 – Giornata 8", "slug": "giornata-8-novella-9", "count": 1, "day": 8, "order": 10}, {"section_id": "nov1002", "title": "Novella 2 – Giornata 10", "slug": "giornata-10-novella-2", "count": 5, "day": 10, "order": 3}, {"section_id": "nov1008", "title": "Novella 8 – Giornata 10", "slug": "giornata-10-novella-8", "count": 15, "day": 10, "order": 9}, {"section_id": "nov1010", "title": "Novella 10 – Giornata 10", "slug": "giornata-10-novella-10", "count": 1, "day": 10, "order": 11}]}, {"id": "romagna", "name": "Romagna", "lat": 44.4914458, "lon": 11.3435713, "type": "region", "area": "Italy", "mentions": [{"section_id": "nov0504", "title": "Novella 4 – Giornata 5", "slug": "giornata-5-novella-4", "count": 1, "day": 5, "order": 5}, {"section_id": "nov0505", "title": "Novella 5 – Giornata 5", "slug": "giornata-5-novella-5", "count": 1, "day": 5, "order": 6}, {"section_id": "nov0508", "title": "Novella 8 – Giornata 5", "slug": "giornata-5-novella-8", "count": 1, "day": 5, "order": 9}, {"section_id": "nov0906", "title": "Novella 6 – Giornata 9", "slug": "giornata-9-novella-6", "count": 1, "day": 9, "order": 7}]}, {"id": "romania", "name": "Romania", "lat": 45.9852129, "lon": 24.6859225, "type": "country", "area": "Greece-Balkans", "mentions": [{"section_id": "nov0207", "title": "Novella 7 – Giornata 2", "slug": "giornata-2-novella-7", "count": 2, "day": 2, "order": 8}]}, {"id": "roussillon", "name": "Rossiglione", "lat": 45.3735991, "lon": 4.8124049, "type": "county", "area": "France", "mentions": [{"section_id": "nov0309", "title": "Novella 9 – Giornata 3", "slug": "giornata-3-novella-9", "count": 4, "day": 3, "order": 10}]}, {"id": "rouen", "name": "Ruem", "lat": 49.4404591, "lon": 1.0939658, "type": "city", "area": "France", "mentions": [{"section_id": "nov0208", "title": "Novella 8 – Giornata 2", "slug": "giornata-2-novella-8", "count": 1, "day": 2, "order": 9}]}, {"id": "salerno", "name": "Salerno", "lat": 40.4194417, "lon": 15.3106085, "type": "city", "area": "Italy", "mentions": [{"section_id": "nov0204", "title": "Novella 4 – Giornata 2", "slug": "giornata-2-novella-4", "count": 1, "day": 2, "order": 5}, {"section_id": "nov0401", "title": "Novella 1 – Giornata 4", "slug": "giornata-4-novella-1", "count": 2, "day": 4, "order": 2}, {"section_id": "nov0810", "title": "Novella 10 – Giornata 8", "slug": "giornata-8-novella-10", "count": 1, "day": 8, "order": 11}]}, {"id": "salerno-0410", "name": "Salerno (IV.10)", "lat": 40.6803601, "lon": 14.7594542, "type": "city", "area": "Italy", "mentions": [{"section_id": "nov0410", "title": "Novella 10 – Giornata 4", "slug": "giornata-4-novella-10", "count": 3, "day": 4, "order": 11}]}, {"id": "sanluzzo", "name": "Sanluzzo", "lat": 44.6446052, "lon": 7.4926009, "type": "city", "area": "Italy", "mentions": [{"section_id": "nov1010", "title": "Novella 10 – Giornata 10", "slug": "giornata-10-novella-10", "count": 3, "day": 10, "order": 11}]}, {"id": "sangallo", "name": "San Gallo", "lat": 45.8649539, "lon": 9.6718341, "type": "church", "area": "Italy", "mentions": [{"section_id": "nov0407", "title": "Novella 7 – Giornata 4", "slug": "giornata-4-novella-7", "count": 1, "day": 4, "order": 8}]}, {"id": "sangallo-ospedale", "name": "San Gallo (ospedale)", "lat": -20.955715, "lon": -49.1782009, "type": "hospital", "area": "Italy", "mentions": [{"section_id": "nov0809", "title": "Novella 9 – Giornata 8", "slug": "giornata-8-novella-9", "count": 1, "day": 8, "order": 10}]}, {"id": "sangimignano", "name": "San Gimignano", "lat": 43.4677993, "lon": 11.0432115, "type": "city", "area": "Italy", "mentions": [{"section_id": "nov0405", "title": "Novella 5 – Giornata 4", "slug": "giornata-4-novella-5", "count": 1, "day": 4, "order": 6}]}, {"id": "sangiovanni", "name": "San Giovanni", "lat": 45.7880182, "lon": 12.6140857, "type": "church", "area": "Italy", "mentions": [{"section_id": "nov0609", "title": "Novella 9 – Giornata 6", "slug": "giornata-6-novella-9", "count": 3, "day": 6, "order": 10}]}, {"id": "ripole", "name": "San Jacopo di Ripoli", "lat": 43.7662819, "lon": 11.3255405, "type": "convent", "area": "Italy", "mentions": [{"section_id": "nov0809", "title": "Novella 9 – Giornata 8", "slug": "giornata-8-novella-9", "count": 1, "day": 8, "order": 10}]}, {"id": "sanmarco", "name": "San Marco", "lat": 45.0220884, "lon": 6.8372267, "type": "square", "area": "Italy", "mentions": [{"section_id": "nov0402", "title": "Novella 2 – Giornata 4", "slug": "giornata-4-novella-2", "count": 4, "day": 4, "order": 3}]}, {"id": "sanpaolo", "name": "San Paolo", "lat": 45.370576, "lon": 10.026767, "type": "church", "area": "Italy", "mentions": [{"section_id": "nov0407", "title": "Novella 7 – Giornata 4", "slug": "giornata-4-novella-7", "count": 1, "day": 4, "order": 8}]}, {"id": "santacroce", "name": "Santa Croce", "lat": 46.0252962, "lon": 10.8388732, "type": "church", "area": "Italy", "mentions": [{"section_id": "nov0106", "title": "Novella 6 – Giornata 1", "slug": "giornata-1-novella-6", "count": 1, "day": 1, "order": 7}]}, {"id": "santamariascala", "name": "Santa Maria della Scala", "lat": 41.8910617, "lon": 12.4678215, "type": "church", "area": "Italy", "mentions": [{"section_id": "nov0809", "title": "Novella 9 – Giornata 8", "slug": "giornata-8-novella-9", "count": 2, "day": 8, "order": 10}]}, {"id": "santamariamaggiore", "name": "Santa Maria Maggiore", "lat": 41.8976275, "lon": 12.4984704, "type": "church", "area": "Italy", "mentions": [{"section_id": "nov0606", "title": "Novella 6 – Giornata 6", "slug": "giornata-6-novella-6", "count": 1, "day": 6, "order": 7}]}, {"id": "smnovella", "name": "Santa Maria Novella", "lat": 42.1037737, "lon": 12.1764684, "type": "church", "area": "Italy", "mentions": [{"section_id": "d01intro", "title": "Introduzione – Giornata 1", "slug": "giornata-1-introduzione", "count": 3, "day": 1, "order": 1}, {"section_id": "nov0701", "title": "Novella 1 – Giornata 7", "slug": "giornata-7-novella-1", "count": 1, "day": 7, "order": 2}, {"section_id": "nov0809", "title": "Novella 9 – Giornata 8", "slug": "giornata-8-novella-9", "count": 2, "day": 8, "order": 10}, {"section_id": "d10conclu", "title": "Conclusione – Giornata 10", "slug": "giornata-10-conclusione", "count": 1, "day": 10, "order": 12}]}, {"id": "santareparata", "name": "Santa Reparata", "lat": 42.8046378, "lon": 13.6957698, "type": "church", "area": "Italy", "mentions": [{"section_id": "nov0609", "title": "Novella 9 – Giornata 6", "slug": "giornata-6-novella-9", "count": 2, "day": 6, "order": 10}]}, {"id": "sardegna", "name": "Sardigna", "lat": 40.0912813, "lon": 9.0305773, "type": "island", "area": "Italy", "mentions": [{"section_id": "nov0207", "title": "Novella 7 – Giornata 2", "slug": "giornata-2-novella-7", "count": 1, "day": 2, "order": 8}, {"section_id": "nov0308", "title": "Novella 8 – Giornata 3", "slug": "giornata-3-novella-8", "count": 1, "day": 3, "order": 9}, {"section_id": "nov0404", "title": "Novella 4 – Giornata 4", "slug": "giornata-4-novella-4", "count": 2, "day": 4, "order": 5}, {"section_id": "nov0610", "title": "Novella 10 – Giornata 6", "slug": "giornata-6-novella-10", "count": 1, "day": 6, "order": 11}]}, {"id": "scozia", "name": "Scozia", "lat": 56.7861112, "lon": -4.1140518, "type": "country", "area": "England-Ireland-Scotland", "mentions": [{"section_id": "nov0203", "title": "Novella 3 – Giornata 2", "slug": "giornata-2-novella-3", "count": 3, "day": 2, "order": 4}, {"section_id": "nov0208", "title": "Novella 8 – Giornata 2", "slug": "giornata-2-novella-8", "count": 1, "day": 2, "order": 9}, {"section_id": "nov0809", "title": "Novella 9 – Giornata 8", "slug": "giornata-8-novella-9", "count": 1, "day": 8, "order": 10}]}, {"id": "ssepolcro", "name": "Sepolcro", "lat": 41.3194648, "lon": 16.280932, "type": "area", "area": "Cyprus-Levant", "mentions": [{"section_id": "nov0207", "title": "Novella 7 – Giornata 2", "slug": "giornata-2-novella-7", "count": 1, "day": 2, "order": 8}, {"section_id": "nov0307", "title": "Novella 7 – Giornata 3", "slug": "giornata-3-novella-7", "count": 1, "day": 3, "order": 8}]}, {"id": "settignano", "name": "Settignano", "lat": 43.7829916, "lon": 11.3208169, "type": "hill", "area": "Italy", "mentions": [{"section_id": "nov0803", "title": "Novella 3 – Giornata 8", "slug": "giornata-8-novella-3", "count": 1, "day": 8, "order": 4}]}, {"id": "siena", "name": "Siena", "lat": 43.167206, "lon": 11.467561, "type": "city", "area": "Italy", "mentions": [{"section_id": "nov0703", "title": "Novella 3 – Giornata 7", "slug": "giornata-7-novella-3", "count": 1, "day": 7, "order": 4}, {"section_id": "nov0710", "title": "Novella 10 – Giornata 7", "slug": "giornata-7-novella-10", "count": 1, "day": 7, "order": 11}, {"section_id": "nov0808", "title": "Novella 8 – Giornata 8", "slug": "giornata-8-novella-8", "count": 1, "day": 8, "order": 9}, {"section_id": "nov0904", "title": "Novella 4 – Giornata 9", "slug": "giornata-9-novella-4", "count": 7, "day": 9, "order": 5}, {"section_id": "nov1002", "title": "Novella 2 – Giornata 10", "slug": "giornata-10-novella-2", "count": 2, "day": 10, "order": 3}]}, {"id": "sinigaglia", "name": "Sinagaglia", "lat": 43.7149517, "lon": 13.2179488, "type": "city", "area": "Italy", "mentions": [{"section_id": "nov0804", "title": "Novella 4 – Giornata 8", "slug": "giornata-8-novella-4", "count": 1, "day": 8, "order": 5}]}, {"id": "spagna", "name": "Spagna / Ispagna", "lat": 39.3260685, "lon": -4.8379791, "type": "country", "area": "Iberia", "mentions": [{"section_id": "nov0403", "title": "Novella 3 – Giornata 4", "slug": "giornata-4-novella-3", "count": 1, "day": 4, "order": 4}, {"section_id": "nov0508", "title": "Novella 8 – Giornata 5", "slug": "giornata-5-novella-8", "count": 1, "day": 5, "order": 9}, {"section_id": "nov1001", "title": "Novella 1 – Giornata 10", "slug": "giornata-10-novella-1", "count": 1, "day": 10, "order": 2}]}, {"id": "strangford", "name": "Stanforda", "lat": 37.4313138, "lon": -122.1693654, "type": "city", "area": "England-Ireland-Scotland", "mentions": [{"section_id": "nov0208", "title": "Novella 8 – Giornata 2", "slug": "giornata-2-novella-8", "count": 1, "day": 2, "order": 9}]}, {"id": "susa", "name": "Susa", "lat": 45.1372115, "lon": 7.0539789, "type": "city", "area": "NorthAfrica", "mentions": [{"section_id": "nov0502", "title": "Novella 2 – Giornata 5", "slug": "giornata-5-novella-2", "count": 5, "day": 5, "order": 3}]}, {"id": "tebaide", "name": "Tebaida", "lat": -4.0112151, "lon": -79.2053795, "type": "region", "area": "NorthAfrica", "mentions": [{"section_id": "nov0310", "title": "Novella 10 – Giornata 3", "slug": "giornata-3-novella-10", "count": 2, "day": 3, "order": 11}]}];
+
+console.log('Places loaded:', places.length);
+
+// Initialize map
+const map = L.map('places-map').setView([42, 12], 5);
+
+// Add tile layer
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap contributors',
+    maxZoom: 18
+}).addTo(map);
+
+// Store layers
+let markersLayer = L.markerClusterGroup({
+    chunkedLoading: true,
+    spiderfyOnMaxZoom: true,
+    showCoverageOnHover: false,
+    zoomToBoundsOnClick: true
+});
+
+let individualMarkersLayer = L.layerGroup();
+let heatmapLayer = null;
+let routesLayer = L.layerGroup();
+let allMarkers = [];
+
+// Current view
+let currentView = 'markers';
+let clusteringEnabled = true;
+
+// Get marker color
+function getMarkerColor(mentionCount) {
+    if (mentionCount >= 16) return '#10b981';
+    if (mentionCount >= 6) return '#f59e0b';
+    return '#ef4444';
+}
+
+// Create marker icon
+function createMarkerIcon(color) {
+    return L.divIcon({
+        className: 'custom-marker',
+        html: `<div style="background-color: ${color}; width: 24px; height: 24px; border-radius: 50%; border: 3px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.3);"></div>`,
+        iconSize: [24, 24],
+        iconAnchor: [12, 12]
+    });
+}
+
+// Build popup HTML
+function buildPopupHTML(place) {
+    const mentionCount = place.mentions.length;
+    const color = getMarkerColor(mentionCount);
+    
+    let html = `
+        <h3 class="popup-header">${place.name}</h3>
+        <div class="popup-body">
+            <div class="popup-meta">
+                ${place.type} in ${place.area}<br>
+                <strong>${mentionCount} mention(s)</strong>
+            </div>
+    `;
+    
+    if (place.mentions.length > 0) {
+        html += '<ul class="mention-list" data-place-id="' + place.id + '">';
+        
+        const showLimit = 5;
+        place.mentions.forEach((m, idx) => {
+            const itemClass = idx >= showLimit ? 'mention-item mention-hidden' : 'mention-item';
+            html += `<li class="${itemClass}">
+                <a href="/${m.slug}/" target="_blank">${m.title}</a>`;
+            
+            if (m.count > 1) {
+                html += `<span class="mention-badge">×${m.count}</span>`;
+            }
+            
+            html += '</li>';
+        });
+        
+        html += '</ul>';
+        
+        if (place.mentions.length > showLimit) {
+            const hiddenCount = place.mentions.length - showLimit;
+            html += `<button class="show-more-mentions" data-place-id="${place.id}">
+                Show ${hiddenCount} more <span class="arrow">▼</span>
+            </button>`;
+        }
+    }
+    
+    html += '</div>';
+    
+    return html;
+}
+
+// Create markers
+function createMarkers() {
+    allMarkers = [];
+    
+    places.forEach(place => {
+        const color = getMarkerColor(place.mentions.length);
+        const icon = createMarkerIcon(color);
+        
+        const marker = L.marker([place.lat, place.lon], { icon: icon });
+        marker.placeData = place;
+        marker.bindPopup(buildPopupHTML(place));
+        
+        // Handle show more button
+        marker.on('popupopen', function() {
+            const btn = document.querySelector(`.show-more-mentions[data-place-id="${place.id}"]`);
+            if (btn) {
+                btn.addEventListener('click', function() {
+                    const list = document.querySelector(`.mention-list[data-place-id="${place.id}"]`);
+                    const hiddenItems = list.querySelectorAll('.mention-hidden');
+                    
+                    if (this.classList.contains('expanded')) {
+                        hiddenItems.forEach(item => item.classList.add('mention-hidden'));
+                        this.innerHTML = `Show ${hiddenItems.length} more <span class="arrow">▼</span>`;
+                        this.classList.remove('expanded');
+                    } else {
+                        hiddenItems.forEach(item => item.classList.remove('mention-hidden'));
+                        this.innerHTML = `Show less <span class="arrow">▲</span>`;
+                        this.classList.add('expanded');
+                    }
+                });
+            }
+        });
+        
+        allMarkers.push(marker);
+    });
+}
+
+// Update map display
+function updateMap() {
+    // Clear all layers
+    markersLayer.clearLayers();
+    individualMarkersLayer.clearLayers();
+    if (heatmapLayer) {
+        map.removeLayer(heatmapLayer);
+    }
+    routesLayer.clearLayers();
+    
+    // Filter markers
+    const regionFilter = document.getElementById('region-filter').value;
+    const typeFilter = document.getElementById('type-filter').value;
+    const searchText = document.getElementById('place-search').value.toLowerCase();
+    
+    const visibleMarkers = allMarkers.filter(marker => {
+        const place = marker.placeData;
+        
+        if (regionFilter !== 'all' && !place.area.includes(regionFilter)) {
+            return false;
+        }
+        
+        if (typeFilter !== 'all' && place.type !== typeFilter) {
+            return false;
+        }
+        
+        if (searchText && !place.name.toLowerCase().includes(searchText)) {
+            return false;
+        }
+        
+        return true;
+    });
+    
+    // Update count
+    document.getElementById('visible-count').textContent = visibleMarkers.length;
+    
+    // Add to appropriate layer
+    if (currentView === 'markers') {
+        if (clusteringEnabled) {
+            visibleMarkers.forEach(m => markersLayer.addLayer(m));
+            map.addLayer(markersLayer);
+        } else {
+            visibleMarkers.forEach(m => individualMarkersLayer.addLayer(m));
+            map.addLayer(individualMarkersLayer);
+        }
+    } else if (currentView === 'heatmap') {
+        const heatData = visibleMarkers.map(m => [
+            m.placeData.lat,
+            m.placeData.lon,
+            m.placeData.mentions.length / 10
+        ]);
+        
+        heatmapLayer = L.heatLayer(heatData, {
+            radius: 25,
+            blur: 15,
+            maxZoom: 10
+        }).addTo(map);
+    } else if (currentView === 'routes') {
+        // Show markers
+        visibleMarkers.forEach(m => individualMarkersLayer.addLayer(m));
+        map.addLayer(individualMarkersLayer);
+        
+        // Draw routes between places mentioned in same section
+        const sectionPlaces = {};
+        visibleMarkers.forEach(marker => {
+            const place = marker.placeData;
+            place.mentions.forEach(m => {
+                if (!sectionPlaces[m.section_id]) {
+                    sectionPlaces[m.section_id] = [];
+                }
+                sectionPlaces[m.section_id].push(place);
+            });
+        });
+        
+        Object.values(sectionPlaces).forEach(placesInSection => {
+            if (placesInSection.length > 1) {
+                for (let i = 0; i < placesInSection.length - 1; i++) {
+                    const p1 = placesInSection[i];
+                    const p2 = placesInSection[i + 1];
+                    
+                    L.polyline([[p1.lat, p1.lon], [p2.lat, p2.lon]], {
+                        color: '#0369a1',
+                        weight: 2,
+                        opacity: 0.3,
+                        dashArray: '5, 5'
+                    }).addTo(routesLayer);
+                }
+            }
+        });
+        
+        map.addLayer(routesLayer);
+    }
+}
+
+// Event listeners
+document.getElementById('region-filter').addEventListener('change', updateMap);
+document.getElementById('type-filter').addEventListener('change', updateMap);
+
+document.getElementById('place-search').addEventListener('input', updateMap);
+
+document.getElementById('clear-search').addEventListener('click', function() {
+    document.getElementById('place-search').value = '';
+    updateMap();
+});
+
+// View toggles
+document.querySelectorAll('.btn-toggle').forEach(btn => {
+    btn.addEventListener('click', function() {
+        document.querySelectorAll('.btn-toggle').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        currentView = this.dataset.view;
+        updateMap();
+    });
+});
+
+document.getElementById('enable-clustering').addEventListener('change', function() {
+    clusteringEnabled = this.checked;
+    if (currentView === 'markers') {
+        updateMap();
+    }
+});
+
+// Export map
+document.getElementById('export-map').addEventListener('click', async function() {
+    const mapElement = document.getElementById('places-map');
+    
+    this.textContent = 'Capturing...';
+    this.disabled = true;
+    
+    try {
+        const canvas = await html2canvas(mapElement);
+        
+        // Download
+        const link = document.createElement('a');
+        link.download = 'decameron-places-map.png';
+        link.href = canvas.toDataURL();
+        link.click();
+        
+        this.textContent = '📸 Export Map';
+    } catch (err) {
+        console.error('Export failed:', err);
+        alert('Export failed. Please try again.');
+        this.textContent = '📸 Export Map';
+    }
+    
+    this.disabled = false;
+});
+
+// Initialize
+createMarkers();
+updateMap();
+</script>

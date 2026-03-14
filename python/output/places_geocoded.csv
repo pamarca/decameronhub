@@ -1,0 +1,284 @@
+id,name,regularized_name,geographic_area,italian_region,type,latitude,longitude,geocoded_name
+abruzzi,Abruzzi,,Italy,Abruzzi,region,42.4687934,13.5631284,"Appennino abruzzese, Pietracamela, Teramo, Abruzzo, 64047, Italia"
+acaia,Acaia,,Greece-Balkans,,region,40.3344763,18.2977001,"Acaya, Vernole, Lecce, Puglia, 73029, Italia"
+sangiovannidacri,Acri,,Cyprus-Levant,,city,32.9281731,35.0756378,"עכו, נפת עכו, מחוז הצפון, ישראל"
+aiguesmortes,Aguamorta,Aigues Mortes,France,,city,43.5661521,4.19154,"Aigues-Mortes, Nîmes, Gard, Occitanie, France métropolitaine, 30220, France"
+alagna,Alagna,,Italy,,city,45.169861,8.889846,"Alagna, Pavia, Lombardia, Italia"
+albisola,Alba,Albisola,Italy,Liguria,city,44.339838,8.509353,"Albisola Superiore, Savona, Liguria, 17011, Italia"
+alessandriaeg,Alessandria / Alessandra,,NorthAfrica,,city,31.1999427,29.9112538,"Alessandra Coffee, طريق الحرية, المسله شرق, الشاطبى, الإسكندرية, 21512, مصر"
+altarisi,Altarisi,,,,city,,,
+amalfi,Amalfi,,Italy,Campania,city,40.63367,14.6026095,"Amalfi, Salerno, Campania, 84011, Italia"
+ancona,Ancona / Marca d'Ancona,,Italy,Marches,city,,,
+antiochia,Antiochia,,Cyprus-Levant,,region,36.2036546,36.1637648,"Antakya, Hatay, Akdeniz Bölgesi, Türkiye"
+maregeo,Arcipelago,,,,sea,59.3409122,18.7984629,"Stockholms Skärgård, Värmdö kommun, Stockholms län, Sverige"
+arezzo,Arezzo,,Italy,Tuscany,city,43.5171442,11.7639282,"Arezzo, Toscana, Italia"
+argo,Argo,,Greece-Balkans,,city,41.7758173,-87.8203,"Argo, ACH Ingredion, Bedford Park, Lyons Township, Cook County, Illinois, 60501, United States"
+arno,Arno,,Italy,Tuscany,river,43.7664527,11.2573196,"Arno, Toscana, Italia"
+avignone,Avignone,,France,,city,43.9492493,4.8059012,"Avignon, Vaucluse, Provence-Alpes-Côte d'Azur, France métropolitaine, 84000, France"
+monteasinaio,Monte Asinaio,,Italy,Tuscany,hill,,,
+atene,Atene,,Greece-Balkans,,city,37.9755648,23.7348324,"Αθήνα, Δήμος Αθηναίων, Περιφερειακή Ενότητα Κεντρικού Τομέα Αθηνών, Περιφέρεια Αττικής, Αποκεντρωμένη Διοίκηση Αττικής, 105 57, Ελλάς"
+cairo,Babillonia / Babilonia,,NorthAfrica,,city,32.5422107,44.4300259,"المسرح البابلي, شارع منتجع بابل, الحلة, ناحية مرکز قضاء الحلة, قضاء الحلة, محافظة بابل, 51001, العراق"
+baffa,Baffa (Pafo),,Cyprus-Levant,,city,,,
+baldacca,Baldacca,,,,,,,
+barberia,Barberia / Barbaria,,NorthAfrica,,region,38.667492,1.3906505,"Centre de Gestió de Residus Cap de Barberia, Venda des Cap de Barbaria, Formentera, Illes Balears, 07860, España"
+barletta,Barletta,,Italy,Apulia,city,41.3214976,16.2868696,"Barletta, Barletta-Andria-Trani, Puglia, 76121, Italia"
+terrabaschi,terra de' Baschi,,Iberia,,,43.2578866,-2.9243518,"Terra Kafe, Done Jakue plazatxoa, Casco Viejo, Ibaiondo, Bilbao, Bizkaia, Euskadi, 48005, España"
+bengodi,Bengodi,,,,contrada,42.5558617,11.1631353,"Bengodi, Fonteblanda, Italia"
+berlinzone,Berlinzone,,,,,,,
+benevento,Benevento,,Italy,Campania,city,41.2476307,14.7057054,"Benevento, Campania, Italia"
+bitonto,Bitonto,,Italy,Apulia,city,41.1084971,16.691548,"Bitonto, Bari, Puglia, 70032, Italia"
+bologna,Bologna,,Italy,Emilia-Romagna,city,44.4938203,11.3426327,"Bologna, Emilia-Romagna, Italia"
+bonconvento,Bonconvento,,Italy,Tuscany,city,44.6044097,11.3110572,"Bonconvento, Sala Bolognese, Unione Terre d'Acqua, Bologna, Emilia-Romagna, 40010, Italia"
+borgogreci,Borgo de' Greci,,Italy,Tuscany,contrada,43.7690764,11.2594446,"Borgo de' Greci, Quartiere 1, Firenze, Toscana, 50122, Italia"
+borgogna,Borgogna,,France,,city,47.2780873,4.2224863,"Bourgogne, France métropolitaine, France"
+sanpancrazio,San Brancazio,,Italy,Tuscany,convent,,,
+contradabrancazio,contrada San Brancazio,,Italy,Tuscany,contrada,,,
+brindisi,Brandizio,,Italy,Apulia,city,42.4914154,14.1744952,"Via Bernardo Brandizio, Santa Filomena, Zanni, Pescara, Abruzzo, 65125, Italia"
+brescia,Brescia,,Italy,Lombardy,city,45.7795805,10.425873,"Brescia, Lombardia, Italia"
+bruges,Bruggia,,NorthEurope-EastEurope,,city,44.9534175,9.1440496,"Casa Bruggia, Borgo Priolo, Pavia, Lombardia, Italia"
+buffia,Buffia,,,,,,,
+cacavincigli,Cacavincigli,,Italy,Tuscany,street-lane,,,
+calatabellotta,Calatabellotta,Caltabellotta,Italy,Sicily,city,37.5773409,13.216548,"Caltabellotta, Agrigento, Sicilia, 92010, Italia"
+Calabria,Calavria,,Italy,Calabria,region,45.7434395,10.6664238,"Calavria, Tignale, Comunità Montana Parco Alto Garda bresciano, Brescia, Lombardia, 25080, Italia"
+calais,Calese,,France,,city,,,
+camaldoli,Camaldoli,,Italy,Tuscany,contrada,40.6526226,15.1751616,"Camaldoli, Campagna, Salerno, Campania, Italia"
+camerata,Camerata,,Italy,Tuscany,hamlet,45.9864146,10.2500195,"Camerata, Lozio, Comunità montana della valle Camonica, Brescia, Lombardia, 25040, Italia"
+camollia,Camollia,Porta Camollia,Italy,Tuscany,contrada,43.3276622,11.3253877,"Porta Camollia, Piazza Guido Chigi Saracini, Siena, Toscana, 53100, Italia"
+campi,Campi,CampiBisenzio,Italy,Tuscany,hamlet,,,
+camporeggi,Camporeggi,Camporegio,Italy,Tuscany,contrada,44.2975113,11.9445004,"Camporegio, Quartiere Reda, Faenza, Unione della Romagna Faentina, Ravenna, Emilia-Romagna, 48018, Italia"
+candia,Candia,,Greece-Balkans,,city,35.3084952,24.4633423,"Κρήτη, Αποκεντρωμένη Διοίκηση Κρήτης, Ελλάς"
+cantomacina,Canto alla Macina,,Italy,Tuscany,area,,,
+cappadocia,Capadocia,,Turkey-AsiaMinor,,region,38.7219011,35.4873214,"Kayseri, Melikgazi, Kayseri, İç Anadolu Bölgesi, 38050, Türkiye"
+capitolio,Capitolio,Campidoglio,Italy,Latium,hill,41.8925778,12.4822154,"Campidoglio, Campitelli, Municipio Roma I, Roma, Roma Capitale, Lazio, 00120, Italia"
+caprezio,Caprezio,,,,,,,
+capova,Capova,Capua,Italy,Campania,city,41.1079984,14.2097176,"Capua, Caserta, Campania, Italia"
+gafsa,Capsa,Gafsa,NorthAfrica,,city,34.4224374,8.7843862,"قفصة, وادي أيلو, معتمدية قفصة الجنوبية, ولاية قفصة, 2100, تونس"
+cartagine,Cartagine,,NorthAfrica,,city,36.8548083,10.3309924,"قرطاج, تونس, ولاية تونس, 2016, تونس"
+castellammarestabia,Castello da mare di Stabia,Castellamare di Stabia,Italy,Campania,city,40.7455771,14.4806859,"Castellamare di Stabia, Autostrada A3 Napoli-Salerno, Masseria Curato, Pompei, Napoli, Campania, 80045, Italia"
+castellorossiglione,Castello dei Rossiglione,,France,,castle,,,
+castelloguardastagno,Castello dei Guardastagno,,France,,castle,,,
+catania,Catania,,Italy,Sicily,city,37.5023612,15.0873718,"Catania, Sicilia, Italia"
+cattaio,Cattaio,,MidEast-FarEast,,region,,,
+loggiacavicciuli,Loggia de' Cavicciuli,,Italy,Tuscany,loggia,,,
+cefalonia,Cifalonia,,Aegean-islands,,island,,,
+certaldo,Certaldo,,Italy,Tuscany,hamlet,43.5477043,11.0409545,"Certaldo, Unione dei Comuni Circondario dell'Empolese Valdelsa, Firenze, Toscana, 50052, Italia"
+cefalu,Cefalú,,Italy,Sicily,city,38.034957,14.0244562,"Cefalù, Palermo, Sicilia, 90015, Italia"
+chiarenza,Chiarenza,,Greece-Balkans,,city,37.5326836,15.0456881,"Piazza Chiarenza, Belsito, Lineri, Misterbianco, Catania, Sicilia, 95045, Italia"
+chiassi,Chiassi,,Italy,Emilia-Romagna,area,45.302644,10.6185306,"Cascina Corbello Chiassi, Volta Mantovana, Mantova, Lombardia, 46049, Italia"
+chiesarossiglione-0409,Chiesa del castello dei Rossiglione,,France,,church,,,
+chios,Chios,,Turkey-AsiaMinor,,island,38.3758132,26.0646552,"Χίος, Περιφερειακή Ενότητα Χίου, Περιφέρεια Βόρειου Αιγαίου, Αποκεντρωμένη Διοίκηση Αιγαίου, Ελλάς"
+sicilia,Cicilia,Sicilia,Italy,Sicily,country,37.587794,14.155048,"Sicilia, Italia"
+cipro,Cipri,,Cyprus-Levant,,island,35.1762004,33.3748219,"SKF Sweedish Levant Trading, Aigeos, Τακτελκαλέ, Taht-el-Kale, Λευκωσία, Δήμος Λευκωσίας, Επαρχία Λευκωσίας, Κύπρος, 1017, Κύπρος - Kıbrıs"
+civillari,Civillari,,Italy,Tuscany,contrada,,,
+viacocomero,Via del Cocomero / Mercato Vecchio,Via Ricasoli,Italy,Tuscany,street-lane,42.7591544,11.1142636,"Strada Ricasoli, Centro storico, Centro, Grosseto, Toscana, 58100, Italia"
+corniglia,Corniglia,,Italy,Liguria,hamlet,44.1199606,9.7086874,"Corniglia, Vernazza, La Spezia, Liguria, 19018, Italia"
+cornovaglia,contea di Cornovaglia,,England-Ireland-Scotland,,county,,,
+costantinopoli,Costantinopoli,,Turkey-AsiaMinor,,city,-37.6830261,176.1698861,"Costantinopoli, The Strand, Tauranga Central, Tauranga, Tauranga City, Bay of Plenty, 3110, New Zealand / Aotearoa"
+corsignano,Corsignano,Pienza,Italy,Tuscany,city,43.0765485,11.6789076,"Pienza, Unione dei Comuni Valdichiana Senese, Siena, Toscana, 53026, Italia"
+cremona,Cremona,,Italy,Lombardy,city,45.2208641,10.037038,"Cremona, Lombardia, Italia"
+sancrescivalcava,san Cresci in Valcava,,Italy,Tuscany,monastery,43.9159011,11.4028674,"San Cresci in Valcava, Borgo San Lorenzo, Unione Montana dei Comuni del Mugello, Firenze, Toscana, 50032, Italia"
+creta,Creti,,Greece-Balkans,,island,44.6841634,24.5115331,"Creți, Poboru, Olt, 237348, România"
+cuba,la Cuba,,Italy,Sicily,castle,38.1380751,13.3422482,"La Cuba, Via Francesco Scaduto, Quartiere Matteotti, VIII Circoscrizione, Palermo, Sicilia, 90144, Italia"
+egina,Egina,,Greece-Balkans,,island,37.7243694,23.4938109,"Αίγινα, Βάγια, Δήμος Αίγινας, Περιφερειακή Ενότητα Νήσων, Περιφέρεια Αττικής, Αποκεντρωμένη Διοίκηση Αττικής, 180 10, Ελλάς"
+egitto,Egitto,,NorthAfrica,,country,26.2540493,29.2675469,مصر
+armenia,Erminia,,Turkey-AsiaMinor,,country,44.7303164,10.2951589,"Erminia, Vigatto, Corcagnano, Parma, Emilia-Romagna, 43124, Italia"
+faenza,Faenza,,Italy,Emilia-Romagna,city,44.2855555,11.8832055,"Faenza, Unione della Romagna Faentina, Ravenna, Emilia-Romagna, 48018, Italia"
+famagosta,Famagosta,,Cyprus-Levant,,city,35.1207627,33.9520958,"Levant Sokak, Namık Kemal, Namık Kemal Mahallesi, Gazimağusa, Gazimağusa Belediyesi, Gazimağusa ilçesi, Kuzey Kıbrıs, 99450, Κύπρος - Kıbrıs"
+fano,Fano,,Italy,Marches,city,43.8424173,13.0146632,"Fano, Pesaro e Urbino, Marche, 61032, Italia"
+ferrara,Ferrara,,Italy,Emilia-Romagna,city,44.7667642,11.827939,"Ferrara, Emilia-Romagna, Italia"
+lefiandre,Fiandra,,NorthEurope-EastEurope,,region,45.1777956,9.5325436,"Cascina Fiandra, Livraga, Lodi, Lombardia, 26863, Italia"
+fiesole,Fiesole,,Italy,Tuscany,city,43.8066689,11.2930735,"Fiesole, Firenze, Toscana, Italia"
+firenze,Firenze,,Italy,Tuscany,city,43.7697955,11.2556404,"Firenze, Toscana, Italia"
+forlimpopoli,Forlimpopoli,,Italy,Emilia-Romagna,city,44.1873049,12.1259056,"Forlimpopoli, Unione di Comuni della Romagna Forlivese, Forlì-Cesena, Emilia-Romagna, 47034, Italia"
+francia,Francia,,France,,country,46.603354,1.8883335,France
+friuli,Frioli,Friuli,Italy,,region,45.6528943,13.7804956,"ISTAT Ufficio Regionale Friuli Venezia Giulia, 18, Via Cesare Battisti, Barriera Nuova, Città Nuova-Barriera Nuova-San Vito-Città Vecchia, Trieste, Friuli-Venezia Giulia, 34137, Italia"
+gaeta,Gaeta,,Italy,Campania,city,41.218312,13.56281,"Gaeta, Latina, Lazio, 04024, Italia"
+galles,Gales,,England-Ireland-Scotland,,,52.2928116,-3.73893,"Cymru / Wales, United Kingdom"
+reamegarbo,reame del Garbo,,Italy,,countryside,,,
+genova,Genova,,Italy,Liguria,city,44.40726,8.9338624,"Genova, Liguria, Italia"
+agrigento,Gergenti,Agrigento,Italy,Sicily,city,37.3122991,13.57465,"Agrigento, Sicilia, 92100, Italia"
+granada,Granata,Granada,Iberia,,city,37.1895028,-3.5906604,"Calle Iberia, Haza Grande, Albaicín, Granada, Comarca de la Vega de Granada, Granada, Andalucía, 18010, España"
+guascogna,Guascogna,,France,,region,44.4682078,7.3278184,"Strada Guascogna, Borgata Ecole, Roccabruna, Cuneo, Piemonte, 12025, Italia"
+castelguiglielmo,Castel Guiglielmo,,Italy,Emilia-Romagna,castle,,,
+corfu,Gurfo,,Greece-Balkans,,island,45.8995223,7.6165576,"Ristorante Lo Gurfo, SR46, Le Crêt, Valtournenche, Valle d'Aosta / Vallée d'Aoste, 11028, Italia"
+gerusalemme,Ierusalem,,Cyprus-Levant,,city,31.7788472,35.2257856,"ירושלים | القدس, נפת ירושלים, מחוז ירושלים, ישראל"
+imola,Imola,,Italy,Emilia-Romagna,city,44.3535145,11.7141233,"Imola, Nuovo Circondario Imolese, Bologna, Emilia-Romagna, 40026, Italia"
+indiapastinacca,India Pastinaca,,,,,,,
+inferno,Inferno / Ninferno,,,,,,,
+inghilterra,Inghilterra,,England-Ireland-Scotland,,country,52.5310214,-1.2649062,"England, United Kingdom"
+irlanda,Irlanda,,England-Ireland-Scotland,,country,52.865196,-7.9794599,Éire / Ireland
+ischia,Ischia,,Italy,Campania,island,40.734205,13.947125,"Ischia, Napoli, Campania, 80077, Italia"
+italia,Italia,,Italy,,country,42.6384261,12.674297,Italia
+laiazzo,Laiazzo,,Cyprus-Levant,,city,,,
+lamporecchio,Lamporecchio,,Italy,Tuscany,hamlet,43.8163799,10.896283,"Lamporecchio, Pistoia, Toscana, 51035, Italia"
+laterino,Laternino,,Italy,Tuscany,city,,,
+lerici,Lerici,,Italy,Liguria,castle,44.0736073,9.9099135,"Lerici, La Spezia, Liguria, 19032, Italia"
+legnaia,Legnaia,,Italy,Tuscany,hamlet,43.7705299,11.2115148,"Legnaia, Soffiano, Quartiere 4, Firenze, Toscana, 50143, Italia"
+lipari,Lipari,,Italy,Sicily,island,38.4692717,14.9564504,"Lipari, Messina, Sicilia, 98055, Italia"
+lombardia,Lombardia,,Italy,Lombardy,region,45.5703694,9.7732524,"Lombardia, Italia"
+londra,Londra,,England-Ireland-Scotland,,city,51.5074456,-0.1277653,"Greater London, England, United Kingdom"
+lucifero,Lucifero,,,,planet,43.8645147,10.2504894,"Lucifero, Via Guglielmo Oberdan, Darsena, Viareggio, Unione dei comuni della Versilia, Lucca, Toscana, 55043, Italia"
+lunigiana,Lunigiana,,Italy,Tuscany,region,44.2484888,10.0524325,"Unione di comuni Montana Lunigiana, Massa-Carrara, Toscana, Italia"
+magra,Magra,,Italy,Liguria,river,44.2512783,9.9450185,"Magra, Massa-Carrara, Toscana, Italia"
+maiorca,Maiolica,,Iberia,,island,44.4071694,8.9424803,"Maiolica, Via San Vincenzo, San Vincenzo, Centro Est, Genova, Liguria, 16121, Italia"
+macello,Macello,,Italy,Veneto,area,44.851139,7.39802,"Macello, Torino, Piemonte, Italia"
+malpertugio,Malpertugio,,Italy,Campania,contrada,38.0117191,14.1032914,"Viadotto Malpertugio, Pollina, Palermo, Sicilia, 90010, Italia"
+maremma,Maremma,,Italy,Tuscany,region,44.2360427,8.4298691,"Maremma, Spotorno, Savona, Liguria, 17028, Italia"
+marsiglia,Marsilia,,France,,city,43.2961743,5.3699525,"Marseille, Bouches-du-Rhône, Provence-Alpes-Côte d'Azur, France métropolitaine, France"
+menzogna,Menzogna,,,,,41.1396097,14.6709358,"Menzogna, Spinara, Vitulano, Benevento, Campania, 82038, Italia"
+messina,Messina,,Italy,Sicily,city,38.1937571,15.5542082,"Messina, Sicilia, Italia"
+milano,Melano,Milano,Italy,Lombardy,city,45.4641943,9.1896346,"Milano, Lombardia, Italia"
+minerva,Minerva,Punta Campanella,Italy,Campania,cape,40.5694595,14.3248809,"Punta Campanella, Sentiero del cuore, Roncato, Marciano, Massa Lubrense, Napoli, Campania, 80061, Italia"
+modena,Modona,Modena,Italy,Emilia-Romagna,city,44.5384728,10.9359609,"Modena, Emilia-Romagna, Italia"
+monaco,Monaco,,France,,country,42.2803146,9.4304477,"Monaco, Campi, Corte, Haute-Corse, Corse, France métropolitaine, 20270, France"
+montenero,Monte Nero,,Italy,Tuscany,,44.5619063,9.5087446,"Monte Nero, Ferriere, Piacenza, Emilia-Romagna, Italia"
+montesone,Montesone,Monitisoni,Italy,Tuscany,hill,,,
+montisci,Montisci,,Italy,Tuscany,hill,39.7915735,9.0079526,"Via Madre Eugenia Montisci, Geroni/Genoni, Casteddu/Cagliari, Sardigna/Sardegna, 08030, Italia"
+mmorello,Monte Morello,,Italy,Tuscany,mountain,44.4713604,11.0774964,"Monte Morello, Valsamoggia, Unione dei comuni Valli del Reno, Lavino e Samoggia, Bologna, Emilia-Romagna, 40053, Italia"
+montughi,Montughi,,Italy,Tuscany,hill,43.792779,11.2546155,"Chiesa di San Martino a Montughi, Via di Montughi, Quartiere 5, Firenze, Toscana, 50134, Italia"
+morea,Morea (Peloponneso),,Greece-Balkans,,region,,,
+mugello,Mugello,,Italy,Tuscany,countryside,43.9993822,11.3723647,"Autodromo del Mugello, 15, Via della Resistenza, Scarperia, Scarperia e San Piero, Unione Montana dei Comuni del Mugello, Firenze, Toscana, 50038, Italia"
+mugnone,Mugnone / Mugnon,,Italy,Tuscany,river,,,
+montpellier,Monpulier,Montpellier,France,,city,43.6112422,3.8767337,"Montpellier, Hérault, Occitanie, France métropolitaine, France"
+napoli,Napoli,,Italy,Campania,city,40.8358846,14.2487679,"Napoli, Campania, Italia"
+narsia,Narsia,,,,,42.2565437,42.6790484,"გრიგოლ ნარსიას ქუჩა, ძელქვიანი, ქუთაისი, იმერეთი, 4600, საქართველო"
+nazarette,Nazarette,,Cyprus-Levant,,city,18.7213093,-72.3742645,"ECOLE MIXTE NAZARETTE DE SOURCE MATELAS, Route Nationale # 1, 4e Fonds-Des-Blancs (Casale), Aubry, Commune Cabaret, Arrondissement de l’Arcahaie, Département de l'Ouest, Ayiti"
+norrueca,Norrueca,,,,,,,
+nostradama,Nostra Dama,,France,,church,44.1861695,0.6683646,"Bon-Encontre, Agen, Lot-et-Garonne, Nouvelle-Aquitaine, France métropolitaine, 47240, France"
+ortosanmichele,Orto San Michele,,Italy,Tuscany,church,43.7010548,11.1279143,"L'Orto, San Michele a Torri, Scandicci, Firenze, Toscana, Italia"
+palermo,Palermo,,Italy,Sicily,city,38.1112268,13.3524434,"Palermo, Sicilia, Italia"
+parigi,Parigi,,France,,city,48.8534951,2.3483915,"Paris, Île-de-France, France métropolitaine, France"
+parione,Parione,,Italy,Tuscany,street-lane,41.8973795,12.4710487,"Parione, Municipio Roma I, Roma, Roma Capitale, Lazio, 00186, Italia"
+pasignano,Passignano sul Trasimeno,,Italy,Umbria,city,43.1847425,12.136838,"Passignano sul Trasimeno, Perugia, Umbria, 06065, Italia"
+pavia,Pavia,,Italy,Lombardy,city,45.0368547,9.1378251,"Pavia, Lombardia, Italia"
+peretola,Peretola,,Italy,Tuscany,countryside,43.7973619,11.1966117,"Peretola, Quartiere 5, Firenze, Toscana, 50145, Italia"
+iran,Persia,Iran,MidEast-FarEast,,country,32.6475314,54.5643516,ایران
+perugia,Perugia,,Italy,Umbria,city,43.1070321,12.4029962,"Perugia, Umbria, Italia"
+piccardia,Piccardia,,France,,region,49.601756,2.8716339,"Picardie, France métropolitaine, France"
+pisa,Pisa,,Italy,Tuscany,city,43.4714722,10.6797912,"Pisa, Toscana, Italia"
+pistoia,Pistoia,,Italy,Tuscany,city,43.9740957,10.8687081,"Pistoia, Toscana, Italia"
+ponteoca,Ponte dell'Oca,,,,bridge,45.9550531,12.5009097,"Ponte Dell'Ospitale, Villorba, San Liberale, Sacile, Pordenone / Pordenon, Friuli-Venezia Giulia, 33077, Italia"
+porcellana,Porcellana,,Italy,Tuscany,street-lane,44.8397466,10.0776608,"Porcellana, Fidenza, Parma, Emilia-Romagna, 43036, Italia"
+ponza,Ponzo,Ponza,Italy,Campania,island,40.8932368,12.9630622,"Ponza, Latina, Lazio, 04027, Italia"
+portasgallo,porta a San Gallo,,Italy,Tuscany,gate,46.9946534,9.5177897,"Porta Romanaweg, Fluppi, Bad Ragaz, Wahlkreis Sarganserland, St. Gallen, 7312, Schweiz/Suisse/Svizzera/Svizra"
+portasalaia,Porta Salaia,,Italy,Tuscany,neighborhood,43.3186,11.330207,"Via di Fontebranda, Contrada della Selva, Terzo di Città, Siena, Toscana, 53100, Italia"
+portapiero,Porta San Piero,,Italy,Tuscany,gate,43.9645507,11.3243514,"Via Porta Vecchia, Scaffaia, San Piero a Sieve, Scarperia e San Piero, Unione Montana dei Comuni del Mugello, Firenze, Toscana, 50037, Italia"
+prato,Prato,,Italy,Tuscany,city,43.9357181,11.0941473,"Prato, Toscana, Italia"
+pratoognisanti,prato d'Ognissanti,,Italy,Tuscany,area,,,
+procida,Procida,,Italy,Campania,island,40.7649991,14.0239063,"Procida, Napoli, Campania, 80079, Italia"
+provenza,Provenza,,France,,region,44.0580563,6.0638506,"Provence-Alpes-Côte d'Azur, France métropolitaine, France"
+puglia,Puglia,,Italy,Apulia,region,40.9842539,16.6210027,"Puglia, Italia"
+radicofani,Radicofani,,Italy,Tuscany,castle,42.8965067,11.7697064,"Radicofani, Unione dei Comuni Amiata Val d'Orcia, Siena, Toscana, Italia"
+ravello,Ravello,,Italy,Campania,city,40.6496643,14.6122753,"Ravello, Salerno, Campania, Italia"
+ravenna,Ravenna,,Italy,Emilia-Romagna,city,44.3640607,12.0590095,"Ravenna, Emilia-Romagna, Italia"
+reggio,Reggio,,Italy,Calabria,city,44.6978389,10.6304971,"Reggio Emilia, Reggio nell'Emilia, Emilia-Romagna, Italia"
+rialto,Rialto,,Italy,Veneto,neighborhood,44.2258176,8.2631084,"Rialto, Savona, Liguria, Italia"
+rimini,Rimini / Ariminio,,Italy,Emilia-Romagna,city,,,
+,Ripole,San Giacomo di Ripoli,Italy,Tuscany,convent,40.6741726,16.58944,"Studio Legale Ripoli, Via Adriano Olivetti, Olmi, Matera, Basilicata, 75100, Italia"
+rodi,Rodi,,Greece-Balkans,,island,36.1725297,27.9194016,"Ρόδος, Αποκεντρωμένη Διοίκηση Αιγαίου, Ελλάς"
+roma,Roma,,Italy,Latium,city,41.8933203,12.4829321,"Roma, Roma Capitale, Lazio, Italia"
+romagna,Romagna,,Italy,Emilia-Romagna,region,44.4914458,11.3435713,"ISTAT Ufficio Regionale Emilia Romagna, 9, Via Luigi Carlo Farini, Quadrilatero, Santo Stefano, Bologna, Emilia-Romagna, 40124, Italia"
+romania,Romania,,Greece-Balkans,,country,45.9852129,24.6859225,România
+roussillon,Rossiglione,Roussillon,France,,county,45.3735991,4.8124049,"Roussillon, Vienne, Isère, Auvergne-Rhône-Alpes, France métropolitaine, 38150, France"
+rouen,Ruem,Rouen,France,,city,49.4404591,1.0939658,"Rouen, Seine-Maritime, Normandie, France métropolitaine, France"
+rugacatalana,Ruga Catalana,,Italy,Campania,street-lane,,,
+salerno,Salerno,,Italy,Campania,city,40.4194417,15.3106085,"Salerno, Campania, Italia"
+salerno-0410,Salerno (IV.10),,Italy,Campania,city,40.6803601,14.7594542,"Salerno, Campania, Italia"
+sanluzzo,Sanluzzo,Saluzzo,Italy,Piedmont,city,44.6446052,7.4926009,"Saluzzo, Cuneo, Piemonte, 12037, Italia"
+sangallo,San Gallo,,Italy,Tuscany,church,45.8649539,9.6718341,"San Gallo, San Giovanni Bianco, Comunità Montana della Valle Brembana, Bergamo, Lombardia, 24015, Italia"
+sangallo-ospedale,San Gallo (ospedale),,Italy,Tuscany,hospital,-20.955715,-49.1782009,"Hospital Municipal Thereza Gallo, 446, Avenida Eduardo Hidalgo, Shara Vida, Uchoa, Região Imediata de São José do Rio Preto, Região Metropolitana de São José do Rio Preto, Região Geográfica Intermediária de São José do Rio Preto, São Paulo, 15890-000, Brasil"
+sangimignano,San Gimignano,,Italy,Tuscany,city,43.4677993,11.0432115,"San Gimignano, Siena, Toscana, Italia"
+sangiovanni,San Giovanni,,Italy,Tuscany,church,45.7880182,12.6140857,"San Giovanni, Motta di Livenza, Treviso, Veneto, 31045, Italia"
+ripole,San Jacopo di Ripoli,,Italy,Tuscany,convent,43.7662819,11.3255405,"Pescaia di San Jacopo al Girone, Sant'Andrea a Rovezzano, Quartiere 2, Firenze, Toscana, Italia"
+sanmarco,San Marco,,Italy,Veneto,square,45.0220884,6.8372267,"San Marco, Oulx, Torino, Piemonte, 10056, Italia"
+sanpaolo,San Paolo,,Italy,Tuscany,church,45.370576,10.026767,"San Paolo, Brescia, Lombardia, Italia"
+sanpieroco,San Piero in Ciel d'Oro,,Italy,Lombardy,church,,,
+santacroce,Santa Croce,,Italy,Tuscany,church,46.0252962,10.8388732,"Santa Croce, Bleggio Superiore, Comunità delle Giudicarie, Provincia di Trento, Trentino-Alto Adige/Südtirol, 38071, Italia"
+santafiore,Santafiore,,Italy,Tuscany,castle,,,
+santalucia,Santa Lucia dal Prato,Santa Lucia a Porta al Prato,Italy,Tuscany,church,,,
+santamariascala,Santa Maria della Scala,,Italy,Tuscany,church,41.8910617,12.4678215,"Santa Maria della Scala, Vicolo della Scala, Trastevere, Municipio Roma I, Roma, Roma Capitale, Lazio, 00120, Italia"
+santamariamaggiore,Santa Maria Maggiore,,Italy,Tuscany,church,41.8976275,12.4984704,"Basilica di Santa Maria Maggiore, Piazza di Santa Maria Maggiore, Monti, Municipio Roma I, Roma, Roma Capitale, Lazio, 00185, Italia"
+smnovella,Santa Maria Novella,,Italy,Tuscany,church,42.1037737,12.1764684,"Santa Maria Novella, Via Umberto I, Bracciano, Roma Capitale, Lazio, 00062, Italia"
+santamariaughi,Santa Maria Ughi,,Italy,Tuscany,church,,,
+santamariaverzaia,Santa Maria a Verzaia,Chiesa a Porta San Ferdinando,Italy,Tuscany,church,,,
+santareparata,Santa Reparata,,Italy,Tuscany,church,42.8046378,13.6957698,"Santa Reparata, Civitella del Tronto, Unione dei Comuni della Val Vibrata, Teramo, Abruzzo, 64016, Italia"
+santelpidio-a-mare,Sant'Elpidio a Mare / San Lepidio,,Italy,Marches,hamlet,,,
+sardegna,Sardigna,Sardegna,Italy,Sardinia,island,40.0912813,9.0305773,"Sardigna/Sardegna, Italia"
+scalea,Scalea in Calavria,,Italy,Calabria,hamlet,,,
+scozia,Scozia,,England-Ireland-Scotland,,country,56.7861112,-4.1140518,"Alba / Scotland, United Kingdom"
+ssepolcro,Sepolcro,,Cyprus-Levant,,area,41.3194648,16.280932,"Sepolcro, Corso Vittorio Emanuele Secondo, Centro, Barletta, Barletta-Andria-Trani, Puglia, 76121, Italia"
+settignano,Settignano,,Italy,Tuscany,hill,43.7829916,11.3208169,"Settignano, Firenze, Toscana, 50135, Italia"
+siena,Siena,,Italy,Tuscany,city,43.167206,11.467561,"Siena, Toscana, Italia"
+sinigaglia,Sinagaglia,Senigallia,Italy,Marches,city,43.7149517,13.2179488,"Senigallia, Ancona, Marche, 60019, Italia"
+smirne,le Smirre,,Turkey-AsiaMinor,,city,,,
+spagna,Spagna / Ispagna,,Iberia,,country,39.3260685,-4.8379791,España
+strangford,Stanforda,,England-Ireland-Scotland,,city,37.4313138,-122.1693654,"Stanford University, 450, Jane Stanford Way, Rains Houses, Santa Clara County, California, 94305, United States"
+susa,Susa,,NorthAfrica,,city,45.1372115,7.0539789,"Susa, Torino, Piemonte, Italia"
+tebaide,Tebaida,,NorthAfrica,,region,-4.0112151,-79.2053795,"Tebaida, Punzara, Loja, 110110, Ecuador"
+terrasanta,Terra Santa,,Cyprus-Levant,,,,,
+ticino,Tesino,,Italy,Lombardy,river,,,
+torrenieri,Torrenieri,,Italy,Tuscany,hamlet,,,
+toscana,Toscana,,Italy,Tuscany,,,,
+trapani,Trapani,,Italy,Sicily,city,,,
+trani,Trani,,Italy,Apulia,city,,,
+tresanti,Tresanti,,Italy,Apulia,hamlet,,,
+treviso,Trivigi,Treviso,Italy,Veneto,city,,,
+truffia,Truffia,,,,,,,
+tunisi,Tunisi,,NorthAfrica,,city,,,
+udine,Udine,,Italy,Friuli-VenetiaJulia,city,,,
+ustica,Ustica,,Italy,Sicily,island,,,
+valdelsa,Valdelsa,,Italy,Tuscany,county,,,
+vallecchio,Vallecchio,,Italy,Tuscany,hamlet,,,
+varlungo,Varlungo,,Italy,Tuscany,county,,,
+verona,Verona,,Italy,Veneto,city,,,
+venezia,Vinegia,Venezia,Italy,Veneto,city,,,
+casamento-1006,casamento di Neri Uberti (X.6),,Italy,Campania,villa,,,
+contado-0601,contado (VI.1),,Italy,,countryside,,,
+duomotreviso-0201,(maggior) chiesa (II.1),duomo-di-Treviso,Italy,Veneto,church,,,
+duomofiesole-0804,maggior chiesa (VIII.4),duomo,Italy,Tuscany,church,,,
+sanfrancesco-0901,chiesa de' frati minori (IX.1),San-Francesco,Italy,Tuscany,church,,,
+chiesa-1004,chiesa (X.4),,Italy,Emilia-Romagna,church,,,
+fiume-0202,fiume (II.2),,Italy,,river,,,
+giardino-0406,giardino (IV.6),,Italy,Lombardy,garden,,,
+giardino-0407,giardino (IV.7),,Italy,Tuscany,garden,,,
+giardino-0709,giardino (VII.9),,Greece-Balkans,,garden,,,
+giardino-1005,giardino (X.5),,Italy,Friuli-VenetiaJulia,garden,,,
+giardino-1006,giardino di Neri Uberti (X.6),,Italy,Campania,garden,,,
+luogo-1009,un luogo di Torello (X.9),,Italy,Lombardy,villa,,,
+monistero-0104,monistero (I.4),,Italy,Tuscany,monastery,,,
+monistero-0301,monistero (III.1),,Italy,Tuscany,convent,,,
+ostiere-1006,ostiere di re Carlo I (X.6),,,,villa,,,
+palagiofolco-0403,il palagio di Folco (IV.3),,Greece-Balkans,,villa,,,
+palagionicostrato-0709,palagio di Nicostrato (VII.9),,Greece-Balkans,,villa,,,
+palagiomitridanes-1003,palagio di Mitridanes (X.3),,MidEast-FarEast,,villa,,,
+palagionatan-1003,palagio di Natan (X.3),,MidEast-FarEast,,villa,,,
+pero-0709,pero (VII.9),,Greece-Balkans,,tree,,,
+piazza-0510,Piazza (V.10),,Italy,Tuscany,square,,,
+prato-1005,prato (X.5),,Italy,Friuli-VenetiaJulia,lawn,,,
+pretorio-1008,pretorio (X.8),,Italy,Latium,villa,,,
+tempio-1008,tempio (X.8),,Greece-Balkans,,church,,,
+alberifrutt-c06,albori fruttiferi (VI.con),,Italy,Tuscany,tree,,,
+boschetto-i09,boschetto (IX.in),,Italy,Tuscany,wood,,,
+canaletti-i03,canaletti (III.in),,Italy,Tuscany,,,,
+cortile-i01,cortile (I.in),,Italy,Tuscany,,,,
+chiesetta-i08,chiesetta (VIII.con),,Italy,Tuscany,,,,
+giardinetto-c02,giardinetto (II.con),,Italy,Tuscany,,,,
+giardini-i02,giardini (II.in),,Italy,Tuscany,,,,
+giardino-i01,giardino (I.in),,Italy,Tuscany,garden,,,
+fiumicello1-c06,chiarissimo fiumicello (VI.con),,Italy,Tuscany,stream,,,
+fiumicello2-c06,fiumicello (VI.con),,Italy,Tuscany,stream,,,
+montagnetta-i01,montagnetta (I.in),,Italy,Tuscany,mountain,,,
+montagnetta-c01,montagnetta (I.con),,Italy,Tuscany,mountain,,,
+montagnette-c06,sei montagnette (VI.con),,Italy,Tuscany,hill,,,
+pratello-i02,pratello (II.in),,Italy,Tuscany,lawn,,,
+prato-i03,prato (III.in),,Italy,Tuscany,lawn,,,
+prato-c06,prato d'erba minutissima (VI.con),,Italy,Tuscany,lawn,,,
+rivo-c01,rivo (I.con),,Italy,Tuscany,river,,,
+valle-c01,valle ombrosa (I.con),,Italy,Tuscany,countryside,,,
+fontebrigata-01,"fonte di marmo bianchissimo (III.in) messe le tavole intorno alla bella fonte (III.con) nella maniera usata vicini alla bella fonte (IV.in) tutti raccolti, come usati erano, appresso della bella fonte (IV.con) intorno della bella fontana di presente furono in sul danzare (VII.con) appresso la bella fontana a seder posti (VIII.in) dintorno alla chiara fonte (X.in)",,Italy,Tuscany,fountain,,,
+giardinobrigata-01,giardino (III.in) (III.con) (IV.in) (IV.con) lo dittevole giardino (V.in) e poi fra le piacevoli ombre del giardino (X.in),,Italy,Tuscany,garden,,,
+laghettobrigata-01,laghetto / pelaghetto,,Italy,Tuscany,lake,,,
+mulinibrigata-01,mulina (III.in) (IV.con),,Italy,Tuscany,mill,,,
+palagiobrigata-01,palagio (I.in) (I.con),,Italy,Tuscany,villa,,,
+palagiobrigata-02,bellissimo e ricco palagio (III.in) bel palagio (IV.in) al palagio tornare (VII.con),,Italy,Tuscany,villa,,,
+valledonnebrigata-01,Valle delle Donne,,Italy,Tuscany,valley,,,

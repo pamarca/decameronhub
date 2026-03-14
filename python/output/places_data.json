@@ -1,0 +1,3055 @@
+[
+  {
+    "id": "abruzzi",
+    "name": "Abruzzi",
+    "type": "region",
+    "geographic_area": "Italy",
+    "mentions": 2,
+    "sections": [
+      "nov0610",
+      "nov0803"
+    ]
+  },
+  {
+    "id": "acaia",
+    "name": "Acaia",
+    "type": "region",
+    "geographic_area": "Greece-Balkans",
+    "mentions": 1,
+    "sections": [
+      "nov1008"
+    ]
+  },
+  {
+    "id": "sangiovannidacri",
+    "name": "Acri",
+    "type": "city",
+    "geographic_area": "Cyprus-Levant",
+    "mentions": 2,
+    "sections": [
+      "nov0209",
+      "nov1009"
+    ]
+  },
+  {
+    "id": "aiguesmortes",
+    "name": "Aguamorta",
+    "type": "city",
+    "geographic_area": "France",
+    "mentions": 1,
+    "sections": [
+      "nov0207"
+    ]
+  },
+  {
+    "id": "alagna",
+    "name": "Alagna",
+    "type": "city",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0503"
+    ]
+  },
+  {
+    "id": "albisola",
+    "name": "Alba",
+    "type": "city",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0209"
+    ]
+  },
+  {
+    "id": "alessandriaeg",
+    "name": "Alessandria / Alessandra",
+    "type": "city",
+    "geographic_area": "NorthAfrica",
+    "mentions": 6,
+    "sections": [
+      "nov0103",
+      "nov0206",
+      "nov0207",
+      "nov0209",
+      "nov0802",
+      "nov1009"
+    ]
+  },
+  {
+    "id": "altarisi",
+    "name": "Altarisi",
+    "type": "city",
+    "geographic_area": "",
+    "mentions": 0,
+    "sections": []
+  },
+  {
+    "id": "amalfi",
+    "name": "Amalfi",
+    "type": "city",
+    "geographic_area": "Italy",
+    "mentions": 2,
+    "sections": [
+      "nov0204",
+      "nov0410"
+    ]
+  },
+  {
+    "id": "ancona",
+    "name": "Ancona / Marca d'Ancona",
+    "type": "city",
+    "geographic_area": "Italy",
+    "mentions": 2,
+    "sections": [
+      "nov0307",
+      "nov0904"
+    ]
+  },
+  {
+    "id": "antiochia",
+    "name": "Antiochia",
+    "type": "region",
+    "geographic_area": "Cyprus-Levant",
+    "mentions": 1,
+    "sections": [
+      "nov0909"
+    ]
+  },
+  {
+    "id": "maregeo",
+    "name": "Arcipelago",
+    "type": "sea",
+    "geographic_area": "",
+    "mentions": 1,
+    "sections": [
+      "nov0204"
+    ]
+  },
+  {
+    "id": "arezzo",
+    "name": "Arezzo",
+    "type": "city",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0704"
+    ]
+  },
+  {
+    "id": "argo",
+    "name": "Argo",
+    "type": "city",
+    "geographic_area": "Greece-Balkans",
+    "mentions": 1,
+    "sections": [
+      "nov0709"
+    ]
+  },
+  {
+    "id": "arno",
+    "name": "Arno",
+    "type": "river",
+    "geographic_area": "Italy",
+    "mentions": 3,
+    "sections": [
+      "nov0807",
+      "nov0809",
+      "nov0908"
+    ]
+  },
+  {
+    "id": "avignone",
+    "name": "Avignone",
+    "type": "city",
+    "geographic_area": "France",
+    "mentions": 1,
+    "sections": [
+      "nov0802"
+    ]
+  },
+  {
+    "id": "monteasinaio",
+    "name": "Monte Asinaio",
+    "type": "hill",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "d04intro"
+    ]
+  },
+  {
+    "id": "atene",
+    "name": "Atene",
+    "type": "city",
+    "geographic_area": "Greece-Balkans",
+    "mentions": 3,
+    "sections": [
+      "nov0207",
+      "nov1008",
+      "epilogue"
+    ]
+  },
+  {
+    "id": "cairo",
+    "name": "Babillonia / Babilonia",
+    "type": "city",
+    "geographic_area": "NorthAfrica",
+    "mentions": 3,
+    "sections": [
+      "nov0103",
+      "nov0207",
+      "nov1009"
+    ]
+  },
+  {
+    "id": "baffa",
+    "name": "Baffa (Pafo)",
+    "type": "city",
+    "geographic_area": "Cyprus-Levant",
+    "mentions": 1,
+    "sections": [
+      "nov0207"
+    ]
+  },
+  {
+    "id": "baldacca",
+    "name": "Baldacca",
+    "type": "",
+    "geographic_area": "",
+    "mentions": 1,
+    "sections": [
+      "nov0610"
+    ]
+  },
+  {
+    "id": "barberia",
+    "name": "Barberia / Barbaria",
+    "type": "region",
+    "geographic_area": "NorthAfrica",
+    "mentions": 4,
+    "sections": [
+      "nov0310",
+      "nov0404",
+      "nov0502",
+      "nov1009"
+    ]
+  },
+  {
+    "id": "barletta",
+    "name": "Barletta",
+    "type": "city",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0910"
+    ]
+  },
+  {
+    "id": "terrabaschi",
+    "name": "terra de' Baschi",
+    "type": "",
+    "geographic_area": "Iberia",
+    "mentions": 1,
+    "sections": [
+      "nov0803"
+    ]
+  },
+  {
+    "id": "bengodi",
+    "name": "Bengodi",
+    "type": "contrada",
+    "geographic_area": "",
+    "mentions": 1,
+    "sections": [
+      "nov0803"
+    ]
+  },
+  {
+    "id": "berlinzone",
+    "name": "Berlinzone",
+    "type": "",
+    "geographic_area": "",
+    "mentions": 2,
+    "sections": [
+      "nov0803",
+      "nov0809"
+    ]
+  },
+  {
+    "id": "benevento",
+    "name": "Benevento",
+    "type": "city",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0206"
+    ]
+  },
+  {
+    "id": "bitonto",
+    "name": "Bitonto",
+    "type": "city",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0910"
+    ]
+  },
+  {
+    "id": "bologna",
+    "name": "Bologna",
+    "type": "city",
+    "geographic_area": "Italy",
+    "mentions": 8,
+    "sections": [
+      "nov0110",
+      "nov0202",
+      "nov0308",
+      "nov0707",
+      "nov0809",
+      "nov1004",
+      "nov1010",
+      "epilogue"
+    ]
+  },
+  {
+    "id": "bonconvento",
+    "name": "Bonconvento",
+    "type": "city",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0904"
+    ]
+  },
+  {
+    "id": "borgogreci",
+    "name": "Borgo de' Greci",
+    "type": "contrada",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0610"
+    ]
+  },
+  {
+    "id": "borgogna",
+    "name": "Borgogna",
+    "type": "city",
+    "geographic_area": "France",
+    "mentions": 1,
+    "sections": [
+      "nov0101"
+    ]
+  },
+  {
+    "id": "sanpancrazio",
+    "name": "San Brancazio",
+    "type": "convent",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0304"
+    ]
+  },
+  {
+    "id": "contradabrancazio",
+    "name": "contrada San Brancazio",
+    "type": "contrada",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0701"
+    ]
+  },
+  {
+    "id": "brindisi",
+    "name": "Brandizio",
+    "type": "city",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0204"
+    ]
+  },
+  {
+    "id": "brescia",
+    "name": "Brescia",
+    "type": "city",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0406"
+    ]
+  },
+  {
+    "id": "bruges",
+    "name": "Bruggia",
+    "type": "city",
+    "geographic_area": "NorthEurope-EastEurope",
+    "mentions": 1,
+    "sections": [
+      "nov0203"
+    ]
+  },
+  {
+    "id": "buffia",
+    "name": "Buffia",
+    "type": "",
+    "geographic_area": "",
+    "mentions": 1,
+    "sections": [
+      "nov0610"
+    ]
+  },
+  {
+    "id": "cacavincigli",
+    "name": "Cacavincigli",
+    "type": "street-lane",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0809"
+    ]
+  },
+  {
+    "id": "calatabellotta",
+    "name": "Calatabellotta",
+    "type": "city",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov1007"
+    ]
+  },
+  {
+    "id": "Calabria",
+    "name": "Calavria",
+    "type": "region",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0506"
+    ]
+  },
+  {
+    "id": "calais",
+    "name": "Calese",
+    "type": "city",
+    "geographic_area": "France",
+    "mentions": 1,
+    "sections": [
+      "nov0208"
+    ]
+  },
+  {
+    "id": "camaldoli",
+    "name": "Camaldoli",
+    "type": "contrada",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0905"
+    ]
+  },
+  {
+    "id": "camerata",
+    "name": "Camerata",
+    "type": "hamlet",
+    "geographic_area": "Italy",
+    "mentions": 2,
+    "sections": [
+      "nov0701",
+      "nov0905"
+    ]
+  },
+  {
+    "id": "camollia",
+    "name": "Camollia",
+    "type": "contrada",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0808"
+    ]
+  },
+  {
+    "id": "campi",
+    "name": "Campi",
+    "type": "hamlet",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0509"
+    ]
+  },
+  {
+    "id": "camporeggi",
+    "name": "Camporeggi",
+    "type": "contrada",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0710"
+    ]
+  },
+  {
+    "id": "candia",
+    "name": "Candia",
+    "type": "city",
+    "geographic_area": "Greece-Balkans",
+    "mentions": 1,
+    "sections": [
+      "nov0403"
+    ]
+  },
+  {
+    "id": "cantomacina",
+    "name": "Canto alla Macina",
+    "type": "area",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0803"
+    ]
+  },
+  {
+    "id": "cappadocia",
+    "name": "Capadocia",
+    "type": "region",
+    "geographic_area": "Turkey-AsiaMinor",
+    "mentions": 1,
+    "sections": [
+      "nov0207"
+    ]
+  },
+  {
+    "id": "capitolio",
+    "name": "Capitolio",
+    "type": "hill",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov1008"
+    ]
+  },
+  {
+    "id": "caprezio",
+    "name": "Caprezio",
+    "type": "",
+    "geographic_area": "",
+    "mentions": 1,
+    "sections": [
+      "nov0610"
+    ]
+  },
+  {
+    "id": "capova",
+    "name": "Capova",
+    "type": "city",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0401"
+    ]
+  },
+  {
+    "id": "gafsa",
+    "name": "Capsa",
+    "type": "city",
+    "geographic_area": "NorthAfrica",
+    "mentions": 1,
+    "sections": [
+      "nov0310"
+    ]
+  },
+  {
+    "id": "cartagine",
+    "name": "Cartagine",
+    "type": "city",
+    "geographic_area": "NorthAfrica",
+    "mentions": 1,
+    "sections": [
+      "nov0404"
+    ]
+  },
+  {
+    "id": "castellammarestabia",
+    "name": "Castello da mare di Stabia",
+    "type": "city",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov1006"
+    ]
+  },
+  {
+    "id": "castellorossiglione",
+    "name": "Castello dei Rossiglione",
+    "type": "castle",
+    "geographic_area": "France",
+    "mentions": 1,
+    "sections": [
+      "nov0409"
+    ]
+  },
+  {
+    "id": "castelloguardastagno",
+    "name": "Castello dei Guardastagno",
+    "type": "castle",
+    "geographic_area": "France",
+    "mentions": 1,
+    "sections": [
+      "nov0409"
+    ]
+  },
+  {
+    "id": "catania",
+    "name": "Catania",
+    "type": "city",
+    "geographic_area": "Italy",
+    "mentions": 0,
+    "sections": []
+  },
+  {
+    "id": "cattaio",
+    "name": "Cattaio",
+    "type": "region",
+    "geographic_area": "MidEast-FarEast",
+    "mentions": 1,
+    "sections": [
+      "nov1003"
+    ]
+  },
+  {
+    "id": "loggiacavicciuli",
+    "name": "Loggia de' Cavicciuli",
+    "type": "loggia",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0908"
+    ]
+  },
+  {
+    "id": "cefalonia",
+    "name": "Cifalonia",
+    "type": "island",
+    "geographic_area": "Aegean-islands",
+    "mentions": 1,
+    "sections": [
+      "nov0204"
+    ]
+  },
+  {
+    "id": "certaldo",
+    "name": "Certaldo",
+    "type": "hamlet",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0610"
+    ]
+  },
+  {
+    "id": "cefalu",
+    "name": "Cefalú",
+    "type": "city",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov1007"
+    ]
+  },
+  {
+    "id": "chiarenza",
+    "name": "Chiarenza",
+    "type": "city",
+    "geographic_area": "Greece-Balkans",
+    "mentions": 1,
+    "sections": [
+      "nov0207"
+    ]
+  },
+  {
+    "id": "chiassi",
+    "name": "Chiassi",
+    "type": "area",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0508"
+    ]
+  },
+  {
+    "id": "chiesarossiglione-0409",
+    "name": "Chiesa del castello dei Rossiglione",
+    "type": "church",
+    "geographic_area": "France",
+    "mentions": 1,
+    "sections": [
+      "nov0409"
+    ]
+  },
+  {
+    "id": "chios",
+    "name": "Chios",
+    "type": "island",
+    "geographic_area": "Turkey-AsiaMinor",
+    "mentions": 1,
+    "sections": [
+      "nov0207"
+    ]
+  },
+  {
+    "id": "sicilia",
+    "name": "Cicilia",
+    "type": "country",
+    "geographic_area": "Italy",
+    "mentions": 9,
+    "sections": [
+      "nov0205",
+      "nov0206",
+      "nov0404",
+      "nov0502",
+      "nov0506",
+      "nov0507",
+      "nov0810",
+      "nov1007",
+      "nov1009"
+    ]
+  },
+  {
+    "id": "cipro",
+    "name": "Cipri",
+    "type": "island",
+    "geographic_area": "Cyprus-Levant",
+    "mentions": 6,
+    "sections": [
+      "nov0109",
+      "nov0204",
+      "nov0207",
+      "nov0307",
+      "nov0501",
+      "nov1009"
+    ]
+  },
+  {
+    "id": "civillari",
+    "name": "Civillari",
+    "type": "contrada",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0809"
+    ]
+  },
+  {
+    "id": "viacocomero",
+    "name": "Via del Cocomero / Mercato Vecchio",
+    "type": "street-lane",
+    "geographic_area": "Italy",
+    "mentions": 2,
+    "sections": [
+      "nov0809",
+      "nov0903"
+    ]
+  },
+  {
+    "id": "corniglia",
+    "name": "Corniglia",
+    "type": "hamlet",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov1002"
+    ]
+  },
+  {
+    "id": "cornovaglia",
+    "name": "contea di Cornovaglia",
+    "type": "county",
+    "geographic_area": "England-Ireland-Scotland",
+    "mentions": 1,
+    "sections": [
+      "nov0203"
+    ]
+  },
+  {
+    "id": "costantinopoli",
+    "name": "Costantinopoli",
+    "type": "city",
+    "geographic_area": "Turkey-AsiaMinor",
+    "mentions": 3,
+    "sections": [
+      "nov0204",
+      "nov0307",
+      "nov0810"
+    ]
+  },
+  {
+    "id": "corsignano",
+    "name": "Corsignano",
+    "type": "city",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0904"
+    ]
+  },
+  {
+    "id": "cremona",
+    "name": "Cremona",
+    "type": "city",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0505"
+    ]
+  },
+  {
+    "id": "sancrescivalcava",
+    "name": "san Cresci in Valcava",
+    "type": "monastery",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0207"
+    ]
+  },
+  {
+    "id": "creta",
+    "name": "Creti",
+    "type": "island",
+    "geographic_area": "Greece-Balkans",
+    "mentions": 4,
+    "sections": [
+      "nov0207",
+      "nov0403",
+      "nov0501",
+      "nov1009"
+    ]
+  },
+  {
+    "id": "cuba",
+    "name": "la Cuba",
+    "type": "castle",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0506"
+    ]
+  },
+  {
+    "id": "egina",
+    "name": "Egina",
+    "type": "island",
+    "geographic_area": "Greece-Balkans",
+    "mentions": 1,
+    "sections": [
+      "nov0207"
+    ]
+  },
+  {
+    "id": "egitto",
+    "name": "Egitto",
+    "type": "country",
+    "geographic_area": "NorthAfrica",
+    "mentions": 3,
+    "sections": [
+      "nov0207",
+      "nov0610",
+      "nov1009"
+    ]
+  },
+  {
+    "id": "armenia",
+    "name": "Erminia",
+    "type": "country",
+    "geographic_area": "Turkey-AsiaMinor",
+    "mentions": 2,
+    "sections": [
+      "nov0207",
+      "nov0507"
+    ]
+  },
+  {
+    "id": "faenza",
+    "name": "Faenza",
+    "type": "city",
+    "geographic_area": "Italy",
+    "mentions": 2,
+    "sections": [
+      "nov0505",
+      "nov0803"
+    ]
+  },
+  {
+    "id": "famagosta",
+    "name": "Famagosta",
+    "type": "city",
+    "geographic_area": "Cyprus-Levant",
+    "mentions": 1,
+    "sections": [
+      "nov0207"
+    ]
+  },
+  {
+    "id": "fano",
+    "name": "Fano",
+    "type": "city",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0505"
+    ]
+  },
+  {
+    "id": "ferrara",
+    "name": "Ferrara",
+    "type": "city",
+    "geographic_area": "Italy",
+    "mentions": 2,
+    "sections": [
+      "nov0202",
+      "nov0810"
+    ]
+  },
+  {
+    "id": "lefiandre",
+    "name": "Fiandra",
+    "type": "region",
+    "geographic_area": "NorthEurope-EastEurope",
+    "mentions": 1,
+    "sections": [
+      "nov0402"
+    ]
+  },
+  {
+    "id": "fiesole",
+    "name": "Fiesole",
+    "type": "city",
+    "geographic_area": "Italy",
+    "mentions": 2,
+    "sections": [
+      "nov0701",
+      "nov0804"
+    ]
+  },
+  {
+    "id": "firenze",
+    "name": "Firenze",
+    "type": "city",
+    "geographic_area": "Italy",
+    "mentions": 37,
+    "sections": [
+      "d01intro",
+      "nov0106",
+      "nov0201",
+      "nov0203",
+      "nov0303",
+      "nov0306",
+      "nov0307",
+      "nov0309",
+      "d04intro",
+      "nov0407",
+      "nov0408",
+      "nov0509",
+      "nov0601",
+      "nov0602",
+      "nov0603",
+      "nov0605",
+      "nov0606",
+      "nov0609",
+      "nov0610",
+      "nov0701",
+      "nov0706",
+      "nov0708",
+      "nov0802",
+      "nov0803",
+      "nov0805",
+      "nov0806",
+      "nov0807",
+      "nov0809",
+      "nov0810",
+      "nov0901",
+      "nov0903",
+      "nov0905",
+      "nov0906",
+      "nov0908",
+      "nov1001",
+      "nov1006",
+      "d10conclu"
+    ]
+  },
+  {
+    "id": "forlimpopoli",
+    "name": "Forlimpopoli",
+    "type": "city",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0809"
+    ]
+  },
+  {
+    "id": "francia",
+    "name": "Francia",
+    "type": "country",
+    "geographic_area": "France",
+    "mentions": 10,
+    "sections": [
+      "nov0101",
+      "nov0105",
+      "nov0106",
+      "nov0207",
+      "nov0208",
+      "nov0409",
+      "nov0508",
+      "nov0608",
+      "nov0707",
+      "nov0809"
+    ]
+  },
+  {
+    "id": "friuli",
+    "name": "Frioli",
+    "type": "region",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov1005"
+    ]
+  },
+  {
+    "id": "gaeta",
+    "name": "Gaeta",
+    "type": "city",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0204"
+    ]
+  },
+  {
+    "id": "galles",
+    "name": "Gales",
+    "type": "",
+    "geographic_area": "England-Ireland-Scotland",
+    "mentions": 1,
+    "sections": [
+      "nov0208"
+    ]
+  },
+  {
+    "id": "reamegarbo",
+    "name": "reame del Garbo",
+    "type": "countryside",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0610"
+    ]
+  },
+  {
+    "id": "genova",
+    "name": "Genova",
+    "type": "city",
+    "geographic_area": "Italy",
+    "mentions": 7,
+    "sections": [
+      "nov0105",
+      "nov0108",
+      "nov0206",
+      "nov0209",
+      "nov0303",
+      "nov0403",
+      "nov1009"
+    ]
+  },
+  {
+    "id": "agrigento",
+    "name": "Gergenti",
+    "type": "city",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0205"
+    ]
+  },
+  {
+    "id": "granada",
+    "name": "Granata",
+    "type": "city",
+    "geographic_area": "Iberia",
+    "mentions": 1,
+    "sections": [
+      "nov0404"
+    ]
+  },
+  {
+    "id": "guascogna",
+    "name": "Guascogna",
+    "type": "region",
+    "geographic_area": "France",
+    "mentions": 1,
+    "sections": [
+      "nov0109"
+    ]
+  },
+  {
+    "id": "castelguiglielmo",
+    "name": "Castel Guiglielmo",
+    "type": "castle",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0202"
+    ]
+  },
+  {
+    "id": "corfu",
+    "name": "Gurfo",
+    "type": "island",
+    "geographic_area": "Greece-Balkans",
+    "mentions": 1,
+    "sections": [
+      "nov0204"
+    ]
+  },
+  {
+    "id": "gerusalemme",
+    "name": "Ierusalem",
+    "type": "city",
+    "geographic_area": "Cyprus-Levant",
+    "mentions": 3,
+    "sections": [
+      "nov0207",
+      "nov0610",
+      "nov0909"
+    ]
+  },
+  {
+    "id": "imola",
+    "name": "Imola",
+    "type": "city",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0402"
+    ]
+  },
+  {
+    "id": "indiapastinacca",
+    "name": "India Pastinaca",
+    "type": "",
+    "geographic_area": "",
+    "mentions": 1,
+    "sections": [
+      "nov0610"
+    ]
+  },
+  {
+    "id": "inferno",
+    "name": "Inferno / Ninferno",
+    "type": "",
+    "geographic_area": "",
+    "mentions": 2,
+    "sections": [
+      "nov0406",
+      "nov0710"
+    ]
+  },
+  {
+    "id": "inghilterra",
+    "name": "Inghilterra",
+    "type": "country",
+    "geographic_area": "England-Ireland-Scotland",
+    "mentions": 4,
+    "sections": [
+      "nov0203",
+      "nov0208",
+      "nov0707",
+      "nov0809"
+    ]
+  },
+  {
+    "id": "irlanda",
+    "name": "Irlanda",
+    "type": "country",
+    "geographic_area": "England-Ireland-Scotland",
+    "mentions": 1,
+    "sections": [
+      "nov0208"
+    ]
+  },
+  {
+    "id": "ischia",
+    "name": "Ischia",
+    "type": "island",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0506"
+    ]
+  },
+  {
+    "id": "italia",
+    "name": "Italia",
+    "type": "country",
+    "geographic_area": "Italy",
+    "mentions": 8,
+    "sections": [
+      "nov0107",
+      "nov0108",
+      "nov0203",
+      "nov0204",
+      "nov0209",
+      "nov0306",
+      "nov0610",
+      "nov1001"
+    ]
+  },
+  {
+    "id": "laiazzo",
+    "name": "Laiazzo",
+    "type": "city",
+    "geographic_area": "Cyprus-Levant",
+    "mentions": 2,
+    "sections": [
+      "nov0507",
+      "nov0909"
+    ]
+  },
+  {
+    "id": "lamporecchio",
+    "name": "Lamporecchio",
+    "type": "hamlet",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0301"
+    ]
+  },
+  {
+    "id": "laterino",
+    "name": "Laternino",
+    "type": "city",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0809"
+    ]
+  },
+  {
+    "id": "lerici",
+    "name": "Lerici",
+    "type": "castle",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0206"
+    ]
+  },
+  {
+    "id": "legnaia",
+    "name": "Legnaia",
+    "type": "hamlet",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0809"
+    ]
+  },
+  {
+    "id": "lipari",
+    "name": "Lipari",
+    "type": "island",
+    "geographic_area": "Italy",
+    "mentions": 2,
+    "sections": [
+      "nov0206",
+      "nov0502"
+    ]
+  },
+  {
+    "id": "lombardia",
+    "name": "Lombardia",
+    "type": "region",
+    "geographic_area": "Italy",
+    "mentions": 4,
+    "sections": [
+      "nov0302",
+      "nov0902",
+      "nov1004",
+      "nov1009"
+    ]
+  },
+  {
+    "id": "londra",
+    "name": "Londra",
+    "type": "city",
+    "geographic_area": "England-Ireland-Scotland",
+    "mentions": 2,
+    "sections": [
+      "nov0203",
+      "nov0208"
+    ]
+  },
+  {
+    "id": "lucifero",
+    "name": "Lucifero",
+    "type": "planet",
+    "geographic_area": "",
+    "mentions": 1,
+    "sections": [
+      "d07intro"
+    ]
+  },
+  {
+    "id": "lunigiana",
+    "name": "Lunigiana",
+    "type": "region",
+    "geographic_area": "Italy",
+    "mentions": 3,
+    "sections": [
+      "nov0104",
+      "nov0206",
+      "nov0307"
+    ]
+  },
+  {
+    "id": "magra",
+    "name": "Magra",
+    "type": "river",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0206"
+    ]
+  },
+  {
+    "id": "maiorca",
+    "name": "Maiolica",
+    "type": "island",
+    "geographic_area": "Iberia",
+    "mentions": 1,
+    "sections": [
+      "nov0207"
+    ]
+  },
+  {
+    "id": "macello",
+    "name": "Macello",
+    "type": "area",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0402"
+    ]
+  },
+  {
+    "id": "malpertugio",
+    "name": "Malpertugio",
+    "type": "contrada",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0205"
+    ]
+  },
+  {
+    "id": "maremma",
+    "name": "Maremma",
+    "type": "region",
+    "geographic_area": "Italy",
+    "mentions": 2,
+    "sections": [
+      "nov0402",
+      "nov0606"
+    ]
+  },
+  {
+    "id": "marsiglia",
+    "name": "Marsilia",
+    "type": "city",
+    "geographic_area": "France",
+    "mentions": 1,
+    "sections": [
+      "nov0403"
+    ]
+  },
+  {
+    "id": "menzogna",
+    "name": "Menzogna",
+    "type": "",
+    "geographic_area": "",
+    "mentions": 1,
+    "sections": [
+      "nov0610"
+    ]
+  },
+  {
+    "id": "messina",
+    "name": "Messina",
+    "type": "city",
+    "geographic_area": "Italy",
+    "mentions": 2,
+    "sections": [
+      "nov0404",
+      "nov0405"
+    ]
+  },
+  {
+    "id": "milano",
+    "name": "Melano",
+    "type": "city",
+    "geographic_area": "Italy",
+    "mentions": 4,
+    "sections": [
+      "nov0305",
+      "nov0703",
+      "nov0801",
+      "nov1009"
+    ]
+  },
+  {
+    "id": "minerva",
+    "name": "Minerva",
+    "type": "cape",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0506"
+    ]
+  },
+  {
+    "id": "modena",
+    "name": "Modona",
+    "type": "city",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov1004"
+    ]
+  },
+  {
+    "id": "monaco",
+    "name": "Monaco",
+    "type": "country",
+    "geographic_area": "France",
+    "mentions": 2,
+    "sections": [
+      "nov0210",
+      "nov0810"
+    ]
+  },
+  {
+    "id": "montenero",
+    "name": "Monte Nero",
+    "type": "",
+    "geographic_area": "Italy",
+    "mentions": 2,
+    "sections": [
+      "nov0210",
+      "d06intro"
+    ]
+  },
+  {
+    "id": "montesone",
+    "name": "Montesone",
+    "type": "hill",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0809"
+    ]
+  },
+  {
+    "id": "montisci",
+    "name": "Montisci",
+    "type": "hill",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0803"
+    ]
+  },
+  {
+    "id": "mmorello",
+    "name": "Monte Morello",
+    "type": "mountain",
+    "geographic_area": "Italy",
+    "mentions": 2,
+    "sections": [
+      "nov0610",
+      "nov0803"
+    ]
+  },
+  {
+    "id": "montughi",
+    "name": "Montughi",
+    "type": "hill",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0606"
+    ]
+  },
+  {
+    "id": "morea",
+    "name": "Morea (Peloponneso)",
+    "type": "region",
+    "geographic_area": "Greece-Balkans",
+    "mentions": 0,
+    "sections": []
+  },
+  {
+    "id": "mugello",
+    "name": "Mugello",
+    "type": "countryside",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0605"
+    ]
+  },
+  {
+    "id": "mugnone",
+    "name": "Mugnone / Mugnon",
+    "type": "river",
+    "geographic_area": "Italy",
+    "mentions": 4,
+    "sections": [
+      "nov0803",
+      "nov0806",
+      "nov0905",
+      "nov0906"
+    ]
+  },
+  {
+    "id": "montpellier",
+    "name": "Monpulier",
+    "type": "city",
+    "geographic_area": "France",
+    "mentions": 1,
+    "sections": [
+      "nov0309"
+    ]
+  },
+  {
+    "id": "napoli",
+    "name": "Napoli",
+    "type": "city",
+    "geographic_area": "Italy",
+    "mentions": 8,
+    "sections": [
+      "nov0205",
+      "nov0206",
+      "nov0306",
+      "nov0405",
+      "nov0506",
+      "nov0702",
+      "nov0810",
+      "nov1006"
+    ]
+  },
+  {
+    "id": "narsia",
+    "name": "Narsia",
+    "type": "",
+    "geographic_area": "",
+    "mentions": 1,
+    "sections": [
+      "nov0809"
+    ]
+  },
+  {
+    "id": "nazarette",
+    "name": "Nazarette",
+    "type": "city",
+    "geographic_area": "Cyprus-Levant",
+    "mentions": 1,
+    "sections": [
+      "nov0610"
+    ]
+  },
+  {
+    "id": "norrueca",
+    "name": "Norrueca",
+    "type": "",
+    "geographic_area": "",
+    "mentions": 1,
+    "sections": [
+      "nov0809"
+    ]
+  },
+  {
+    "id": "nostradama",
+    "name": "Nostra Dama",
+    "type": "church",
+    "geographic_area": "France",
+    "mentions": 1,
+    "sections": [
+      "nov0102"
+    ]
+  },
+  {
+    "id": "ortosanmichele",
+    "name": "Orto San Michele",
+    "type": "church",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0609"
+    ]
+  },
+  {
+    "id": "palermo",
+    "name": "Palermo",
+    "type": "city",
+    "geographic_area": "Italy",
+    "mentions": 6,
+    "sections": [
+      "nov0205",
+      "nov0206",
+      "nov0404",
+      "nov0506",
+      "nov0810",
+      "nov1007"
+    ]
+  },
+  {
+    "id": "parigi",
+    "name": "Parigi",
+    "type": "city",
+    "geographic_area": "France",
+    "mentions": 14,
+    "sections": [
+      "nov0101",
+      "nov0102",
+      "nov0107",
+      "nov0203",
+      "nov0208",
+      "nov0209",
+      "nov0304",
+      "nov0309",
+      "nov0408",
+      "nov0707",
+      "nov0807",
+      "nov0809",
+      "nov1009",
+      "epilogue"
+    ]
+  },
+  {
+    "id": "parione",
+    "name": "Parione",
+    "type": "street-lane",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0610"
+    ]
+  },
+  {
+    "id": "pasignano",
+    "name": "Passignano sul Trasimeno",
+    "type": "city",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0809"
+    ]
+  },
+  {
+    "id": "pavia",
+    "name": "Pavia",
+    "type": "city",
+    "geographic_area": "Italy",
+    "mentions": 3,
+    "sections": [
+      "nov0302",
+      "nov0505",
+      "nov1009"
+    ]
+  },
+  {
+    "id": "peretola",
+    "name": "Peretola",
+    "type": "countryside",
+    "geographic_area": "Italy",
+    "mentions": 2,
+    "sections": [
+      "nov0604",
+      "nov0809"
+    ]
+  },
+  {
+    "id": "iran",
+    "name": "Persia",
+    "type": "country",
+    "geographic_area": "MidEast-FarEast",
+    "mentions": 1,
+    "sections": [
+      "nov1004"
+    ]
+  },
+  {
+    "id": "perugia",
+    "name": "Perugia",
+    "type": "city",
+    "geographic_area": "Italy",
+    "mentions": 2,
+    "sections": [
+      "nov0205",
+      "nov0510"
+    ]
+  },
+  {
+    "id": "piccardia",
+    "name": "Piccardia",
+    "type": "region",
+    "geographic_area": "France",
+    "mentions": 1,
+    "sections": [
+      "nov0208"
+    ]
+  },
+  {
+    "id": "pisa",
+    "name": "Pisa",
+    "type": "city",
+    "geographic_area": "Italy",
+    "mentions": 2,
+    "sections": [
+      "nov0210",
+      "nov0810"
+    ]
+  },
+  {
+    "id": "pistoia",
+    "name": "Pistoia",
+    "type": "city",
+    "geographic_area": "Italy",
+    "mentions": 2,
+    "sections": [
+      "nov0305",
+      "nov0901"
+    ]
+  },
+  {
+    "id": "ponteoca",
+    "name": "Ponte dell'Oca",
+    "type": "bridge",
+    "geographic_area": "",
+    "mentions": 1,
+    "sections": [
+      "nov0909"
+    ]
+  },
+  {
+    "id": "porcellana",
+    "name": "Porcellana",
+    "type": "street-lane",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0610"
+    ]
+  },
+  {
+    "id": "ponza",
+    "name": "Ponzo",
+    "type": "island",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0206"
+    ]
+  },
+  {
+    "id": "portasgallo",
+    "name": "porta a San Gallo",
+    "type": "gate",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0803"
+    ]
+  },
+  {
+    "id": "portasalaia",
+    "name": "Porta Salaia",
+    "type": "neighborhood",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0710"
+    ]
+  },
+  {
+    "id": "portapiero",
+    "name": "Porta San Piero",
+    "type": "gate",
+    "geographic_area": "Italy",
+    "mentions": 2,
+    "sections": [
+      "nov0603",
+      "nov0701"
+    ]
+  },
+  {
+    "id": "prato",
+    "name": "Prato",
+    "type": "city",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0607"
+    ]
+  },
+  {
+    "id": "pratoognisanti",
+    "name": "prato d'Ognissanti",
+    "type": "area",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0809"
+    ]
+  },
+  {
+    "id": "procida",
+    "name": "Procida",
+    "type": "island",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0506"
+    ]
+  },
+  {
+    "id": "provenza",
+    "name": "Provenza",
+    "type": "region",
+    "geographic_area": "France",
+    "mentions": 2,
+    "sections": [
+      "nov0403",
+      "nov0409"
+    ]
+  },
+  {
+    "id": "puglia",
+    "name": "Puglia",
+    "type": "region",
+    "geographic_area": "Italy",
+    "mentions": 3,
+    "sections": [
+      "nov0206",
+      "nov0910",
+      "nov1006"
+    ]
+  },
+  {
+    "id": "radicofani",
+    "name": "Radicofani",
+    "type": "castle",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov1002"
+    ]
+  },
+  {
+    "id": "ravello",
+    "name": "Ravello",
+    "type": "city",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0204"
+    ]
+  },
+  {
+    "id": "ravenna",
+    "name": "Ravenna",
+    "type": "city",
+    "geographic_area": "Italy",
+    "mentions": 2,
+    "sections": [
+      "nov0210",
+      "nov0508"
+    ]
+  },
+  {
+    "id": "reggio",
+    "name": "Reggio",
+    "type": "city",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0204"
+    ]
+  },
+  {
+    "id": "rialto",
+    "name": "Rialto",
+    "type": "neighborhood",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0402"
+    ]
+  },
+  {
+    "id": "rimini",
+    "name": "Rimini / Ariminio",
+    "type": "city",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0705"
+    ]
+  },
+  {
+    "id": "",
+    "name": "Ripole",
+    "type": "convent",
+    "geographic_area": "Italy",
+    "mentions": 0,
+    "sections": []
+  },
+  {
+    "id": "rodi",
+    "name": "Rodi",
+    "type": "island",
+    "geographic_area": "Greece-Balkans",
+    "mentions": 3,
+    "sections": [
+      "nov0207",
+      "nov0403",
+      "nov0501"
+    ]
+  },
+  {
+    "id": "roma",
+    "name": "Roma",
+    "type": "city",
+    "geographic_area": "Italy",
+    "mentions": 9,
+    "sections": [
+      "nov0102",
+      "nov0203",
+      "nov0208",
+      "nov0503",
+      "nov0507",
+      "nov0809",
+      "nov1002",
+      "nov1008",
+      "nov1010"
+    ]
+  },
+  {
+    "id": "romagna",
+    "name": "Romagna",
+    "type": "region",
+    "geographic_area": "Italy",
+    "mentions": 4,
+    "sections": [
+      "nov0504",
+      "nov0505",
+      "nov0508",
+      "nov0906"
+    ]
+  },
+  {
+    "id": "romania",
+    "name": "Romania",
+    "type": "country",
+    "geographic_area": "Greece-Balkans",
+    "mentions": 1,
+    "sections": [
+      "nov0207"
+    ]
+  },
+  {
+    "id": "roussillon",
+    "name": "Rossiglione",
+    "type": "county",
+    "geographic_area": "France",
+    "mentions": 1,
+    "sections": [
+      "nov0309"
+    ]
+  },
+  {
+    "id": "rouen",
+    "name": "Ruem",
+    "type": "city",
+    "geographic_area": "France",
+    "mentions": 1,
+    "sections": [
+      "nov0208"
+    ]
+  },
+  {
+    "id": "rugacatalana",
+    "name": "Ruga Catalana",
+    "type": "street-lane",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0205"
+    ]
+  },
+  {
+    "id": "salerno",
+    "name": "Salerno",
+    "type": "city",
+    "geographic_area": "Italy",
+    "mentions": 3,
+    "sections": [
+      "nov0204",
+      "nov0401",
+      "nov0810"
+    ]
+  },
+  {
+    "id": "salerno-0410",
+    "name": "Salerno (IV.10)",
+    "type": "city",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0410"
+    ]
+  },
+  {
+    "id": "sanluzzo",
+    "name": "Sanluzzo",
+    "type": "city",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov1010"
+    ]
+  },
+  {
+    "id": "sangallo",
+    "name": "San Gallo",
+    "type": "church",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0407"
+    ]
+  },
+  {
+    "id": "sangallo-ospedale",
+    "name": "San Gallo (ospedale)",
+    "type": "hospital",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0809"
+    ]
+  },
+  {
+    "id": "sangimignano",
+    "name": "San Gimignano",
+    "type": "city",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0405"
+    ]
+  },
+  {
+    "id": "sangiovanni",
+    "name": "San Giovanni",
+    "type": "church",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0609"
+    ]
+  },
+  {
+    "id": "ripole",
+    "name": "San Jacopo di Ripoli",
+    "type": "convent",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0809"
+    ]
+  },
+  {
+    "id": "sanmarco",
+    "name": "San Marco",
+    "type": "square",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0402"
+    ]
+  },
+  {
+    "id": "sanpaolo",
+    "name": "San Paolo",
+    "type": "church",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0407"
+    ]
+  },
+  {
+    "id": "sanpieroco",
+    "name": "San Piero in Ciel d'Oro",
+    "type": "church",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov1009"
+    ]
+  },
+  {
+    "id": "santacroce",
+    "name": "Santa Croce",
+    "type": "church",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0106"
+    ]
+  },
+  {
+    "id": "santafiore",
+    "name": "Santafiore",
+    "type": "castle",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov1002"
+    ]
+  },
+  {
+    "id": "santalucia",
+    "name": "Santa Lucia dal Prato",
+    "type": "church",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0807"
+    ]
+  },
+  {
+    "id": "santamariascala",
+    "name": "Santa Maria della Scala",
+    "type": "church",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0809"
+    ]
+  },
+  {
+    "id": "santamariamaggiore",
+    "name": "Santa Maria Maggiore",
+    "type": "church",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0606"
+    ]
+  },
+  {
+    "id": "smnovella",
+    "name": "Santa Maria Novella",
+    "type": "church",
+    "geographic_area": "Italy",
+    "mentions": 4,
+    "sections": [
+      "d01intro",
+      "nov0701",
+      "nov0809",
+      "d10conclu"
+    ]
+  },
+  {
+    "id": "santamariaughi",
+    "name": "Santa Maria Ughi",
+    "type": "church",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0602"
+    ]
+  },
+  {
+    "id": "santamariaverzaia",
+    "name": "Santa Maria a Verzaia",
+    "type": "church",
+    "geographic_area": "Italy",
+    "mentions": 0,
+    "sections": []
+  },
+  {
+    "id": "santareparata",
+    "name": "Santa Reparata",
+    "type": "church",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0609"
+    ]
+  },
+  {
+    "id": "santelpidio-a-mare",
+    "name": "Sant'Elpidio a Mare / San Lepidio",
+    "type": "hamlet",
+    "geographic_area": "Italy",
+    "mentions": 0,
+    "sections": []
+  },
+  {
+    "id": "sardegna",
+    "name": "Sardigna",
+    "type": "island",
+    "geographic_area": "Italy",
+    "mentions": 4,
+    "sections": [
+      "nov0207",
+      "nov0308",
+      "nov0404",
+      "nov0610"
+    ]
+  },
+  {
+    "id": "scalea",
+    "name": "Scalea in Calavria",
+    "type": "hamlet",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0506"
+    ]
+  },
+  {
+    "id": "scozia",
+    "name": "Scozia",
+    "type": "country",
+    "geographic_area": "England-Ireland-Scotland",
+    "mentions": 3,
+    "sections": [
+      "nov0203",
+      "nov0208",
+      "nov0809"
+    ]
+  },
+  {
+    "id": "ssepolcro",
+    "name": "Sepolcro",
+    "type": "area",
+    "geographic_area": "Cyprus-Levant",
+    "mentions": 2,
+    "sections": [
+      "nov0207",
+      "nov0307"
+    ]
+  },
+  {
+    "id": "settignano",
+    "name": "Settignano",
+    "type": "hill",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0803"
+    ]
+  },
+  {
+    "id": "siena",
+    "name": "Siena",
+    "type": "city",
+    "geographic_area": "Italy",
+    "mentions": 5,
+    "sections": [
+      "nov0703",
+      "nov0710",
+      "nov0808",
+      "nov0904",
+      "nov1002"
+    ]
+  },
+  {
+    "id": "sinigaglia",
+    "name": "Sinagaglia",
+    "type": "city",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0804"
+    ]
+  },
+  {
+    "id": "smirne",
+    "name": "le Smirre",
+    "type": "city",
+    "geographic_area": "Turkey-AsiaMinor",
+    "mentions": 1,
+    "sections": [
+      "nov0207"
+    ]
+  },
+  {
+    "id": "spagna",
+    "name": "Spagna / Ispagna",
+    "type": "country",
+    "geographic_area": "Iberia",
+    "mentions": 3,
+    "sections": [
+      "nov0403",
+      "nov0508",
+      "nov1001"
+    ]
+  },
+  {
+    "id": "strangford",
+    "name": "Stanforda",
+    "type": "city",
+    "geographic_area": "England-Ireland-Scotland",
+    "mentions": 1,
+    "sections": [
+      "nov0208"
+    ]
+  },
+  {
+    "id": "susa",
+    "name": "Susa",
+    "type": "city",
+    "geographic_area": "NorthAfrica",
+    "mentions": 1,
+    "sections": [
+      "nov0502"
+    ]
+  },
+  {
+    "id": "tebaide",
+    "name": "Tebaida",
+    "type": "region",
+    "geographic_area": "NorthAfrica",
+    "mentions": 1,
+    "sections": [
+      "nov0310"
+    ]
+  },
+  {
+    "id": "terrasanta",
+    "name": "Terra Santa",
+    "type": "",
+    "geographic_area": "Cyprus-Levant",
+    "mentions": 2,
+    "sections": [
+      "nov0109",
+      "nov1009"
+    ]
+  },
+  {
+    "id": "ticino",
+    "name": "Tesino",
+    "type": "river",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov1009"
+    ]
+  },
+  {
+    "id": "torrenieri",
+    "name": "Torrenieri",
+    "type": "hamlet",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0904"
+    ]
+  },
+  {
+    "id": "toscana",
+    "name": "Toscana",
+    "type": "",
+    "geographic_area": "Italy",
+    "mentions": 8,
+    "sections": [
+      "nov0101",
+      "nov0203",
+      "nov0305",
+      "nov0308",
+      "nov0309",
+      "nov0509",
+      "nov0610",
+      "nov1001"
+    ]
+  },
+  {
+    "id": "trapani",
+    "name": "Trapani",
+    "type": "city",
+    "geographic_area": "Italy",
+    "mentions": 3,
+    "sections": [
+      "nov0404",
+      "nov0502",
+      "nov0507"
+    ]
+  },
+  {
+    "id": "trani",
+    "name": "Trani",
+    "type": "city",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0204"
+    ]
+  },
+  {
+    "id": "tresanti",
+    "name": "Tresanti",
+    "type": "hamlet",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0910"
+    ]
+  },
+  {
+    "id": "treviso",
+    "name": "Trivigi",
+    "type": "city",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0201"
+    ]
+  },
+  {
+    "id": "truffia",
+    "name": "Truffia",
+    "type": "",
+    "geographic_area": "",
+    "mentions": 1,
+    "sections": [
+      "nov0610"
+    ]
+  },
+  {
+    "id": "tunisi",
+    "name": "Tunisi",
+    "type": "city",
+    "geographic_area": "NorthAfrica",
+    "mentions": 2,
+    "sections": [
+      "nov0404",
+      "nov0502"
+    ]
+  },
+  {
+    "id": "udine",
+    "name": "Udine",
+    "type": "city",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov1005"
+    ]
+  },
+  {
+    "id": "ustica",
+    "name": "Ustica",
+    "type": "island",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0404"
+    ]
+  },
+  {
+    "id": "valdelsa",
+    "name": "Valdelsa",
+    "type": "county",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0610"
+    ]
+  },
+  {
+    "id": "vallecchio",
+    "name": "Vallecchio",
+    "type": "hamlet",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0809"
+    ]
+  },
+  {
+    "id": "varlungo",
+    "name": "Varlungo",
+    "type": "county",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0802"
+    ]
+  },
+  {
+    "id": "verona",
+    "name": "Verona",
+    "type": "city",
+    "geographic_area": "Italy",
+    "mentions": 2,
+    "sections": [
+      "nov0107",
+      "nov0202"
+    ]
+  },
+  {
+    "id": "venezia",
+    "name": "Vinegia",
+    "type": "city",
+    "geographic_area": "Italy",
+    "mentions": 3,
+    "sections": [
+      "nov0402",
+      "nov0610",
+      "nov0809"
+    ]
+  },
+  {
+    "id": "casamento-1006",
+    "name": "casamento di Neri Uberti (X.6)",
+    "type": "villa",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov1006"
+    ]
+  },
+  {
+    "id": "contado-0601",
+    "name": "contado (VI.1)",
+    "type": "countryside",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0601"
+    ]
+  },
+  {
+    "id": "duomotreviso-0201",
+    "name": "(maggior) chiesa (II.1)",
+    "type": "church",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0201"
+    ]
+  },
+  {
+    "id": "duomofiesole-0804",
+    "name": "maggior chiesa (VIII.4)",
+    "type": "church",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0804"
+    ]
+  },
+  {
+    "id": "sanfrancesco-0901",
+    "name": "chiesa de' frati minori (IX.1)",
+    "type": "church",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0901"
+    ]
+  },
+  {
+    "id": "chiesa-1004",
+    "name": "chiesa (X.4)",
+    "type": "church",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov1004"
+    ]
+  },
+  {
+    "id": "fiume-0202",
+    "name": "fiume (II.2)",
+    "type": "river",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0202"
+    ]
+  },
+  {
+    "id": "giardino-0406",
+    "name": "giardino (IV.6)",
+    "type": "garden",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0407"
+    ]
+  },
+  {
+    "id": "giardino-0407",
+    "name": "giardino (IV.7)",
+    "type": "garden",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0407"
+    ]
+  },
+  {
+    "id": "giardino-0709",
+    "name": "giardino (VII.9)",
+    "type": "garden",
+    "geographic_area": "Greece-Balkans",
+    "mentions": 1,
+    "sections": [
+      "nov0709"
+    ]
+  },
+  {
+    "id": "giardino-1005",
+    "name": "giardino (X.5)",
+    "type": "garden",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov1005"
+    ]
+  },
+  {
+    "id": "giardino-1006",
+    "name": "giardino di Neri Uberti (X.6)",
+    "type": "garden",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov1006"
+    ]
+  },
+  {
+    "id": "luogo-1009",
+    "name": "un luogo di Torello (X.9)",
+    "type": "villa",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov1009"
+    ]
+  },
+  {
+    "id": "monistero-0104",
+    "name": "monistero (I.4)",
+    "type": "monastery",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0104"
+    ]
+  },
+  {
+    "id": "monistero-0301",
+    "name": "monistero (III.1)",
+    "type": "convent",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0301"
+    ]
+  },
+  {
+    "id": "ostiere-1006",
+    "name": "ostiere di re Carlo I (X.6)",
+    "type": "villa",
+    "geographic_area": "",
+    "mentions": 1,
+    "sections": [
+      "nov1006"
+    ]
+  },
+  {
+    "id": "palagiofolco-0403",
+    "name": "il palagio di Folco (IV.3)",
+    "type": "villa",
+    "geographic_area": "Greece-Balkans",
+    "mentions": 1,
+    "sections": [
+      "nov0403"
+    ]
+  },
+  {
+    "id": "palagionicostrato-0709",
+    "name": "palagio di Nicostrato (VII.9)",
+    "type": "villa",
+    "geographic_area": "Greece-Balkans",
+    "mentions": 1,
+    "sections": [
+      "nov0709"
+    ]
+  },
+  {
+    "id": "palagiomitridanes-1003",
+    "name": "palagio di Mitridanes (X.3)",
+    "type": "villa",
+    "geographic_area": "MidEast-FarEast",
+    "mentions": 1,
+    "sections": [
+      "nov1003"
+    ]
+  },
+  {
+    "id": "palagionatan-1003",
+    "name": "palagio di Natan (X.3)",
+    "type": "villa",
+    "geographic_area": "MidEast-FarEast",
+    "mentions": 1,
+    "sections": [
+      "nov1003"
+    ]
+  },
+  {
+    "id": "pero-0709",
+    "name": "pero (VII.9)",
+    "type": "tree",
+    "geographic_area": "Greece-Balkans",
+    "mentions": 0,
+    "sections": []
+  },
+  {
+    "id": "piazza-0510",
+    "name": "Piazza (V.10)",
+    "type": "square",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov0510"
+    ]
+  },
+  {
+    "id": "prato-1005",
+    "name": "prato (X.5)",
+    "type": "lawn",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov1005"
+    ]
+  },
+  {
+    "id": "pretorio-1008",
+    "name": "pretorio (X.8)",
+    "type": "villa",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "nov1008"
+    ]
+  },
+  {
+    "id": "tempio-1008",
+    "name": "tempio (X.8)",
+    "type": "church",
+    "geographic_area": "Greece-Balkans",
+    "mentions": 1,
+    "sections": [
+      "nov1008"
+    ]
+  },
+  {
+    "id": "alberifrutt-c06",
+    "name": "albori fruttiferi (VI.con)",
+    "type": "tree",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "d06conclu"
+    ]
+  },
+  {
+    "id": "boschetto-i09",
+    "name": "boschetto (IX.in)",
+    "type": "wood",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "d09intro"
+    ]
+  },
+  {
+    "id": "canaletti-i03",
+    "name": "canaletti (III.in)",
+    "type": "",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "d03intro"
+    ]
+  },
+  {
+    "id": "cortile-i01",
+    "name": "cortile (I.in)",
+    "type": "",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "d01intro"
+    ]
+  },
+  {
+    "id": "chiesetta-i08",
+    "name": "chiesetta (VIII.con)",
+    "type": "",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "d08intro"
+    ]
+  },
+  {
+    "id": "giardinetto-c02",
+    "name": "giardinetto (II.con)",
+    "type": "",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "d02conclu"
+    ]
+  },
+  {
+    "id": "giardini-i02",
+    "name": "giardini (II.in)",
+    "type": "",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "d02intro"
+    ]
+  },
+  {
+    "id": "giardino-i01",
+    "name": "giardino (I.in)",
+    "type": "garden",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "d01intro"
+    ]
+  },
+  {
+    "id": "fiumicello1-c06",
+    "name": "chiarissimo fiumicello (VI.con)",
+    "type": "stream",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "d06conclu"
+    ]
+  },
+  {
+    "id": "fiumicello2-c06",
+    "name": "fiumicello (VI.con)",
+    "type": "stream",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "d06conclu"
+    ]
+  },
+  {
+    "id": "montagnetta-i01",
+    "name": "montagnetta (I.in)",
+    "type": "mountain",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "d01intro"
+    ]
+  },
+  {
+    "id": "montagnetta-c01",
+    "name": "montagnetta (I.con)",
+    "type": "mountain",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "d01conclu"
+    ]
+  },
+  {
+    "id": "montagnette-c06",
+    "name": "sei montagnette (VI.con)",
+    "type": "hill",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "d06conclu"
+    ]
+  },
+  {
+    "id": "pratello-i02",
+    "name": "pratello (II.in)",
+    "type": "lawn",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "d02intro"
+    ]
+  },
+  {
+    "id": "prato-i03",
+    "name": "prato (III.in)",
+    "type": "lawn",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "d03intro"
+    ]
+  },
+  {
+    "id": "prato-c06",
+    "name": "prato d'erba minutissima (VI.con)",
+    "type": "lawn",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "d06conclu"
+    ]
+  },
+  {
+    "id": "rivo-c01",
+    "name": "rivo (I.con)",
+    "type": "river",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "d01conclu"
+    ]
+  },
+  {
+    "id": "valle-c01",
+    "name": "valle ombrosa (I.con)",
+    "type": "countryside",
+    "geographic_area": "Italy",
+    "mentions": 1,
+    "sections": [
+      "d01conclu"
+    ]
+  },
+  {
+    "id": "fontebrigata-01",
+    "name": "fonte di marmo bianchissimo (III.in) messe le tavole intorno alla bella fonte (III.con) nella maniera usata vicini alla bella fonte (IV.in) tutti raccolti, come usati erano, appresso della bella fonte (IV.con) intorno della bella fontana di presente furono in sul danzare (VII.con) appresso la bella fontana a seder posti (VIII.in) dintorno alla chiara fonte (X.in)",
+    "type": "fountain",
+    "geographic_area": "Italy",
+    "mentions": 8,
+    "sections": [
+      "d03intro",
+      "d03conclu",
+      "d04intro",
+      "d04conclu",
+      "d07conclu",
+      "d08intro",
+      "d08conclu",
+      "d10intro"
+    ]
+  },
+  {
+    "id": "giardinobrigata-01",
+    "name": "giardino (III.in) (III.con) (IV.in) (IV.con) lo dittevole giardino (V.in) e poi fra le piacevoli ombre del giardino (X.in)",
+    "type": "garden",
+    "geographic_area": "Italy",
+    "mentions": 6,
+    "sections": [
+      "d03intro",
+      "d03conclu",
+      "d04intro",
+      "d04conclu",
+      "d05intro",
+      "d10intro"
+    ]
+  },
+  {
+    "id": "laghettobrigata-01",
+    "name": "laghetto / pelaghetto",
+    "type": "lake",
+    "geographic_area": "Italy",
+    "mentions": 3,
+    "sections": [
+      "d06conclu",
+      "d07intro",
+      "d07conclu"
+    ]
+  },
+  {
+    "id": "mulinibrigata-01",
+    "name": "mulina (III.in) (IV.con)",
+    "type": "mill",
+    "geographic_area": "Italy",
+    "mentions": 2,
+    "sections": [
+      "d03intro",
+      "d04conclu"
+    ]
+  },
+  {
+    "id": "palagiobrigata-01",
+    "name": "palagio (I.in) (I.con)",
+    "type": "villa",
+    "geographic_area": "Italy",
+    "mentions": 2,
+    "sections": [
+      "d01intro",
+      "d01conclu"
+    ]
+  },
+  {
+    "id": "palagiobrigata-02",
+    "name": "bellissimo e ricco palagio (III.in) bel palagio (IV.in) al palagio tornare (VII.con)",
+    "type": "villa",
+    "geographic_area": "Italy",
+    "mentions": 5,
+    "sections": [
+      "d03intro",
+      "d06intro",
+      "d07conclu",
+      "d09intro",
+      "d10intro"
+    ]
+  },
+  {
+    "id": "valledonnebrigata-01",
+    "name": "Valle delle Donne",
+    "type": "valley",
+    "geographic_area": "Italy",
+    "mentions": 3,
+    "sections": [
+      "d06conclu",
+      "d07intro",
+      "d07conclu"
+    ]
+  }
+]
