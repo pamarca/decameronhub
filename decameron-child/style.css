@@ -616,10 +616,6 @@ body.hide-english .italian-column {
         overflow-y: auto;
     }
     
-    .dec-text-controls {
-        z-index: 100; /* Lower than menu toggle */
-    }
-    
     .text-controls-toggle {
         padding: 0.4rem 0.75rem;
         font-size: 0.85rem;
@@ -641,24 +637,53 @@ body.hide-english .italian-column {
 }
 
 /* ============================================================
-   MOBILE - PREVENT DISPLAY BUTTON FROM COVERING MENU
+   DISPLAY BUTTON — FLOATING BOTTOM-RIGHT WHEN SCROLLED
+   Applies on mobile and desktop once user scrolls past 100px.
    ============================================================ */
 
+/* Mobile: keep Display button below the sidebar overlay */
 @media (max-width: 768px) {
-    /* When scrolling, anchor the Display button bottom-left (sidebar toggle is top-right) */
+    .dec-text-controls {
+        z-index: 997; /* below overlay (998) and sidebar (999) */
+    }
+
+    /* Float to bottom-right when scrolled */
     body.scrolled .dec-text-controls {
         position: fixed;
         bottom: 1rem;
-        left: 1rem;
+        right: 1rem;
+        left: auto;
         top: auto;
         margin: 0;
-        z-index: 100;
+        z-index: 997;
     }
 
     body.scrolled .text-controls-panel {
-        left: 1rem;
-        right: 1rem;
         bottom: 4rem;
+        top: auto;
+        right: 0;
+        left: 0;
+        border-radius: 16px 16px 0 0;
+    }
+}
+
+/* Desktop: float to bottom-right when scrolled */
+@media (min-width: 769px) {
+    body.scrolled .dec-text-controls {
+        position: fixed;
+        bottom: 1.5rem;
+        right: 1.5rem;
+        left: auto;
+        top: auto;
+        margin: 0;
+        z-index: 10001;
+    }
+
+    /* Panel opens upward from the floating button */
+    body.scrolled .text-controls-panel {
+        bottom: 4rem;
+        top: auto;
+        right: 0;
     }
 }
 
@@ -950,11 +975,67 @@ body.hide-english .italian-column {
 }
 
 /* ============================================================
-   MOBILE RESPONSIVE
+   TOP NAV SUBMENU TOGGLE BUTTON
+   JS injects a .dec-top-nav-item-row wrapper containing the
+   existing <a> and a new .dec-top-subnav-toggle arrow button.
+   Desktop: hover still opens via CSS; button is an extra option.
+   Mobile:  hover is suppressed; button is the only way.
+   ============================================================ */
+
+.dec-top-nav-item-row {
+    display: flex;
+    align-items: stretch;
+}
+
+.dec-top-nav-item-row > a {
+    flex: 1;
+}
+
+.dec-top-subnav-toggle {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    background: none;
+    border: none;
+    border-left: 1px solid var(--color-border, #2a2a3e);
+    color: var(--color-text-dim, #a0a0b8);
+    cursor: pointer;
+    padding: 0;
+    transition: background 0.15s, color 0.15s;
+}
+
+.dec-top-subnav-toggle svg {
+    transition: transform 0.2s ease;
+}
+
+.dec-top-subnav-toggle.open svg {
+    transform: rotate(90deg);
+}
+
+.dec-top-subnav-toggle:hover,
+.dec-top-subnav-toggle:focus {
+    background: var(--color-bg-hover);
+    color: var(--color-accent, #a78bfa);
+    outline: 2px solid var(--color-accent, #a78bfa);
+    outline-offset: -2px;
+}
+
+/* Sub-menu opened via button click (desktop and mobile) */
+.dec-top-nav li > ul.sub-menu.submenu-open {
+    display: flex;
+}
+
+/* ============================================================
+   MOBILE RESPONSIVE — TOP NAV
+   ============================================================ */
+
+/* ============================================================
+   MOBILE RESPONSIVE — TOP NAV
    ============================================================ */
 
 @media (max-width: 768px) {
-    /* Brand bar: site title [grows] + theme toggle + hamburger */
     .dec-top-nav-brand {
         display: flex;
         align-items: center;
@@ -994,13 +1075,12 @@ body.hide-english .italian-column {
         outline-offset: -2px;
     }
 
-    /* Hide the nav menu by default; show when .nav-open is toggled by JS */
     .dec-top-nav ul,
     .dec-top-nav .menu {
         display: none;
         flex-direction: column;
         width: 100%;
-        padding: 0;        /* reset desktop right padding */
+        padding: 0;
         border-top: 1px solid var(--color-border, #2a2a3e);
     }
 
@@ -1011,6 +1091,34 @@ body.hide-english .italian-column {
 
     .dec-top-nav li {
         width: 100%;
+    }
+
+    /* Row container gets a bottom border on mobile */
+    .dec-top-nav-item-row {
+        width: 100%;
+        border-bottom: 1px solid var(--color-border, #2a2a3e);
+    }
+
+    .dec-top-nav-item-row > a {
+        padding: 0.75rem 1.25rem;
+        min-height: 44px;
+    }
+
+    /* Larger touch target on mobile */
+    .dec-top-subnav-toggle {
+        width: 44px;
+        min-height: 44px;
+    }
+
+    /* Suppress hover-open on mobile — button is the only trigger */
+    .dec-top-nav li:hover > .sub-menu,
+    .dec-top-nav li:focus-within > .sub-menu {
+        display: none;
+    }
+
+    /* Only .submenu-open (set by JS) shows the sub-menu on mobile */
+    .dec-top-nav li > ul.sub-menu.submenu-open {
+        display: flex;
     }
 
     /* First level submenu */
@@ -1027,6 +1135,10 @@ body.hide-english .italian-column {
         padding-left: 2.5rem;
     }
 
+    .dec-top-nav .sub-menu .dec-top-nav-item-row > a {
+        padding-left: 2.5rem;
+    }
+
     /* Second level submenu */
     .dec-top-nav .sub-menu .sub-menu {
         position: static;
@@ -1039,10 +1151,10 @@ body.hide-english .italian-column {
         padding-left: 3.5rem;
     }
 
-    /* Arrow changes on mobile */
+    /* Hide CSS-generated arrows — JS button replaces them */
+    .dec-top-nav .menu-item-has-children > a::after,
     .dec-top-nav .sub-menu .menu-item-has-children > a::after {
-        content: ' ▾';
-        float: none;
+        display: none;
     }
 }
 
@@ -1125,7 +1237,7 @@ body.hide-english .italian-column {
     display: inline-block;
     position: relative;
     margin-left: 1rem;
-    z-index: 10001;
+    z-index: 100;
 }
 
 /* Toggle button */
@@ -1267,7 +1379,7 @@ body.hide-place-names .dec-name-place {
     color: inherit;
 }
 
-/* Clickable milestones */
+/* Milestone links: hover animation when "Paragraph numbers are links" is ON */
 .milestone-clickable {
     cursor: pointer !important;
     transition: all 0.2s;
@@ -1280,30 +1392,18 @@ body.hide-place-names .dec-name-place {
     transform: scale(1.1);
 }
 
-/* Clickable speakers */
-.speaker-clickable {
-    cursor: pointer !important;
-    transition: all 0.2s;
+/* Milestone selectable: allow text to be included in mouse drag-selections */
+.milestone-selectable {
+    user-select: text !important;
+    -webkit-user-select: text !important;
+    -moz-user-select: text !important;
 }
 
-.speaker-clickable:hover {
-    background: var(--color-speaker-bg);
-    transform: scale(1.05);
-}
-
-/* Highlighted speaker */
-.speaker-highlighted {
-    background: var(--color-speaker-hl) !important;
-    animation: pulse 1s ease-in-out 2;
-}
-
-@keyframes pulse {
-    0%, 100% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.05);
-    }
+/* Speaker selectable: allow text to be included in mouse drag-selections */
+.speaker-selectable {
+    user-select: text !important;
+    -webkit-user-select: text !important;
+    -moz-user-select: text !important;
 }
 
 /* ============================================================
