@@ -1,36 +1,117 @@
 /**
  * mobile-nav.js
- * Loaded on every page. Handles the top-nav hamburger,
- * the sidebar panel toggle, scroll-state detection,
- * and the light/dark/auto theme toggle.
+ * Loaded on every page. Handles:
+ *  - Top-nav submenu toggle buttons (all screen sizes)
+ *  - Top-nav hamburger (mobile only)
+ *  - Sidebar panel toggle (mobile only)
+ *  - Scroll-state detection (all screen sizes)
+ *  - Light/dark/auto theme toggle
  */
 
 (function () {
     'use strict';
 
     // ============================================================
-    // MOBILE TOP NAV HAMBURGER
+    // TOP-NAV SUBMENU TOGGLE BUTTONS — all screen sizes
+    // Injects an arrow <button> next to every top-nav link that has
+    // a sub-menu, so users can click to open/close it.
+    // Desktop: hover still opens via CSS; button is an extra option.
+    // Mobile:  hover is suppressed via CSS; button is the only way.
+    // ============================================================
+
+    function initTopNavSubmenus() {
+        var nav = document.querySelector('.dec-top-nav');
+        if (!nav) return;
+
+        var CHEVRON = '<svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg>';
+
+        nav.querySelectorAll('li.menu-item-has-children').forEach(function (li, idx) {
+            if (li.querySelector('.dec-top-subnav-toggle')) return; // avoid double-inject
+
+            var link    = li.querySelector(':scope > a');
+            var subMenu = li.querySelector(':scope > ul.sub-menu');
+            if (!link || !subMenu) return;
+
+            var subId = subMenu.id || ('top-sub-' + idx + '-' + Math.random().toString(36).slice(2, 6));
+            subMenu.id = subId;
+
+            // Wrap link + button in a flex row (mirrors .dec-nav-day-container)
+            var container = document.createElement('div');
+            container.className = 'dec-top-nav-item-row';
+            li.insertBefore(container, link);
+            container.appendChild(link);
+
+            var btn = document.createElement('button');
+            btn.className = 'dec-top-subnav-toggle';
+            btn.setAttribute('aria-label', 'Toggle ' + link.textContent.trim() + ' submenu');
+            btn.setAttribute('aria-expanded', 'false');
+            btn.setAttribute('aria-controls', subId);
+            btn.innerHTML = CHEVRON;
+            container.appendChild(btn);
+
+            btn.addEventListener('click', function (e) {
+                e.stopPropagation();
+                var isOpen = subMenu.classList.contains('submenu-open');
+
+                // On mobile close sibling sub-menus first (accordion)
+                if (window.innerWidth <= 768) {
+                    var parentUl = li.parentElement;
+                    if (parentUl) {
+                        parentUl.querySelectorAll(':scope > li > ul.sub-menu.submenu-open').forEach(function (other) {
+                            if (other !== subMenu) {
+                                other.classList.remove('submenu-open');
+                                var otherBtn = other.closest('li').querySelector('.dec-top-subnav-toggle');
+                                if (otherBtn) { otherBtn.setAttribute('aria-expanded', 'false'); otherBtn.classList.remove('open'); }
+                            }
+                        });
+                    }
+                }
+
+                subMenu.classList.toggle('submenu-open', !isOpen);
+                btn.setAttribute('aria-expanded', String(!isOpen));
+                btn.classList.toggle('open', !isOpen);
+            });
+        });
+
+        // Close all open sub-menus when clicking outside the nav
+        document.addEventListener('click', function (e) {
+            if (!nav.contains(e.target)) {
+                nav.querySelectorAll('.sub-menu.submenu-open').forEach(function (sub) {
+                    sub.classList.remove('submenu-open');
+                });
+                nav.querySelectorAll('.dec-top-subnav-toggle.open').forEach(function (b) {
+                    b.classList.remove('open');
+                    b.setAttribute('aria-expanded', 'false');
+                });
+            }
+        });
+    }
+
+    // ============================================================
+    // MOBILE TOP NAV HAMBURGER — mobile only
     // ============================================================
 
     function initMobileTopNav() {
         if (window.innerWidth > 768) return;
 
-        const nav = document.querySelector('.dec-top-nav');
+        var nav = document.querySelector('.dec-top-nav');
         if (!nav) return;
 
-        const menu = nav.querySelector('ul');
+        var menu = nav.querySelector('ul');
         if (!menu) return;
 
         menu.id = 'dec-top-nav-menu';
 
-        const brand = document.createElement('div');
+        if (nav.querySelector('.dec-top-nav-brand')) return; // avoid double-init
+
+        var brand = document.createElement('div');
         brand.className = 'dec-top-nav-brand';
 
-        const title = document.createElement('span');
+        var title = document.createElement('span');
         title.className = 'dec-nav-site-title';
         title.textContent = 'The Decameron';
 
-        const hamburger = document.createElement('button');
+        var hamburger = document.createElement('button');
         hamburger.className = 'dec-nav-hamburger';
         hamburger.setAttribute('aria-label', 'Toggle navigation menu');
         hamburger.setAttribute('aria-expanded', 'false');
@@ -42,7 +123,7 @@
         nav.insertBefore(brand, menu);
 
         hamburger.addEventListener('click', function () {
-            const isOpen = menu.classList.contains('nav-open');
+            var isOpen = menu.classList.contains('nav-open');
             menu.classList.toggle('nav-open', !isOpen);
             hamburger.setAttribute('aria-expanded', String(!isOpen));
             hamburger.innerHTML = !isOpen
@@ -59,40 +140,32 @@
     }
 
     // ============================================================
-    // MOBILE SIDEBAR PANEL TOGGLE
+    // MOBILE SIDEBAR PANEL TOGGLE — mobile only
     // ============================================================
 
     function initMobileMenu() {
         if (window.innerWidth > 768) return;
 
-        const sidebar = document.querySelector('.decameron-sidebar');
+        var sidebar = document.querySelector('.decameron-sidebar');
         if (!sidebar) return;
 
-        // Panel icon: rectangle with left divider — distinct from top-nav hamburger
-        const ICON_PANEL = `
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                <rect x="3" y="3" width="18" height="18" rx="2"/>
-                <line x1="9" y1="3" x2="9" y2="21"/>
-            </svg>`;
-        const ICON_CLOSE = `
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                <path d="M6 18L18 6M6 6l12 12"/>
-            </svg>`;
+        var ICON_PANEL = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/></svg>';
+        var ICON_CLOSE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 18L18 6M6 6l12 12"/></svg>';
 
-        const toggleBtn = document.createElement('button');
+        var toggleBtn = document.createElement('button');
         toggleBtn.className = 'mobile-menu-toggle';
         toggleBtn.setAttribute('aria-label', 'Toggle table of contents');
         toggleBtn.setAttribute('aria-expanded', 'false');
         toggleBtn.innerHTML = ICON_PANEL;
 
-        const overlay = document.createElement('div');
+        var overlay = document.createElement('div');
         overlay.className = 'sidebar-overlay';
 
         document.body.appendChild(toggleBtn);
         document.body.appendChild(overlay);
 
         function toggleMenu() {
-            const isOpen = sidebar.classList.contains('open');
+            var isOpen = sidebar.classList.contains('open');
             sidebar.classList.toggle('open');
             overlay.classList.toggle('active');
             toggleBtn.setAttribute('aria-expanded', String(!isOpen));
@@ -124,17 +197,15 @@
     // THEME TOGGLE (auto / dark / light)
     // ============================================================
 
-    var THEME_ICONS = { light: '☀️', dark: '🌙', auto: '🌗' };
+    var THEME_ICONS  = { light: '☀️', dark: '🌙', auto: '🌗' };
     var THEME_LABELS = {
         light: 'Light theme. Click for dark.',
         dark:  'Dark theme. Click to follow device.',
         auto:  'Following device preference. Click for light.'
     };
-    // Cycle: light → dark → auto (device) → light
     var THEME_CYCLE = { light: 'dark', dark: 'auto', auto: 'light' };
 
     function getCurrentTheme() {
-        // Default is 'light'; 'auto' must be explicitly chosen by the user.
         return localStorage.getItem('dec-theme') || 'light';
     }
 
@@ -148,14 +219,11 @@
     function updateThemeBtn(btn, theme) {
         btn.textContent = THEME_ICONS[theme] || THEME_ICONS.auto;
         btn.setAttribute('aria-label', THEME_LABELS[theme] || THEME_LABELS.auto);
-        btn.setAttribute('title', THEME_LABELS[theme] || THEME_LABELS.auto);
+        btn.setAttribute('title',      THEME_LABELS[theme] || THEME_LABELS.auto);
     }
 
     function initThemeToggle() {
         var theme = getCurrentTheme();
-
-        // Belt-and-suspenders: ensure the class is applied even if the
-        // inline <head> script was blocked or ran before localStorage was set.
         applyTheme(theme);
 
         var btn = document.createElement('button');
@@ -170,11 +238,9 @@
         });
 
         if (window.innerWidth > 768) {
-            // Desktop: append to sticky nav (absolutely positioned to right edge)
             var nav = document.querySelector('.dec-top-nav');
             if (nav) nav.appendChild(btn);
         } else {
-            // Mobile: insert into brand bar, before the hamburger
             var brand = document.querySelector('.dec-top-nav-brand');
             if (brand) {
                 var hamburger = brand.querySelector('.dec-nav-hamburger');
@@ -185,12 +251,11 @@
     }
 
     // ============================================================
-    // SCROLL STATE (used to reposition Display button on mobile)
+    // SCROLL STATE — all screen sizes
+    // Toggles body.scrolled so the Display button floats bottom-right.
     // ============================================================
 
     function initScrollDetection() {
-        if (window.innerWidth > 768) return;
-
         window.addEventListener('scroll', function () {
             document.body.classList.toggle('scrolled', window.pageYOffset > 100);
         }, { passive: true });
@@ -200,18 +265,19 @@
     // INIT
     // ============================================================
 
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', function () {
-            initMobileTopNav();   // creates brand bar first
-            initMobileMenu();
-            initThemeToggle();    // then place theme btn (needs brand bar on mobile)
-            initScrollDetection();
-        });
-    } else {
-        initMobileTopNav();
-        initMobileMenu();
-        initThemeToggle();
+    function init() {
+        initTopNavSubmenus(); // all screen sizes — must run before mobile nav
+        initMobileTopNav();   // mobile only — creates brand bar
+        initMobileMenu();     // mobile only — sidebar toggle
+        initThemeToggle();    // needs brand bar to exist on mobile
         initScrollDetection();
     }
 
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+
 })();
+
