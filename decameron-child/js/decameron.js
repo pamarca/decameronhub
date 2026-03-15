@@ -279,13 +279,10 @@
 (function() {
     'use strict';
     
-    // Add controls to the page
     function addTextControls() {
-        // Find the language toggle container
         const langToggle = document.querySelector('.dec-toggle-bar');
         if (!langToggle) return;
         
-        // Create controls container
         const controlsHTML = `
             <div class="dec-text-controls">
                 <button class="text-controls-toggle" id="text-controls-toggle" aria-label="Text Display Options">
@@ -301,6 +298,11 @@
                     </label>
                     
                     <label class="control-item">
+                        <input type="checkbox" id="toggle-milestone-selectable">
+                        <span>Paragraph numbers can be selected</span>
+                    </label>
+                    
+                    <label class="control-item">
                         <input type="checkbox" id="toggle-milestone-links">
                         <span>Paragraph numbers are links</span>
                     </label>
@@ -311,17 +313,17 @@
                     </label>
                     
                     <label class="control-item">
-                        <input type="checkbox" id="toggle-speaker-filter">
-                        <span>Speaker labels are clickable</span>
+                        <input type="checkbox" id="toggle-speaker-selectable">
+                        <span>Speaker labels can be selected</span>
                     </label>
                     
                     <label class="control-item">
-                        <input type="checkbox" id="toggle-person-names" checked>
+                        <input type="checkbox" id="toggle-person-names">
                         <span>Highlight person names</span>
                     </label>
                     
                     <label class="control-item">
-                        <input type="checkbox" id="toggle-place-names" checked>
+                        <input type="checkbox" id="toggle-place-names">
                         <span>Highlight place names</span>
                     </label>
                     
@@ -346,19 +348,13 @@
             </div>
         `;
         
-        // Insert inside language toggle bar (as a flex sibling of the language checkboxes)
         langToggle.insertAdjacentHTML('beforeend', controlsHTML);
-        
-        // Initialize controls
         initializeControls();
     }
     
-    // Initialize control functionality
     function initializeControls() {
-        // Load saved preferences
         loadPreferences();
         
-        // Toggle panel
         const toggleBtn = document.getElementById('text-controls-toggle');
         const panel = document.getElementById('text-controls-panel');
         
@@ -368,7 +364,6 @@
             this.setAttribute('aria-expanded', !isVisible);
         });
         
-        // Close panel when clicking outside
         document.addEventListener('click', function(e) {
             if (!e.target.closest('.dec-text-controls')) {
                 panel.style.display = 'none';
@@ -376,46 +371,46 @@
             }
         });
         
-        // Milestone visibility
         document.getElementById('toggle-milestones').addEventListener('change', function() {
             toggleMilestones(this.checked);
             savePreference('milestones', this.checked);
         });
         
-        // Milestone links
+        // Allow paragraph number text to be included in mouse drag-selections
+        document.getElementById('toggle-milestone-selectable').addEventListener('change', function() {
+            toggleMilestoneSelectable(this.checked);
+            savePreference('milestoneSelectable', this.checked);
+        });
+        
+        // Hover animation + click copies full URL + toast
         document.getElementById('toggle-milestone-links').addEventListener('change', function() {
             toggleMilestoneLinks(this.checked);
             savePreference('milestoneLinks', this.checked);
         });
         
-        // Speaker visibility
         document.getElementById('toggle-speakers').addEventListener('change', function() {
             toggleSpeakers(this.checked);
             savePreference('speakers', this.checked);
         });
         
-        // Speaker filter
-        document.getElementById('toggle-speaker-filter').addEventListener('change', function() {
-            toggleSpeakerFilter(this.checked);
-            savePreference('speakerFilter', this.checked);
+        // Allow speaker label text to be included in mouse drag-selections
+        document.getElementById('toggle-speaker-selectable').addEventListener('change', function() {
+            toggleSpeakerSelectable(this.checked);
+            savePreference('speakerSelectable', this.checked);
         });
         
-        // Person names
         document.getElementById('toggle-person-names').addEventListener('change', function() {
             togglePersonNames(this.checked);
             savePreference('personNames', this.checked);
         });
         
-        // Place names
         document.getElementById('toggle-place-names').addEventListener('change', function() {
             togglePlaceNames(this.checked);
             savePreference('placeNames', this.checked);
         });
         
-        // Font size
         const fontSizeSlider = document.getElementById('font-size-slider');
-        const fontSizeValue = document.getElementById('font-size-value');
-        
+        const fontSizeValue  = document.getElementById('font-size-value');
         fontSizeSlider.addEventListener('input', function() {
             const size = this.value + 'px';
             fontSizeValue.textContent = size;
@@ -423,10 +418,8 @@
             savePreference('fontSize', this.value);
         });
         
-        // Line height
         const lineHeightSlider = document.getElementById('line-height-slider');
-        const lineHeightValue = document.getElementById('line-height-value');
-        
+        const lineHeightValue  = document.getElementById('line-height-value');
         lineHeightSlider.addEventListener('input', function() {
             const height = this.value;
             lineHeightValue.textContent = height;
@@ -434,30 +427,39 @@
             savePreference('lineHeight', this.value);
         });
         
-        // Reset button
         document.getElementById('reset-settings').addEventListener('click', function() {
             resetToDefaults();
         });
     }
-    
-    // Toggle functions
+
+    // ── Toggle functions ──────────────────────────────────────────
+
     function toggleMilestones(show) {
         document.body.classList.toggle('hide-milestones', !show);
     }
-    
+
+    // Makes paragraph number text selectable so it is included when the
+    // user drags to select and copy text. When OFF (default) it is skipped.
+    function toggleMilestoneSelectable(enable) {
+        document.querySelectorAll('.dec-milestone').forEach(m => {
+            m.classList.toggle('milestone-selectable', enable);
+        });
+    }
+
+    // Hover animation + pointer cursor. Clicking copies the full page URL
+    // + hash to clipboard and shows a toast notification.
+    // e.g. https://…/proemio-prologue/#p99990001
     function toggleMilestoneLinks(enable) {
-        const milestones = document.querySelectorAll('.dec-milestone');
-        milestones.forEach(m => {
+        document.querySelectorAll('.dec-milestone').forEach(m => {
             if (enable) {
                 m.style.cursor = 'pointer';
                 m.classList.add('milestone-clickable');
             } else {
-                m.style.cursor = 'default';
+                m.style.cursor = '';
                 m.classList.remove('milestone-clickable');
             }
         });
-        
-        // Add/remove click handlers
+
         if (enable && !document.body.hasAttribute('data-milestone-listeners')) {
             document.body.addEventListener('click', handleMilestoneClick);
             document.body.setAttribute('data-milestone-listeners', 'true');
@@ -466,73 +468,33 @@
             document.body.removeAttribute('data-milestone-listeners');
         }
     }
-    
+
     function handleMilestoneClick(e) {
         if (e.target.classList.contains('milestone-clickable')) {
             const milestoneId = e.target.getAttribute('data-id');
-            
-            // Copy paragraph ID to clipboard
-            navigator.clipboard.writeText(milestoneId).then(() => {
-                // Show toast notification
-                showToast(`Paragraph ID copied: ${milestoneId}`);
-                
-                // Update URL hash
+            const fullUrl = window.location.origin + window.location.pathname + '#' + milestoneId;
+            navigator.clipboard.writeText(fullUrl).then(() => {
+                showToast('Link copied: ' + fullUrl);
                 window.location.hash = milestoneId;
+            }).catch(() => {
+                window.location.hash = milestoneId;
+                showToast('Navigated to #' + milestoneId);
             });
         }
     }
-    
+
     function toggleSpeakers(show) {
         document.body.classList.toggle('hide-speakers', !show);
     }
-    
-    function toggleSpeakerFilter(enable) {
-        const speakers = document.querySelectorAll('.dec-speaker');
-        speakers.forEach(s => {
-            if (enable) {
-                s.style.cursor = 'pointer';
-                s.classList.add('speaker-clickable');
-            } else {
-                s.style.cursor = 'default';
-                s.classList.remove('speaker-clickable');
-            }
+
+    // Makes speaker label text selectable so it is included when the
+    // user drags to select and copy text. When OFF (default) it is skipped.
+    function toggleSpeakerSelectable(enable) {
+        document.querySelectorAll('.dec-speaker').forEach(s => {
+            s.classList.toggle('speaker-selectable', enable);
         });
-        
-        // Add/remove click handlers
-        if (enable && !document.body.hasAttribute('data-speaker-listeners')) {
-            document.body.addEventListener('click', handleSpeakerClick);
-            document.body.setAttribute('data-speaker-listeners', 'true');
-        } else if (!enable && document.body.hasAttribute('data-speaker-listeners')) {
-            document.body.removeEventListener('click', handleSpeakerClick);
-            document.body.removeAttribute('data-speaker-listeners');
-        }
     }
-    
-    function handleSpeakerClick(e) {
-        if (e.target.classList.contains('speaker-clickable')) {
-            const speakerName = e.target.textContent.replace(/[\[\]]/g, '').trim();
-            
-            // Highlight all instances of this speaker
-            document.querySelectorAll('.dec-speaker').forEach(s => {
-                s.classList.remove('speaker-highlighted');
-            });
-            
-            document.querySelectorAll('.dec-speaker').forEach(s => {
-                if (s.textContent.includes(speakerName)) {
-                    s.classList.add('speaker-highlighted');
-                    
-                    // Scroll to first instance
-                    if (!document.querySelector('.speaker-highlighted.scrolled')) {
-                        s.classList.add('scrolled');
-                        s.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    }
-                }
-            });
-            
-            showToast(`Highlighted all instances of ${speakerName}`);
-        }
-    }
-    
+
     function togglePersonNames(show) {
         document.body.classList.toggle('hide-person-names', !show);
     }
@@ -549,99 +511,66 @@
         document.documentElement.style.setProperty('--text-line-height', height);
     }
     
-    // Toast notification
     function showToast(message) {
         const toast = document.createElement('div');
         toast.className = 'dec-toast';
         toast.textContent = message;
         document.body.appendChild(toast);
-        
-        setTimeout(() => {
-            toast.classList.add('show');
-        }, 10);
-        
+        setTimeout(() => { toast.classList.add('show'); }, 10);
         setTimeout(() => {
             toast.classList.remove('show');
             setTimeout(() => toast.remove(), 300);
         }, 2000);
     }
     
-    // Preferences storage
     function savePreference(key, value) {
         localStorage.setItem('dec_text_' + key, value);
     }
     
     function loadPreferences() {
         const prefs = {
-            milestones: localStorage.getItem('dec_text_milestones') !== 'false',
-            milestoneLinks: localStorage.getItem('dec_text_milestoneLinks') === 'true',
-            speakers: localStorage.getItem('dec_text_speakers') !== 'false',
-            speakerFilter: localStorage.getItem('dec_text_speakerFilter') === 'true',
-            personNames: localStorage.getItem('dec_text_personNames') !== 'false',
-            placeNames: localStorage.getItem('dec_text_placeNames') !== 'false',
-            fontSize: localStorage.getItem('dec_text_fontSize') || '18',
-            lineHeight: localStorage.getItem('dec_text_lineHeight') || '1.8'
+            milestones:          localStorage.getItem('dec_text_milestones')          !== 'false',
+            milestoneSelectable: localStorage.getItem('dec_text_milestoneSelectable') === 'true',
+            milestoneLinks:      localStorage.getItem('dec_text_milestoneLinks')      === 'true',
+            speakers:            localStorage.getItem('dec_text_speakers')            !== 'false',
+            speakerSelectable:   localStorage.getItem('dec_text_speakerSelectable')   === 'true',
+            // personNames and placeNames default OFF
+            personNames:         localStorage.getItem('dec_text_personNames')         === 'true',
+            placeNames:          localStorage.getItem('dec_text_placeNames')          === 'true',
+            fontSize:            localStorage.getItem('dec_text_fontSize')            || '18',
+            lineHeight:          localStorage.getItem('dec_text_lineHeight')          || '1.8'
         };
 
-        function setChecked(id, val) {
-            const el = document.getElementById(id);
-            if (el) el.checked = val;
-        }
-        function setText(id, val) {
-            const el = document.getElementById(id);
-            if (el) el.textContent = val;
-        }
-        function setVal(id, val) {
-            const el = document.getElementById(id);
-            if (el) el.value = val;
-        }
+        function setChecked(id, val) { const el = document.getElementById(id); if (el) el.checked = val; }
+        function setText(id, val)    { const el = document.getElementById(id); if (el) el.textContent = val; }
+        function setVal(id, val)     { const el = document.getElementById(id); if (el) el.value = val; }
 
-        setChecked('toggle-milestones', prefs.milestones);
-        toggleMilestones(prefs.milestones);
+        setChecked('toggle-milestones',           prefs.milestones);          toggleMilestones(prefs.milestones);
+        setChecked('toggle-milestone-selectable',  prefs.milestoneSelectable); toggleMilestoneSelectable(prefs.milestoneSelectable);
+        setChecked('toggle-milestone-links',       prefs.milestoneLinks);      toggleMilestoneLinks(prefs.milestoneLinks);
+        setChecked('toggle-speakers',              prefs.speakers);            toggleSpeakers(prefs.speakers);
+        setChecked('toggle-speaker-selectable',    prefs.speakerSelectable);   toggleSpeakerSelectable(prefs.speakerSelectable);
+        setChecked('toggle-person-names',          prefs.personNames);         togglePersonNames(prefs.personNames);
+        setChecked('toggle-place-names',           prefs.placeNames);          togglePlaceNames(prefs.placeNames);
 
-        setChecked('toggle-milestone-links', prefs.milestoneLinks);
-        toggleMilestoneLinks(prefs.milestoneLinks);
-
-        setChecked('toggle-speakers', prefs.speakers);
-        toggleSpeakers(prefs.speakers);
-
-        setChecked('toggle-speaker-filter', prefs.speakerFilter);
-        toggleSpeakerFilter(prefs.speakerFilter);
-
-        setChecked('toggle-person-names', prefs.personNames);
-        togglePersonNames(prefs.personNames);
-
-        setChecked('toggle-place-names', prefs.placeNames);
-        togglePlaceNames(prefs.placeNames);
-
-        setVal('font-size-slider', prefs.fontSize);
-        setText('font-size-value', prefs.fontSize + 'px');
-        setFontSize(prefs.fontSize + 'px');
-
-        setVal('line-height-slider', prefs.lineHeight);
-        setText('line-height-value', prefs.lineHeight);
-        setLineHeight(prefs.lineHeight);
+        setVal('font-size-slider',   prefs.fontSize);   setText('font-size-value',   prefs.fontSize + 'px');   setFontSize(prefs.fontSize + 'px');
+        setVal('line-height-slider', prefs.lineHeight);  setText('line-height-value', prefs.lineHeight);        setLineHeight(prefs.lineHeight);
     }
     
     function resetToDefaults() {
-        localStorage.removeItem('dec_text_milestones');
-        localStorage.removeItem('dec_text_milestoneLinks');
-        localStorage.removeItem('dec_text_speakers');
-        localStorage.removeItem('dec_text_speakerFilter');
-        localStorage.removeItem('dec_text_personNames');
-        localStorage.removeItem('dec_text_placeNames');
-        localStorage.removeItem('dec_text_fontSize');
-        localStorage.removeItem('dec_text_lineHeight');
-        
+        ['milestones', 'milestoneSelectable', 'milestoneLinks',
+         'speakers', 'speakerSelectable',
+         'personNames', 'placeNames',
+         'fontSize', 'lineHeight'].forEach(k => localStorage.removeItem('dec_text_' + k));
         loadPreferences();
         showToast('Settings reset to defaults');
     }
     
-    // Initialize when DOM is ready
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', addTextControls);
     } else {
         addTextControls();
     }
 })();
+
 
